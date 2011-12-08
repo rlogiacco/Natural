@@ -1,0 +1,55 @@
+grammar org.rlogiacco.eclipse.cucumber.CucumberDSL hidden(SPACE, ML_COMMENT, SL_COMMENT)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+generate cucumberDSL "http://www.rlogiacco.org/eclipse/cucumber/CucumberDSL"
+
+Model:
+	feature=Feature;
+
+Feature:
+	'Feature:' title=Line
+	description+=Line*
+	scenarios+=Scenario+;
+
+Scenario:
+	tag=Tag?
+	'Scenario:' title=Line
+	description+=Line*
+	condSitions+=Step+;
+
+Step:
+	type=('Given' | 'And' | 'When' | 'Then' | 'But') 
+	description=Line;
+	
+Line:
+	(STRING | WORD | INT | ANY_OTHER)+ EOL*;
+
+Tag:
+	'@' WORD EOL;
+
+terminal WORD:
+	'^'? ('a'..'z' | 'A'..'Z' | '_' ) ('a'..'z' | 'A'..'Z' | '_' | '0'..'9' | "'" | "#" |
+		('\\' ( 'u' | '"' | "'" | '\\'))
+	)*;
+
+terminal INT returns ecore::EInt:
+	('0'..'9')+;
+
+terminal STRING:
+	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
+	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+
+terminal ML_COMMENT:
+	'|' -> '|' ('\r'? '\n')?;
+	
+terminal SL_COMMENT:
+	'#' !('\n' | '\r')* ('\r'? '\n')?;
+
+terminal SPACE:
+	(' ' | '\t')+;
+
+terminal EOL:
+	('\r'? '\n')?;
+
+terminal ANY_OTHER:
+	.;
