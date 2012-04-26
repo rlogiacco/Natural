@@ -6,12 +6,13 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.rlogiacco.eclipse.jbehave.ui.JBehaveDSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="story"
-            id="org.rlogiacco.eclipse.jbehave.JBehaveDSL"
-            name="JBehave Editor">
+              class="org.rlogiacco.eclipse.jbehave.ui.JBehaveDSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+              contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+              default="true"
+              extensions="story"
+              icon="icons/feature.png"
+              id="org.rlogiacco.eclipse.jbehave.JBehaveDSL"
+              name="JBehave Editor">
         </editor>
     </extension>
     <extension

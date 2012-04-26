@@ -9,18 +9,52 @@ Model:
 Story:
 	'Story:' title=Line
 	description+=Line*
-	scenarios+=Narrative+;
+	narrative=Narrative?
+	scenarios+=Scenario+;
 
 Narrative:
-	tag=Tag?
 	'Narrative:' title=Line
 	description+=Line*
-	condSitions+=Step+;
+	goal=InOrderTo
+	role=AsA
+	condition=IWantTo;
+
+InOrderTo: 
+	'In order to' body+=Line+;
+	
+AsA: 
+	'As a' body+=Line+;
+
+IWantTo: 
+	'I want to' body+=Line+;
+	
+Scenario:
+	'Scenario:' title=Line
+	description+=Line*
+	givenStories=GivenStories?
+	steps+=Step+
+	examples=Examples?;
+
+GivenStories:
+	'GivenStories:' paths+=StoryPath+;
+
+StoryPath:
+	(WORD ','?);
 
 Step:
 	type=('Given' | 'And' | 'When' | 'Then' | 'But')
 	description=Line;
+
+Examples:
+	'Examples:' table=Table;
 	
+Table:
+	header=TableRow
+	rows+=TableRow+;
+	
+TableRow: 
+	(EOC (WORD)+)+ EOC EOL;
+ 	
 Line:
 	(STRING | WORD | INT | ANY_OTHER)+ EOL*;
 
@@ -47,6 +81,9 @@ terminal SPACE:
 
 terminal EOL:
 	('\r'? '\n')?;
+
+terminal EOC:
+	'|';
 
 terminal ANY_OTHER:
 	.;
