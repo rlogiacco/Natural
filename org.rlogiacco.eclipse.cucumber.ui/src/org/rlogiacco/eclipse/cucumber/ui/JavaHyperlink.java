@@ -24,22 +24,18 @@ public class JavaHyperlink implements IHyperlink {
 		this.text = text;
 	}
 
-	@Override
 	public String getHyperlinkText() {
 		return text;
 	}
 
-	@Override
 	public IRegion getHyperlinkRegion() {
 		return region;
 	}
 
-	@Override
 	public String getTypeLabel() {
 		return javaElement.getElementName();
 	}
 
-	@Override
 	public void open() {
 		IEditorPart editorPart;
 		try {
