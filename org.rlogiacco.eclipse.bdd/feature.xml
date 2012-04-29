@@ -39,6 +39,8 @@
       <import plugin="org.eclipse.xtext.common.types.ui"/>
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import plugin="org.eclipse.compare"/>
+      <import plugin="org.eclipse.jdt.ui" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.7.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
