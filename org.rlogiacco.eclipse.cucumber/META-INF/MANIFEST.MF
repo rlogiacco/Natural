@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.rlogiacco.eclipse.cucumber
 Bundle-Vendor: My Company
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Bundle-SymbolicName: org.rlogiacco.eclipse.cucumber; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,

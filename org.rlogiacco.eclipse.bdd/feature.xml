@@ -2,7 +2,7 @@
 <feature
       id="org.rlogiacco.eclipse.bdd"
       label="BDD Editors"
-      version="0.3.0.qualifier"
+      version="0.3.1.qualifier"
       provider-name="Roberto Lo Giacco">
 
    <description>
