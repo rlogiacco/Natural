@@ -8,6 +8,7 @@ import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Line;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Model;
+import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Table;
 
 /**
@@ -26,5 +27,10 @@ public class CucumberDSLOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	protected boolean _isLeaf(Table modelElement) {
 		// do not allow expansion of table nodes
 		return true;
+	}
+	
+	protected boolean _isLeaf(Step modelElement) {
+		// only allow expansion of step nodes with tables
+		return modelElement.getTable() == null;
 	}
 }
