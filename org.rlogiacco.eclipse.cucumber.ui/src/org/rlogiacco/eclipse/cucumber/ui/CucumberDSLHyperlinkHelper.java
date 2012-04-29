@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 
 public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 
-	private static final String[] STEPS = { "Given", "And", "Than", "But" };
+	private static final String[] STEPS = { "Given", "When", "Then", "And", "But" };
 
 	@Inject
 	private EObjectAtOffsetHelper helper;

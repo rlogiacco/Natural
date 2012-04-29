@@ -32,7 +32,7 @@ ScenarioOutline:
 	examples+=Example* EOL*;
 	
 Step:
-	type=('Given' | 'And' | 'When' | 'Then' | 'But') EOL* 
+	type=('Given' | 'When' | 'Then' | 'And' | 'But') EOL* 
 	description=Line EOL*
 	table=Table? EOL*;
 
