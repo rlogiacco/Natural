@@ -15,8 +15,8 @@ Feature:
 	scenarios+=(Scenario | ScenarioOutline)+ EOL*;
 
 Background:
-	'Background:' title=Line EOL*
-	description+=Line* EOL*;
+	'Background:' title=Line? EOL*
+	steps+=Step+ EOL*;
 	
 Scenario:
 	tags+=Tag*
@@ -29,17 +29,16 @@ ScenarioOutline:
 	'Scenario Outline:' title=Line EOL*
 	description+=Line* EOL*
 	conditions+=Step+ EOL*
-	examples+=Example* EOL*;
+	examples=Examples EOL*;
 	
 Step:
 	type=('Given' | 'When' | 'Then' | 'And' | 'But') EOL* 
 	description=Line EOL*
 	table=Table? EOL*;
 
-Example:
-	'Examples:' 
-	description+=Line+ EOL*
-	tables+=Table* EOL*;
+Examples:
+	'Examples:' title=Line EOL*
+	table=Table EOL*;
 	
 Line:
 	content=CharSequence EOL;
@@ -48,8 +47,10 @@ Table:
 	rows+=Row+;
 
 Row:
-	'|' (CharSequence | '|')+ '|' EOL;
-	
+	'|' cells+=Cell+ EOL;
+
+Cell:
+	content=CharSequence '|';	
 Tag:
 	'@' WORD EOL?;
 

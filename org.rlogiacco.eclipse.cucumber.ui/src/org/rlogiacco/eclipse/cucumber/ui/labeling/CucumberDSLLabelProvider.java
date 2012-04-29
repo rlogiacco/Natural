@@ -6,9 +6,8 @@ package org.rlogiacco.eclipse.cucumber.ui.labeling;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Background;
-import org.rlogiacco.eclipse.cucumber.cucumberDSL.Example;
+import org.rlogiacco.eclipse.cucumber.cucumberDSL.Examples;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Feature;
-import org.rlogiacco.eclipse.cucumber.cucumberDSL.Line;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Model;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Scenario;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.ScenarioOutline;
@@ -82,15 +81,11 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 		return "table.gif";
 	}
 
-	String text(Example ele) {
-		for (Line description : ele.getDescription()) {
-			if (!description.getContent().isEmpty())
-				return description.toString();
-		}
-		return "Example";
+	String text(Examples ele) {
+		return ele.getTitle().getContent().isEmpty() ? "Example" : ele.getTitle().getContent();
 	}
 
-	String image(Example ele) {
+	String image(Examples ele) {
 		return "example.gif";
 	}
 }
