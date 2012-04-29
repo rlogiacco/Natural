@@ -8,6 +8,7 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Background;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Example;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Feature;
+import org.rlogiacco.eclipse.cucumber.cucumberDSL.Line;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Model;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Scenario;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.ScenarioOutline;
@@ -34,7 +35,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Feature ele) {
-		return ele.getTitle();
+		return ele.getTitle().getContent();
 	}
 
 	String image(Feature ele) {
@@ -42,7 +43,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Background ele) {
-		return ele.getTitle();
+		return ele.getTitle().getContent();
 	}
 
 	String image(Background ele) {
@@ -50,7 +51,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Scenario ele) {
-		return ele.getTitle();
+		return ele.getTitle().getContent();
 	}
 
 	String image(Scenario ele) {
@@ -58,7 +59,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(ScenarioOutline ele) {
-		return ele.getTitle();
+		return ele.getTitle().getContent();
 	}
 
 	String image(ScenarioOutline ele) {
@@ -66,11 +67,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Step ele) {
-		for (String description : ele.getDescription()) {
-			if (!description.isEmpty())
-				return ele.getType() + " " + description;
-		}
-		return ele.getType();
+		return ele.getType() + " " + ele.getDescription().getContent();
 	}
 
 	String image(Step ele) {
@@ -86,9 +83,9 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Example ele) {
-		for (String description : ele.getDescription()) {
-			if (!description.isEmpty())
-				return description;
+		for (Line description : ele.getDescription()) {
+			if (!description.getContent().isEmpty())
+				return description.toString();
 		}
 		return "Example";
 	}

@@ -33,7 +33,7 @@ ScenarioOutline:
 	
 Step:
 	type=('Given' | 'And' | 'When' | 'Then' | 'But') EOL* 
-	description+=Line+ EOL*
+	description=Line EOL*
 	table=Table? EOL*;
 
 Example:
@@ -42,16 +42,19 @@ Example:
 	tables+=Table* EOL*;
 	
 Line:
-	(STRING | WORD | INT | ANY_OTHER)+ EOL;
+	content=CharSequence EOL;
 
 Table:
 	rows+=Row+;
 
 Row:
-	'|' (STRING | WORD | INT | ANY_OTHER | '|')+ '|' EOL;
+	'|' (CharSequence | '|')+ '|' EOL;
 	
 Tag:
 	'@' WORD EOL?;
+
+CharSequence:
+	(STRING | WORD | INT | ANY_OTHER)+;
 
 terminal WORD:
 	'^'? ('a'..'z' | 'A'..'Z' | '_' ) ('a'..'z' | 'A'..'Z' | '_' | '0'..'9' | "'" | "#" |
