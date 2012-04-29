@@ -8,6 +8,7 @@ import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Line;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Model;
+import org.rlogiacco.eclipse.cucumber.cucumberDSL.Table;
 
 /**
  * customization of the default outline structure
@@ -19,6 +20,11 @@ public class CucumberDSLOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	}
 	
 	protected void _createNode(IOutlineNode parentNode, Line modelElement) {
-		// do not show as node in the outline
+		// hide descriptions
+	}
+	
+	protected boolean _isLeaf(Table modelElement) {
+		// do not allow expansion of table nodes
+		return true;
 	}
 }
