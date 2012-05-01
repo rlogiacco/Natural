@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <feature url="features/org.rlogiacco.eclipse.bdd_0.3.3.qualifier.jar" id="org.rlogiacco.eclipse.bdd" version="0.3.3.qualifier">
-      <category name="editors"/>
+      <category name="bdd-editors"/>
    </feature>
-   <category-def name="editors" label="BDD Language Editors">
+   <category-def name="bdd-editors" label="BDD Language Editors">
       <description>
          Cucumber and JBehave rich editors
       </description>

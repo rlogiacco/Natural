@@ -1,4 +1,4 @@
-package org.rlogiacco.eclipse.cucumber.ui;
+package org.rlogiacco.eclipse.bdd.common;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IJavaElement;
