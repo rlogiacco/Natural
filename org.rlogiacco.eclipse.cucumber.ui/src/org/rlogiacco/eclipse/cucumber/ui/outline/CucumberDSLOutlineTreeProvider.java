@@ -3,11 +3,7 @@
  */
 package org.rlogiacco.eclipse.cucumber.ui.outline;
 
-import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
-import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
-import org.rlogiacco.eclipse.cucumber.cucumberDSL.Line;
-import org.rlogiacco.eclipse.cucumber.cucumberDSL.Model;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Table;
 
@@ -16,13 +12,6 @@ import org.rlogiacco.eclipse.cucumber.cucumberDSL.Table;
  * 
  */
 public class CucumberDSLOutlineTreeProvider extends DefaultOutlineTreeProvider {
-	protected void _createChildren(DocumentRootNode parentNode, Model domainModel) {
-		createNode(parentNode, domainModel.getFeature());
-	}
-	
-	protected void _createNode(IOutlineNode parentNode, Line modelElement) {
-		// hide descriptions
-	}
 	
 	protected boolean _isLeaf(Table modelElement) {
 		// do not allow expansion of table nodes

@@ -3,12 +3,12 @@
  */
 package org.rlogiacco.eclipse.cucumber.ui.labeling;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Background;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Examples;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Feature;
-import org.rlogiacco.eclipse.cucumber.cucumberDSL.Model;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Scenario;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.ScenarioOutline;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
@@ -29,12 +29,8 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate);
 	}
 	
-	String image(Model ele) {
-		return "feature.png";
-	}
-
 	String text(Feature ele) {
-		return ele.getTitle().getContent();
+		return merge(ele.getDescription());
 	}
 
 	String image(Feature ele) {
@@ -42,7 +38,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Background ele) {
-		return ele.getTitle().getContent();
+		return merge(ele.getDescription());
 	}
 
 	String image(Background ele) {
@@ -50,7 +46,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Scenario ele) {
-		return ele.getTitle().getContent();
+		return merge(ele.getDescription());
 	}
 
 	String image(Scenario ele) {
@@ -58,7 +54,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(ScenarioOutline ele) {
-		return ele.getTitle().getContent();
+		return merge(ele.getDescription());
 	}
 
 	String image(ScenarioOutline ele) {
@@ -66,7 +62,7 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Step ele) {
-		return ele.getType() + " " + ele.getDescription().getContent();
+		return ele.getDescription();
 	}
 
 	String image(Step ele) {
@@ -82,10 +78,18 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Examples ele) {
-		return ele.getTitle().getContent().isEmpty() ? "Example" : ele.getTitle().getContent();
+		return merge(ele.getDescription()).isEmpty() ? "Example" : merge(ele.getDescription());
 	}
 
 	String image(Examples ele) {
 		return "example.gif";
+	}
+	
+	private static String merge(EList<String> strings) {
+		StringBuilder builder = new StringBuilder();
+		for (String string : strings) {
+			builder.append(string);
+		}
+		return builder.toString();
 	}
 }

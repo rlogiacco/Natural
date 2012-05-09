@@ -25,7 +25,6 @@ import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkHelper;
 import org.rlogiacco.eclipse.bdd.common.JavaHyperlink;
-import org.rlogiacco.eclipse.cucumber.cucumberDSL.Line;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
 
 import com.google.common.collect.Iterables;
@@ -45,16 +44,15 @@ public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 		List<IHyperlink> hyperlinks = (defaults == null ? new ArrayList<IHyperlink>() : Arrays.asList(defaults));
 
 		EObject eObject = helper.resolveElementAt(resource, offset);
-		if (eObject instanceof Line && eObject.eContainer() instanceof Step) {
-			eObject = eObject.eContainer();
-		}
 		if (eObject instanceof Step) {
 			IParseResult parseResult = resource.getParseResult();
 			INode node = NodeModelUtils.findLeafNodeAtOffset(parseResult.getRootNode(), offset);
 			while (!(node instanceof CompositeNode && node.getSemanticElement() instanceof Step)) {
 				node = node.getParent();
 			}
-			hyperlinks.addAll(findLinkTargets(((Step) eObject).getDescription().getContent(), new Region(node.getOffset(), node.getLength()), STEPS));
+			String description = ((Step) eObject).getDescription().trim();
+			description = description.substring(description.indexOf(" ") + 1);
+			hyperlinks.addAll(findLinkTargets(description, new Region(node.getOffset(), node.getText().trim().length()), STEPS));
 		}
 		return hyperlinks.isEmpty() ? null : Iterables.toArray(hyperlinks, IHyperlink.class);
 	}
