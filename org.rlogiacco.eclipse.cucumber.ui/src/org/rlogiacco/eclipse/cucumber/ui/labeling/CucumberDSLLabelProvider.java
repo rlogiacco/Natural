@@ -13,6 +13,7 @@ import org.rlogiacco.eclipse.cucumber.cucumberDSL.Scenario;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.ScenarioOutline;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Table;
+import org.rlogiacco.eclipse.cucumber.cucumberDSL.Tag;
 
 import com.google.inject.Inject;
 
@@ -83,6 +84,14 @@ public class CucumberDSLLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(Examples ele) {
 		return "example.gif";
+	}
+
+	String text(Tag ele) {
+		return ele.getName();
+	}
+
+	String image(Tag ele) {
+		return "annotation.gif";
 	}
 	
 	private static String merge(EList<String> strings) {
