@@ -4,33 +4,61 @@
 package org.rlogiacco.eclipse.cucumber.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.builder.IXtextBuilderParticipant;
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.rlogiacco.eclipse.bdd.common.AbstractAnnotationDescriptor;
+import org.rlogiacco.eclipse.bdd.common.JavaHyperlinkCache;
 
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class CucumberDSLUiModule extends org.rlogiacco.eclipse.cucumber.ui.AbstractCucumberDSLUiModule {
+	
+	public final static String[] STEPS = { "Given", "When", "Then", "And", "But" };
+	private static final String CUCUMBER_PACKAGE = "cucumber.annotation.en";
+
 	public CucumberDSLUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
-	
+
 	@Override
 	public Class<? extends IHyperlinkHelper> bindIHyperlinkHelper() {
 		return CucumberDSLHyperlinkHelper.class;
 	}
-	
-	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration () {
-	    return CucumberDSLHighlightingConfiguration.class;
+
+	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+		return CucumberDSLHighlightingConfiguration.class;
+	}
+
+	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+		return CucumberDSLSemanticHighlightingCalculator.class;
+	}
+
+	@Override
+	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
+		return BuilderParticipant.class;
+	}
+
+	public Class<? extends JavaHyperlinkCache> bindJavaHyperlinkCache() {
+		return JavaHyperlinkCache.class;
 	}
 	
-	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator(){
-		 return CucumberDSLSemanticHighlightingCalculator.class;
+	public Class<? extends AbstractAnnotationDescriptor> bindAnnotationDescriptor() {
+		return CucumberAnnotationDescriptor.class;
 	}
 	
-//	@Override
-//	public Class<? extends org.eclipse.xtext.builder.IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
-//		return org.eclipse.xtext.builder.BuilderParticipant.class;
-//	}
+	public static class CucumberAnnotationDescriptor extends AbstractAnnotationDescriptor {
+
+		@Override
+		public String[] getNames() {
+			return STEPS;
+		}
+
+		@Override
+		public String getPackage() {
+			return CUCUMBER_PACKAGE;
+		}
+	}
 }

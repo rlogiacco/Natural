@@ -24,6 +24,7 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkHelper;
+import org.rlogiacco.eclipse.bdd.common.AbstractAnnotationDescriptor;
 import org.rlogiacco.eclipse.bdd.common.JavaHyperlink;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
 
@@ -32,14 +33,15 @@ import com.google.inject.Inject;
 
 public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 
-	private static final String[] STEPS = { "Given", "When", "Then", "And", "But" };
-
 	@Inject
 	private EObjectAtOffsetHelper helper;
+	
+	@Inject
+	private AbstractAnnotationDescriptor descriptor;
 
 	@Override
 	public IHyperlink[] createHyperlinksByOffset(XtextResource resource, int offset, boolean createMultipleHyperlinks) {
-
+		long time = System.currentTimeMillis();
 		IHyperlink[] defaults = super.createHyperlinksByOffset(resource, offset, createMultipleHyperlinks);
 		List<IHyperlink> hyperlinks = (defaults == null ? new ArrayList<IHyperlink>() : Arrays.asList(defaults));
 
@@ -52,12 +54,13 @@ public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 			}
 			String description = ((Step) eObject).getDescription().trim();
 			description = description.substring(description.indexOf(" ") + 1);
-			hyperlinks.addAll(findLinkTargets(description, new Region(node.getOffset(), node.getText().trim().length()), STEPS));
+			hyperlinks.addAll(findLinkTargets(description, new Region(node.getOffset(), node.getText().trim().length()), descriptor.getNames()));
 		}
+		System.out.println(System.currentTimeMillis() - time);
 		return hyperlinks.isEmpty() ? null : Iterables.toArray(hyperlinks, IHyperlink.class);
 	}
 
-	public static Collection<IHyperlink> findLinkTargets(final String step, final Region region, String[] annotationNames) {
+	public Collection<IHyperlink> findLinkTargets(final String step, final Region region, String[] annotationNames) {
 		final List<IHyperlink> results = new ArrayList<IHyperlink>();
 		for (final String annotationName : annotationNames) {
 			SearchPattern pattern = SearchPattern.createPattern(annotationName, IJavaSearchConstants.ANNOTATION_TYPE,
@@ -66,12 +69,15 @@ public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 				public void acceptSearchMatch(SearchMatch match) throws CoreException {
 					if (match.getElement() instanceof IMethod) {
 						IMethod method = (IMethod) match.getElement();
-						// verify pattern
 						IAnnotation type = method.getAnnotation(annotationName);
-						String annotationValue = (String) type.getMemberValuePairs()[0].getValue();
-						if (step.matches(annotationValue)) {
-							results.add(new JavaHyperlink("Open mapping " + annotationValue, method, region));
-						}						
+						// Check annotation package
+						if (AbstractAnnotationDescriptor.checkPackage(type, descriptor.getPackage())) {
+							// verify pattern
+							String annotationValue = (String) type.getMemberValuePairs()[0].getValue();
+							if (step.matches(annotationValue)) {
+								results.add(new JavaHyperlink("Open mapping " + annotationValue, method, region));
+							}
+						}		
 					}
 				}
 			};
