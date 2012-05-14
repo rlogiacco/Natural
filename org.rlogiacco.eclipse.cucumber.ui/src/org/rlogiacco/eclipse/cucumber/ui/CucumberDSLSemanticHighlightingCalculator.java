@@ -15,7 +15,6 @@ import org.rlogiacco.eclipse.cucumber.cucumberDSL.Tag;
 
 public class CucumberDSLSemanticHighlightingCalculator implements ISemanticHighlightingCalculator {
 	
-	@Override
 	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
 		if (resource == null || resource.getParseResult() == null || resource.getContents().size() <= 0) {
 			return;
