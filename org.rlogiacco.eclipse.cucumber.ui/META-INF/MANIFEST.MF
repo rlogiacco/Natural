@@ -24,4 +24,4 @@ Import-Package: org.apache.log4j,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.rlogiacco.eclipse.cucumber.ui.contentassist.antlr,
  org.rlogiacco.eclipse.cucumber.ui.internal
-Bundle-Activator: org.rlogiacco.eclipse.cucumber.ui.internal.CucumberDSLActivator
+Bundle-Activator: org.rlogiacco.eclipse.cucumber.ui.CucumberDSLActivator
