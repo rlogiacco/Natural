@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.rlogiacco.eclipse.cucumber.ui
 Bundle-Vendor: Roberto Lo Giacco
-Bundle-Version: 0.3.5
+Bundle-Version: 0.3.6
 Bundle-SymbolicName: org.rlogiacco.eclipse.cucumber.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.rlogiacco.eclipse.cucumber;visibility:=reexport,

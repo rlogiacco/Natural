@@ -2,20 +2,28 @@
 <feature
       id="org.rlogiacco.eclipse.cucumber.feature"
       label="Cucumber Editor"
-      version="0.3.5.qualifier"
+      version="0.3.6.qualifier"
       provider-name="Roberto Lo Giacco">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://github.com/rlogiacco/bdd-eclipse/wiki">
+      Cucumber feature file editor providing syntax highlighting, auto
+completion, feature outline, grammar validation and hyperlink
+to corresponding Java annotated classes.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      (c) Copyright Roberto Lo Giacco &lt;rlogiacco@gmail.com&gt; and others 2012.  All rights reserved.
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      The BDD Editors contributors make available all content in this plug-in ("Content"). Unless otherwise indicated below, the Content is provided to you under the terms and conditions of the Eclipse Public License Version 1.0 ("EPL"). A copy of the EPL is available at http://www.eclipse.org/legal/epl-v10.html. For purposes of the EPL, "Program" will mean the Content.
+      If you did not receive this Content directly from the BDD Editors contributors, the Content is being redistributed by another party ("Redistributor") and different terms and conditions may apply to your use of any object code in the Content. Check the Redistributor's license that was provided with the Content. If no such license exists, contact the Redistributor. 
+      Unless otherwise indicated below, the terms and conditions of the EPL still apply to any source code in the Content and such source code may be obtained at https://github.com/rlogiacco/bdd-eclipse.
    </license>
+
+   <url>
+      <discovery label="Xtext Update Site" url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+   </url>
 
    <plugin
          id="org.rlogiacco.eclipse.cucumber"

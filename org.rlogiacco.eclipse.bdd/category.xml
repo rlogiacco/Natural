@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.rlogiacco.eclipse.cucumber.feature_0.3.5.qualifier.jar" id="org.rlogiacco.eclipse.cucumber.feature" version="0.3.5.qualifier">
+   <feature url="features/org.rlogiacco.eclipse.jbehave.feature_0.2.0.qualifier.jar" id="org.rlogiacco.eclipse.jbehave.feature" version="0.2.0.qualifier">
       <category name="bdd-editors"/>
    </feature>
-   <feature url="features/org.rlogiacco.eclipse.jbehave.feature_0.2.0.qualifier.jar" id="org.rlogiacco.eclipse.jbehave.feature" version="0.2.0.qualifier">
+   <feature url="features/org.rlogiacco.eclipse.cucumber.feature_0.3.6.qualifier.jar" id="org.rlogiacco.eclipse.cucumber.feature" version="0.3.6.qualifier">
       <category name="bdd-editors"/>
    </feature>
    <category-def name="bdd-editors" label="BDD Language Editors">
