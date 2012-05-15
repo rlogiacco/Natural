@@ -20,11 +20,9 @@ public class CucumberDSLJavaValidator extends AbstractCucumberDSLJavaValidator {
 		matcher.findMatches(description, new JavaAnnotationMatcher.Command() {
 
 			public void match(String annotationValue, IMethod method) {
-				System.out.println(method);
 				counter.increment();
 			}
 		});
-		System.err.println('`' + description + '`' + counter.count);
 		if (counter.get() == 0) {
 			warning("No definition found for `" + description + "`", CucumberDSLPackage.Literals.STEP__DESCRIPTION);
 		} else if (counter.get() > 1) {
