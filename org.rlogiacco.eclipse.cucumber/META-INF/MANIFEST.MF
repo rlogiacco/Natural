@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.rlogiacco.eclipse.cucumber
 Bundle-Vendor: Roberto Lo Giacco
-Bundle-Version: 1.0.5
+Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.rlogiacco.eclipse.cucumber; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
@@ -17,7 +17,9 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.common.types
+ org.eclipse.xtext.common.types,
+ org.eclipse.jdt.core;bundle-version="3.6.0",
+ org.rlogiacco.eclipse.bdd;visibility:=reexport
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,

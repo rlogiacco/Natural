@@ -2,11 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.rlogiacco.eclipse.cucumber.ui
 Bundle-Vendor: Roberto Lo Giacco
-Bundle-Version: 0.3.6
+Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.rlogiacco.eclipse.cucumber.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.rlogiacco.eclipse.cucumber;visibility:=reexport,
- org.eclipse.xtext.ui,
+Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.xtext.ui.shared,
@@ -18,9 +17,9 @@ Require-Bundle: org.rlogiacco.eclipse.cucumber;visibility:=reexport,
  org.eclipse.compare,
  org.eclipse.jdt.ui;bundle-version="3.6.0",
  org.eclipse.jdt.core;bundle-version="3.6.0",
- org.rlogiacco.eclipse.bdd;bundle-version="0.0.0"
-Import-Package: org.apache.log4j,
- org.apache.commons.logging
+ org.rlogiacco.eclipse.cucumber;visibility:=reexport
+Import-Package: org.apache.commons.logging,
+ org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.rlogiacco.eclipse.cucumber.ui.contentassist.antlr,
  org.rlogiacco.eclipse.cucumber.ui.internal
