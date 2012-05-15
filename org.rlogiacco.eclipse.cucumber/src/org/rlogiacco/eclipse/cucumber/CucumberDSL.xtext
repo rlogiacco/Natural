@@ -29,7 +29,7 @@ ScenarioOutline:
 	examples=Examples;
 	
 Step:
-	description=StepDescription
+	description=StepDescription EOL*
 	table=Table?;
 
 Examples:
@@ -44,7 +44,7 @@ Description:
 	Content EOL+;
 
 StepDescription:
-	STEP_KEYWORD (STRING | WORD | INT | ANY | PLACEHOLDER)+ EOL*;
+	STEP_KEYWORD (STRING | WORD | INT | ANY | PLACEHOLDER)+;
 	
 Content:
 	(STRING | WORD | INT | ANY | PLACEHOLDER) (AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
