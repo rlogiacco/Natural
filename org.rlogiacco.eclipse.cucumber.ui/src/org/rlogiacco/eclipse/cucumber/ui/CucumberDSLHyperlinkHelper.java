@@ -5,16 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jdt.core.IAnnotation;
 import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.search.IJavaSearchConstants;
-import org.eclipse.jdt.core.search.SearchEngine;
-import org.eclipse.jdt.core.search.SearchMatch;
-import org.eclipse.jdt.core.search.SearchParticipant;
-import org.eclipse.jdt.core.search.SearchPattern;
-import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.xtext.nodemodel.INode;
@@ -24,7 +16,7 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkHelper;
-import org.rlogiacco.eclipse.bdd.common.AbstractAnnotationDescriptor;
+import org.rlogiacco.eclipse.bdd.common.JavaAnnotationMatcher;
 import org.rlogiacco.eclipse.bdd.common.JavaHyperlink;
 import org.rlogiacco.eclipse.cucumber.cucumberDSL.Step;
 
@@ -37,11 +29,10 @@ public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 	private EObjectAtOffsetHelper helper;
 	
 	@Inject
-	private AbstractAnnotationDescriptor descriptor;
+	private JavaAnnotationMatcher matcher;
 
 	@Override
 	public IHyperlink[] createHyperlinksByOffset(XtextResource resource, int offset, boolean createMultipleHyperlinks) {
-		long time = System.currentTimeMillis();
 		IHyperlink[] defaults = super.createHyperlinksByOffset(resource, offset, createMultipleHyperlinks);
 		List<IHyperlink> hyperlinks = (defaults == null ? new ArrayList<IHyperlink>() : Arrays.asList(defaults));
 
@@ -52,42 +43,22 @@ public class CucumberDSLHyperlinkHelper extends HyperlinkHelper {
 			while (!(node instanceof CompositeNode && node.getSemanticElement() instanceof Step)) {
 				node = node.getParent();
 			}
-			String description = ((Step) eObject).getDescription().trim();
+			String description = ((Step) eObject).getDescription();
 			description = description.substring(description.indexOf(" ") + 1);
-			hyperlinks.addAll(findLinkTargets(description, new Region(node.getOffset(), node.getText().trim().length()), descriptor.getNames()));
+			hyperlinks.addAll(findLinkTargets(description, new Region(node.getOffset(), node.getText().trim().length())));
 		}
-		System.out.println(System.currentTimeMillis() - time);
 		return hyperlinks.isEmpty() ? null : Iterables.toArray(hyperlinks, IHyperlink.class);
 	}
 
-	public Collection<IHyperlink> findLinkTargets(final String step, final Region region, String[] annotationNames) {
+	private Collection<? extends IHyperlink> findLinkTargets(String description, final Region region) {
 		final List<IHyperlink> results = new ArrayList<IHyperlink>();
-		for (final String annotationName : annotationNames) {
-			SearchPattern pattern = SearchPattern.createPattern(annotationName, IJavaSearchConstants.ANNOTATION_TYPE,
-					IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
-			SearchRequestor requestor = new SearchRequestor() {
-				public void acceptSearchMatch(SearchMatch match) throws CoreException {
-					if (match.getElement() instanceof IMethod) {
-						IMethod method = (IMethod) match.getElement();
-						IAnnotation type = method.getAnnotation(annotationName);
-						// Check annotation package
-						if (AbstractAnnotationDescriptor.checkPackage(type, descriptor.getPackage())) {
-							// verify pattern
-							String annotationValue = (String) type.getMemberValuePairs()[0].getValue();
-							if (step.matches(annotationValue)) {
-								results.add(new JavaHyperlink("Open mapping " + annotationValue, method, region));
-							}
-						}		
-					}
-				}
-			};
-			try {
-				new SearchEngine().search(pattern, new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, SearchEngine.createWorkspaceScope(),
-						requestor, null);
-			} catch (CoreException e) {
-				e.printStackTrace();
+		matcher.findMatches(description, new JavaAnnotationMatcher.Command() {
+			
+			public void match(String annotationValue, IMethod method) {
+				results.add(new JavaHyperlink("Open definition " + annotationValue, method, region));
+				
 			}
-		}
+		});
 		return results;
 	}
 }
