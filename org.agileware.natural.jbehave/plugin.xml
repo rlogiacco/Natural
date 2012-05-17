@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.agileware.org/natural/jbehave" 
+       class = "org.agileware.natural.jbehave.jbehave.JbehavePackage"
+       genModel = "org/agileware/natural/jbehave/JBehave.genmodel" /> 
+	
+  </extension>
+
+
+
+
+
+</plugin>
