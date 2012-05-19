@@ -26,7 +26,7 @@ public class CucumberJavaValidator extends AbstractCucumberJavaValidator {
 		if (counter.get() == 0) {
 			warning("No definition found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
 		} else if (counter.get() > 1) {
-			warning("Multiple definition found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
+			warning("Multiple definitions found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
 		}
 	}
 
