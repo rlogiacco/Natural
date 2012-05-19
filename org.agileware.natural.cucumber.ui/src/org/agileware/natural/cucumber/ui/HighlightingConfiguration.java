@@ -11,6 +11,7 @@ public class HighlightingConfiguration extends
 	public static final String STEP_KEYWORD = "stepCondition";
 	public static final String TAG = "tag";
 	public static final String TABLE = "table";
+	public static final String PLACEHOLDER = "placeholder";
 
 	@Override
 	public void configure(IHighlightingConfigurationAcceptor acceptor) {
@@ -18,6 +19,7 @@ public class HighlightingConfiguration extends
 		acceptor.acceptDefaultHighlighting(STEP_KEYWORD, "Step Condition", stepKeywordTextStyle());
 		acceptor.acceptDefaultHighlighting(TAG, "Tag", tagTextStyle());
 		acceptor.acceptDefaultHighlighting(TABLE, "Table", super.numberTextStyle());
+		acceptor.acceptDefaultHighlighting(PLACEHOLDER, "Placeholder", tagTextStyle());
 	}
 
 	public TextStyle stepKeywordTextStyle() {
