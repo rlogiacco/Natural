@@ -20,10 +20,9 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
  org.eclipse.xtext.common.types,
  org.eclipse.jdt.core;bundle-version="3.6.0",
  org.agileware.natural.common;visibility:=reexport
-Import-Package: org.apache.log4j,
- org.apache.commons.logging,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtext.xtend2.lib
+Import-Package: org.apache.commons.logging,
+ org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.agileware.natural.cucumber,
  org.agileware.natural.cucumber.formatting,
