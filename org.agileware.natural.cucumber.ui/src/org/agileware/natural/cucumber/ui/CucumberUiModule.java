@@ -18,7 +18,7 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculato
 public class CucumberUiModule extends AbstractCucumberUiModule {
 	
 	public final static String[] STEPS = { "Given", "When", "Then", "And", "But" };
-	private static final String CUCUMBER_PACKAGE = "cucumber.annotation.en";
+	private static final String CUCUMBER_PACKAGE = "cucumber.api.java.en";
 
 	public CucumberUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
