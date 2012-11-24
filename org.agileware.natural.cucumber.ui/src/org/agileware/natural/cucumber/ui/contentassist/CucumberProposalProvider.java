@@ -3,9 +3,27 @@
 */
 package org.agileware.natural.cucumber.ui.contentassist;
 
+import org.agileware.natural.cucumber.cucumber.Feature;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class CucumberProposalProvider extends AbstractCucumberProposalProvider {
 
+	public void completeFeature_Tags(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
+	
+	public void completeFeature_Description(Feature model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+		
+		// compute the plain proposal
+		String proposal = " ID";
+		acceptor.accept(createCompletionProposal(proposal, context));
+	}
 }
