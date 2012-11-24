@@ -23,5 +23,6 @@ Import-Package: org.apache.commons.logging,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.agileware.natural.cucumber.ui,
  org.agileware.natural.cucumber.ui.contentassist.antlr,
- org.agileware.natural.cucumber.ui.internal
+ org.agileware.natural.cucumber.ui.internal,
+ org.agileware.natural.cucumber.ui.contentassist
 Bundle-Activator: org.agileware.natural.cucumber.ui.CucumberActivator
