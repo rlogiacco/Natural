@@ -1,5 +1,6 @@
 package org.agileware.natural.cucumber.ui;
 
+import org.agileware.natural.cucumber.cucumber.Code;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
@@ -21,15 +22,18 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 		}
 		Feature feature = (Feature) resource.getContents().get(0);
 		provideHighlightingForTags(feature.getTags(), acceptor);
+		if (feature.getBackground() != null) {
+			provideHighlightingForSteps(feature.getBackground().getSteps(), acceptor);
+		}
 		for (Object child : feature.getScenarios()) {
 			if (child instanceof Scenario) {
 				Scenario scenario = (Scenario) child;
-				provideHighlightingForSteps(scenario.getConditions(), acceptor);
+				provideHighlightingForSteps(scenario.getSteps(), acceptor);
 				provideHighlightingForTags(scenario.getTags(), acceptor);
 			}
 			if (child instanceof ScenarioOutline) {
 				ScenarioOutline outline = (ScenarioOutline) child;
-				provideHighlightingForSteps(outline.getConditions(), acceptor);
+				provideHighlightingForSteps(outline.getSteps(), acceptor);
 				provideHighlightingForTags(outline.getTags(), acceptor);
 				if (outline.getExamples() != null && outline.getExamples().getTable() != null) {
 					provideHighlightingForTable(outline.getExamples().getTable(), acceptor);
@@ -50,6 +54,9 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 			}
 			if (step.getTable() != null) {
 				provideHighlightingForTable(step.getTable(), acceptor);
+			}
+			if (step.getCode() != null) {
+				provideHighlightingForDocStrings(step.getCode(), acceptor);
 			}
 		}
 	}
@@ -79,5 +86,13 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 					node.getText().trim().length(),
 					HighlightingConfiguration.TAG);
 		}
+	}
+	
+	private void provideHighlightingForDocStrings(Code code, IHighlightedPositionAcceptor acceptor) {
+		INode node = NodeModelUtils.getNode(code);
+		acceptor.addPosition(
+				node.getOffset(),
+				node.getText().trim().length(),
+				HighlightingConfiguration.DOC_STRING);
 	}
 }

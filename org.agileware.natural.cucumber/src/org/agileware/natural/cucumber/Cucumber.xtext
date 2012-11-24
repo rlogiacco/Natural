@@ -4,74 +4,76 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate cucumber "http://www.agileware.org/natural/cucumber"
 
 Feature:
-	tags+=Tag*
+	tags+=Tag* EOL
 	'Feature:'
-	description+=Description+
+	description+=Description*
 	background=Background?
 	scenarios+=(Scenario | ScenarioOutline)+;
 
 Background:
-	'Background:' 
-	description+=Description+
+	'Background:' EOL*
+	description=Description?
 	steps+=Step+;
 	
 Scenario:
-	tags+=Tag*
-	'Scenario:'
-	description+=Description+
-	conditions+=Step+;
+	tags+=Tag* EOL
+	'Scenario:' EOL*
+	description=Description?
+	steps+=Step+;
 
 ScenarioOutline:
-	tags+=Tag*
-	'Scenario Outline:' 
-	description+=Description+
-	conditions+=Step+
+	tags+=Tag* EOL
+	'Scenario Outline:' EOL*
+	description=Description?
+	steps+=Step+
 	examples=Examples;
 	
 Step:
 	description=StepDescription EOL*
-	table=Table?;
+	table=Table?
+	code=Code?;
 
 Examples:
-	'Examples:' 
-	description+=Description*
+	'Examples:' EOL*
+	description=Description?
 	table=Table;
 	
 Table:
 	rows+=TABLE_ROW+ EOL*;
+	
+Code:
+	rows+=DOC_STRING;
 
 Description:
-	Content EOL+;
+	(WORD | INT | STRING | PLACEHOLDER) (AT | WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD)* EOL+;
 
 StepDescription:
-	STEP_KEYWORD (STRING | WORD | INT | ANY | PLACEHOLDER)+;
+	STEP_KEYWORD (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD )* EOL?;
 	
-Content:
-	(STRING | WORD | INT | ANY | PLACEHOLDER) (AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
-
 Tag: AT name=WORD EOL?;
-
-
-terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
-
-terminal PLACEHOLDER: '<' ('a'..'z' | 'A'..'Z') !('>' | '\n' | '\r')* '>';
-	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ SPACE* EOL;
-
-terminal WORD: ('a'..'z' | 'A'..'Z') !(SPACE | '\n' | '\r')*;
 
 terminal INT returns ecore::EDouble: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
 
+terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
+
+terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
+	
+terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ EOL;
+
+terminal DOC_STRING: '"""' -> '"""' EOL;
+
 terminal STRING:
-	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
-	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
+	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'";
 
 terminal SL_COMMENT: '#' !('\n' | '\r')* EOL;
+
+terminal AT: '@';
+
+terminal PIPE: '|';
+
+terminal WORD: !('@' | '|' | ' ' | '\t' | '\n' | '\r') !(' ' | '\t' | '\n' | '\r')*;
 
 terminal SPACE: (' ' | '\t');
 
 terminal EOL: '\r'? '\n'?;
-
-terminal AT: '@';
-
-terminal ANY: .;

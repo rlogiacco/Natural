@@ -4,6 +4,7 @@
 package org.agileware.natural.cucumber.ui.labeling;
 
 import org.agileware.natural.cucumber.cucumber.Background;
+import org.agileware.natural.cucumber.cucumber.Code;
 import org.agileware.natural.cucumber.cucumber.Examples;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
@@ -39,7 +40,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Background ele) {
-		return merge(ele.getDescription());
+		return ele.getDescription() == null ? "Background" : ele.getDescription();
 	}
 
 	String image(Background ele) {
@@ -47,7 +48,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Scenario ele) {
-		return merge(ele.getDescription());
+		return ele.getDescription() == null ? "Scenario" : ele.getDescription();
 	}
 
 	String image(Scenario ele) {
@@ -55,7 +56,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(ScenarioOutline ele) {
-		return merge(ele.getDescription());
+		return ele.getDescription() == null ? "Scenario Outline" : ele.getDescription();
 	}
 
 	String image(ScenarioOutline ele) {
@@ -77,9 +78,17 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	String image(Table ele) {
 		return "table.gif";
 	}
+	
+	String text(Code ele) {
+		return "Doc String";
+	}
+
+	String image(Code ele) {
+		return "code.gif";
+	}
 
 	String text(Examples ele) {
-		return merge(ele.getDescription()).isEmpty() ? "Example" : merge(ele.getDescription());
+		return ele.getDescription().isEmpty() ? "Example" : ele.getDescription();
 	}
 
 	String image(Examples ele) {

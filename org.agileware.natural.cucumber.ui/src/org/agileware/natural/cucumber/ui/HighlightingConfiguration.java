@@ -12,6 +12,7 @@ public class HighlightingConfiguration extends
 	public static final String TAG = "tag";
 	public static final String TABLE = "table";
 	public static final String PLACEHOLDER = "placeholder";
+	public static final String DOC_STRING = "docstring";
 
 	@Override
 	public void configure(IHighlightingConfigurationAcceptor acceptor) {
@@ -20,6 +21,7 @@ public class HighlightingConfiguration extends
 		acceptor.acceptDefaultHighlighting(TAG, "Tag", tagTextStyle());
 		acceptor.acceptDefaultHighlighting(TABLE, "Table", super.numberTextStyle());
 		acceptor.acceptDefaultHighlighting(PLACEHOLDER, "Placeholder", tagTextStyle());
+		acceptor.acceptDefaultHighlighting(DOC_STRING, "Doc String", super.numberTextStyle());
 	}
 
 	public TextStyle stepKeywordTextStyle() {
