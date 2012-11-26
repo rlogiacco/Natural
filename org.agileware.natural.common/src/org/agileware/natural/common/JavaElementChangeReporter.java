@@ -3,6 +3,7 @@ package org.agileware.natural.common;
 import java.util.List;
 
 import org.eclipse.jdt.core.ElementChangedEvent;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaElementDelta;
@@ -22,7 +23,7 @@ public class JavaElementChangeReporter implements IElementChangedListener {
 	void traverse(IJavaElementDelta delta, List<JavaHyperlink> hyperlinks) {
 		if (delta.getElement().getElementType() == IJavaElement.COMPILATION_UNIT) {
 			if ((delta.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) > 0) {
-				matcher.invalidateCache();
+				matcher.evict((ICompilationUnit)delta.getElement());
 			}
 		}
 		for (IJavaElementDelta child : delta.getAffectedChildren()) {

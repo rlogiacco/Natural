@@ -1,10 +1,13 @@
 package org.agileware.natural.common;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IAnnotation;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.core.search.SearchEngine;
@@ -22,14 +25,16 @@ public class JavaAnnotationMatcher {
 	@Inject
 	private AbstractAnnotationDescriptor descriptor;
 	
-	private List<Entry> cache = new ArrayList<Entry>();
+	private Map<ICompilationUnit, List<Entry>> cache = new HashMap<ICompilationUnit, List<Entry>>();
 	
 	public void findMatches(final String description, final Command command) {
 		long time = System.currentTimeMillis();
 		if (!cache.isEmpty()) {
-			for (Entry entry : cache) {
-				if (description.matches(entry.annotationValue)) {
-					command.match(entry.annotationValue, entry.method);
+			for (List<Entry> entries : cache.values()) {
+				for (Entry entry : entries) {
+					if (description.matches(entry.annotationValue)) {
+						command.match(entry.annotationValue, entry.method);
+					}
 				}
 			}
 			return;
@@ -47,7 +52,12 @@ public class JavaAnnotationMatcher {
 						if (AbstractAnnotationDescriptor.checkPackage(type, descriptor.getPackage())) {
 							// verify pattern
 							String annotationValue = (String) type.getMemberValuePairs()[0].getValue();
-							cache.add(new Entry(annotationValue, method));
+							List<Entry> entries = cache.get(method.getCompilationUnit());
+							if (entries == null) {
+								entries = new ArrayList<Entry>();
+								cache.put(method.getCompilationUnit(), entries);
+							}
+							entries.add(new Entry(annotationValue, method));
 							if (des.matches(annotationValue)) {
 								command.match(annotationValue, method);
 							}
@@ -65,9 +75,15 @@ public class JavaAnnotationMatcher {
 		System.out.println("Search took: " + (System.currentTimeMillis() - time) + "ms");
 	}
 	
-	public void invalidateCache() {
-		System.out.println("invalidated");
-		cache.clear();
+	public void evict(ICompilationUnit element) {
+		//TODO evict only those that match
+//		if (element != null) {
+//			cache.remove(element);
+//			System.out.println(">>> Removed " + element.toString());
+//		} else {
+			cache.clear();
+			System.out.println(">>> Invalidated");
+//		}
 	}
 	
 	public static interface Command {

@@ -52,7 +52,7 @@ public class CucumberHyperlinkHelper extends HyperlinkHelper {
 
 	private Collection<? extends IHyperlink> findLinkTargets(String description, final Region region) {
 		final List<IHyperlink> results = new ArrayList<IHyperlink>();
-		matcher.findMatches(description, new JavaAnnotationMatcher.Command() {
+		matcher.findMatches(description.trim(), new JavaAnnotationMatcher.Command() {
 			
 			public void match(String annotationValue, IMethod method) {
 				results.add(new JavaHyperlink("Open definition " + annotationValue, method, region));
