@@ -3,6 +3,7 @@
  */
 package org.agileware.natural.cucumber.formatting;
 
+import org.agileware.natural.cucumber.services.CucumberGrammarAccess;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
@@ -18,10 +19,18 @@ public class CucumberFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-// It's usually a good idea to activate the following three statements.
-// They will add and preserve newlines around comments
-//		c.setLinewrap(0, 1, 2).before(getGrammarAccess().getSL_COMMENTRule());
-//		c.setLinewrap(0, 1, 2).before(getGrammarAccess().getML_COMMENTRule());
-//		c.setLinewrap(0, 1, 1).after(getGrammarAccess().getML_COMMENTRule());
+		CucumberGrammarAccess g = (CucumberGrammarAccess)super.getGrammarAccess();
+
+		c.setIndentationIncrement().before(g.getNarrativeRule());
+		c.setIndentationDecrement().after(g.getNarrativeRule());
+		c.setIndentationIncrement().before(g.getStepRule());
+		c.setIndentationDecrement().after(g.getStepRule());
+		c.setIndentationIncrement().before(g.getExamplesRule());
+		c.setIndentationDecrement().after(g.getExamplesRule());
+		c.setIndentationIncrement().before(g.getTableRule());
+		c.setIndentationDecrement().after(g.getTableRule());
+		c.setIndentationIncrement().before(g.getDocStringRule());
+		c.setIndentationDecrement().after(g.getDocStringRule());
+
 	}
 }
