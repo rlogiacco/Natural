@@ -14,18 +14,21 @@ Feature:
 Background:
 	'Background:' EOL*
 	title=Title?
+	narrative+=Narrative*
 	steps+=Step+;
 	
 Scenario:
 	tags+=Tag*
 	'Scenario:' EOL*
 	title=Title?
+	narrative+=Narrative*
 	steps+=Step+;
 
 ScenarioOutline:
 	tags+=Tag*
 	'Scenario Outline:' EOL*
 	title=Title?
+	narrative+=Narrative*
 	steps+=Step+
 	examples=Examples;
 	
@@ -36,6 +39,7 @@ Step:
 Examples:
 	'Examples:' EOL*
 	title=Title?
+	narrative+=Narrative*
 	table=Table;
 	
 Table:
