@@ -16,7 +16,7 @@ public class CucumberJavaValidator extends AbstractCucumberJavaValidator {
 	@Check
 	public void checkStepMatching(Step step) {
 		final Counter counter = new Counter();
-		String description = step.getDescription().substring(step.getDescription().indexOf(' ') + 1, step.getDescription().length() - 1);
+		String description = step.getDescription().substring(step.getDescription().indexOf(' ') + 1).trim();
 		matcher.findMatches(description, new Counter());
 		if (counter.get() == 0) {
 			warning("No definition found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);

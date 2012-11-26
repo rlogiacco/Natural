@@ -4,7 +4,7 @@
 package org.agileware.natural.cucumber.ui.labeling;
 
 import org.agileware.natural.cucumber.cucumber.Background;
-import org.agileware.natural.cucumber.cucumber.Code;
+import org.agileware.natural.cucumber.cucumber.DocString;
 import org.agileware.natural.cucumber.cucumber.Examples;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
@@ -32,7 +32,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(Feature ele) {
-		return merge(ele.getDescription());
+		return ele.getTitle();
 	}
 
 	String image(Feature ele) {
@@ -40,7 +40,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Background ele) {
-		return ele.getDescription() == null ? "Background" : ele.getDescription();
+		return ele.getTitle() == null ? "Background" : ele.getTitle();
 	}
 
 	String image(Background ele) {
@@ -48,7 +48,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Scenario ele) {
-		return ele.getDescription() == null ? "Scenario" : ele.getDescription();
+		return ele.getTitle() == null ? "Scenario" : ele.getTitle();
 	}
 
 	String image(Scenario ele) {
@@ -56,7 +56,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(ScenarioOutline ele) {
-		return ele.getDescription() == null ? "Scenario Outline" : ele.getDescription();
+		return ele.getTitle() == null ? "Scenario Outline" : ele.getTitle();
 	}
 
 	String image(ScenarioOutline ele) {
@@ -64,7 +64,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Step ele) {
-		return ele.getDescription();
+		return ele.getDescription().trim();
 	}
 
 	String image(Step ele) {
@@ -79,16 +79,16 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 		return "table.gif";
 	}
 	
-	String text(Code ele) {
-		return "Doc String";
+	String text(DocString ele) {
+		return "DocString";
 	}
 
-	String image(Code ele) {
+	String image(DocString ele) {
 		return "code.gif";
 	}
 
 	String text(Examples ele) {
-		return ele.getDescription().isEmpty() ? "Example" : ele.getDescription();
+		return ele.getTitle().isEmpty() ? "Examples" : ele.getTitle();
 	}
 
 	String image(Examples ele) {

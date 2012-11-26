@@ -1,6 +1,6 @@
 package org.agileware.natural.cucumber.ui;
 
-import org.agileware.natural.cucumber.cucumber.Code;
+import org.agileware.natural.cucumber.cucumber.DocString;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
@@ -8,6 +8,7 @@ import org.agileware.natural.cucumber.cucumber.Step;
 import org.agileware.natural.cucumber.cucumber.Table;
 import org.agileware.natural.cucumber.cucumber.Tag;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
@@ -52,11 +53,12 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 			if (step.eContainer() instanceof ScenarioOutline) {
 				this.provideHighlightingForPlaceholders(step.getDescription(), node, 0, acceptor);
 			}
-			if (step.getTable() != null) {
-				provideHighlightingForTable(step.getTable(), acceptor);
-			}
-			if (step.getCode() != null) {
-				provideHighlightingForDocStrings(step.getCode(), acceptor);
+			for (EObject attach : step.getAttach()) {
+				if (attach instanceof Table) {
+					provideHighlightingForTable((Table)attach, acceptor);
+				} else if (attach instanceof DocString) {
+					provideHighlightingForDocString((DocString)attach, acceptor);
+				}
 			}
 		}
 	}
@@ -88,7 +90,7 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 		}
 	}
 	
-	private void provideHighlightingForDocStrings(Code code, IHighlightedPositionAcceptor acceptor) {
+	private void provideHighlightingForDocString(DocString code, IHighlightedPositionAcceptor acceptor) {
 		INode node = NodeModelUtils.getNode(code);
 		acceptor.addPosition(
 				node.getOffset(),
