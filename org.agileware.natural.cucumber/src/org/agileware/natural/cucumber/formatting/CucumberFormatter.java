@@ -20,7 +20,7 @@ public class CucumberFormatter extends AbstractDeclarativeFormatter {
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 		CucumberGrammarAccess g = (CucumberGrammarAccess)super.getGrammarAccess();
-
+		
 		c.setIndentationIncrement().before(g.getNarrativeRule());
 		c.setIndentationDecrement().after(g.getNarrativeRule());
 		c.setIndentationIncrement().before(g.getStepRule());

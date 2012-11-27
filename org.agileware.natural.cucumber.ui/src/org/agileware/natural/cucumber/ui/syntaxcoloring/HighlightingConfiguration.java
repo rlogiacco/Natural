@@ -1,4 +1,4 @@
-package org.agileware.natural.cucumber.ui;
+package org.agileware.natural.cucumber.ui.syntaxcoloring;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;

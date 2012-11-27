@@ -33,6 +33,7 @@ ScenarioOutline:
 	examples=Examples;
 	
 Step:
+	STEP_KEYWORD
 	description=StepDescription EOL*
 	attach+=(Table | DocString)*;
 
@@ -55,7 +56,7 @@ Narrative:
 	(WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+;
 
 StepDescription:
-	STEP_KEYWORD (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL?;
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL?;
 	
 Tag: name=TAGNAME EOL?;
 
@@ -76,8 +77,6 @@ terminal STRING:
 terminal SL_COMMENT: '#' !('\n' | '\r')* EOL;
 
 terminal TAGNAME: '@' !('@' | ' ' | '\t' | '\n' | '\r')+ ;
-
-terminal PIPE: '|';
 
 terminal WORD: !('@' | '|' | ' ' | '\t' | '\n' | '\r') !(' ' | '\t' | '\n' | '\r')*;
 
