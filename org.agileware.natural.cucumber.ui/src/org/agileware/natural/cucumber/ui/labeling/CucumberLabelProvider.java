@@ -96,7 +96,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Tag ele) {
-		return ele.getName();
+		return ele.getName().substring(1);
 	}
 
 	String image(Tag ele) {
