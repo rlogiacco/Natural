@@ -1,4 +1,4 @@
-package org.agileware.natural.cucumber.ui;
+package org.agileware.natural.cucumber.ui.syntaxcoloring;
 
 import org.agileware.natural.cucumber.cucumber.DocString;
 import org.agileware.natural.cucumber.cucumber.Feature;
