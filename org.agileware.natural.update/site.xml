@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.rlogiacco.eclipse.bdd_0.2.0.qualifier.jar" id="org.rlogiacco.eclipse.bdd" version="0.2.0.qualifier"/>
-   <feature url="features/org.rlogiacco.eclipse.bdd_0.3.1.qualifier.jar" id="org.rlogiacco.eclipse.bdd" version="0.3.1.qualifier"/>
-   <feature url="features/org.rlogiacco.eclipse.bdd_0.3.2.qualifier.jar" id="org.rlogiacco.eclipse.bdd" version="0.3.2.qualifier"/>
-   <feature url="features/org.rlogiacco.eclipse.bdd_0.3.3.qualifier.jar" id="org.rlogiacco.eclipse.bdd" version="0.3.3.qualifier"/>
+   <feature url="features/org.agileware.natural.cucumber.feature_0.6.0.201211270227.jar" id="org.agileware.natural.cucumber.feature" version="0.6.0.201211270227"/>
+   <feature url="features/org.agileware.natural.jbehave.feature_0.3.0.201211270227.jar" id="org.agileware.natural.jbehave.feature" version="0.3.0.201211270227"/>
 </site>
