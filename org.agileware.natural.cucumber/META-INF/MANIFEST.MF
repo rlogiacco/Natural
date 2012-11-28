@@ -24,16 +24,17 @@ Import-Package: org.apache.commons.logging,
  org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.agileware.natural.cucumber,
- org.agileware.natural.cucumber.formatting,
- org.agileware.natural.cucumber.parser.antlr,
- org.agileware.natural.cucumber.scoping,
- org.agileware.natural.cucumber.validation,
- org.agileware.natural.cucumber.generator,
- org.agileware.natural.cucumber.services,
- org.agileware.natural.cucumber.cucumber,
- org.agileware.natural.cucumber.cucumber.impl,
- org.agileware.natural.cucumber.cucumber.util,
- org.agileware.natural.cucumber.serializer,
- org.agileware.natural.cucumber.parser.antlr.internal
-
+Export-Package: org.agileware.natural.cucumber; uses:="org.eclipse.xtext,  org.eclipse.xtext.service,  org.eclipse.xtext.common.types,  com.google.inject",
+ org.agileware.natural.cucumber.cucumber;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
+ org.agileware.natural.cucumber.cucumber.impl; uses:="org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.emf.ecore.impl,  org.eclipse.emf.common.notify,  org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.cucumber.util; uses:="org.eclipse.emf.ecore.util,  org.eclipse.emf.ecore,  org.eclipse.emf.common.notify.impl,  org.eclipse.emf.common.notify,  org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.formatting;uses:="org.eclipse.xtext.formatting.impl",
+ org.agileware.natural.cucumber.generator;uses:="org.eclipse.emf.ecore.resource,org.eclipse.xtext.generator",
+ org.agileware.natural.cucumber.parseTreeConstruction,
+ org.agileware.natural.cucumber.parser.antlr;uses:="org.agileware.natural.cucumber.services,org.eclipse.xtext.parser.antlr,org.agileware.natural.cucumber.parser.antlr.internal",
+ org.agileware.natural.cucumber.parser.antlr.internal; uses:="org.agileware.natural.cucumber.services,  org.eclipse.emf.ecore,  org.antlr.runtime,  org.eclipse.xtext.parser.antlr",
+ org.agileware.natural.cucumber.scoping;uses:="org.eclipse.xtext.scoping.impl",
+ org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext,org.eclipse.xtext.service",
+ org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.validation",
+ org.agileware.natural.cucumber.parser.antlr.lexer
+Bundle-ClassPath: gherkin-2.11.2.jar,.
