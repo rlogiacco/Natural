@@ -62,7 +62,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	String image(ScenarioOutline ele) {
 		return "scenario.gif";
 	}
-
+	
 	String text(Step ele) {
 		return ele.getDescription().trim();
 	}
@@ -96,7 +96,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Tag ele) {
-		return ele.getName().substring(1);
+		return ele.getId();
 	}
 
 	String image(Tag ele) {
