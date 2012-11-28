@@ -42,7 +42,7 @@ public class CucumberProposalProvider extends AbstractCucumberProposalProvider {
 				entry = entry.substring(1);
 			}
 			if (entry.charAt(entry.length() - 1) == '$') {
-				entry = entry.substring(0, entry.length() - 2);
+				entry = entry.substring(0, entry.length() - 1);
 			}
 			acceptor.accept(createCompletionProposal(entry, context));
 		}
