@@ -6,6 +6,7 @@ package org.agileware.natural.cucumber.ui;
 import org.agileware.natural.common.AbstractAnnotationDescriptor;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.HighlightingConfiguration;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.LexicalHighlightingCalculator;
+import org.agileware.natural.cucumber.ui.syntaxcoloring.SemanticHighlightingCalculator;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant;
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
@@ -38,9 +39,9 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 		return LexicalHighlightingCalculator.class;
 	}
 	
-	/*public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
 		return SemanticHighlightingCalculator.class;
-	}*/
+	}
 
 	@Override
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {

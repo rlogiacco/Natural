@@ -10,13 +10,8 @@ public class LexicalHighlightingCalculator extends
 
 	private static final Pattern QUOTED = Pattern.compile("(?:^'([^']*)'$)|(?:^\"([^\"]*)\")$", Pattern.MULTILINE);
 	
-	private static final Pattern PUNCTUATION = Pattern.compile("\\p{Punct}*");
-	
 	@Override
 	protected String calculateId(String tokenName, int tokenType) {
-		if(PUNCTUATION.matcher(tokenName).matches()) {
-			return DefaultHighlightingConfiguration.PUNCTUATION_ID;
-		}
 		if(QUOTED.matcher(tokenName).matches()) {
 			return DefaultHighlightingConfiguration.KEYWORD_ID;
 		}
@@ -26,14 +21,8 @@ public class LexicalHighlightingCalculator extends
 		if("RULE_INT".equals(tokenName)) {
 			return DefaultHighlightingConfiguration.NUMBER_ID;
 		}
-		if("RULE_ML_COMMENT".equals(tokenName) || "RULE_SL_COMMENT".equals(tokenName)) {
+		if("RULE_SL_COMMENT".equals(tokenName)) {
 			return DefaultHighlightingConfiguration.COMMENT_ID;
-		}
-		if("RULE_STEP_KEYWORD".equals(tokenName)) {
-			return HighlightingConfiguration.STEP_KEYWORD;
-		}
-		if("RULE_PLACEHOLDER".equals(tokenName)) {
-			return HighlightingConfiguration.PLACEHOLDER;
 		}
 		if("RULE_TAGNAME".equals(tokenName)) {
 			return HighlightingConfiguration.TAG;
