@@ -37,4 +37,4 @@ Export-Package: org.agileware.natural.cucumber; uses:="org.eclipse.xtext,  org.e
  org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext,org.eclipse.xtext.service",
  org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.validation",
  org.agileware.natural.cucumber.parser.antlr.lexer
-Bundle-ClassPath: gherkin-2.11.2.jar,.
+Bundle-ClassPath: .
