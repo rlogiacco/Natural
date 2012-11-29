@@ -40,7 +40,7 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 					node.getOffset(),
 					node.getText().trim().indexOf(" "),
 					HighlightingConfiguration.STEP_KEYWORD);
-			if (step.eContainer() instanceof ScenarioOutline) {
+			if (step.eContainer() instanceof ScenarioOutline && step.getDescription() != null) {
 				this.provideHighlightingForPlaceholders(step.getDescription(), node, node.getText().indexOf(" "), 0, acceptor);	
 			}
 		}
