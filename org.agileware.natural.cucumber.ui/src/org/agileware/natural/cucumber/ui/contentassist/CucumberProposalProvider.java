@@ -28,23 +28,24 @@ public class CucumberProposalProvider extends AbstractCucumberProposalProvider {
 	private AbstractAnnotationDescriptor descriptor;
 	
 	public void complete_Step(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		if (((RuleCallImpl)context.getLastCompleteNode().getGrammarElement()).getRule().getName().equals("EOL")) {
+		if (((RuleCallImpl)context.getLastCompleteNode().getGrammarElement()).getRule().getName().equals("EOL") && context.getPrefix().length() == 0) {
 			for (String entry : descriptor.getNames()) {
-				acceptor.accept(createCompletionProposal(entry, context));
+				acceptor.accept(createCompletionProposal(entry + " ", context));
 			}
 		}
 	}
 	
 	public void complete_StepDescription(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		Collection<String> proposals = matcher.findProposals();
-		for (String entry : proposals) {
-			if (entry.charAt(0) == '^') {
-				entry = entry.substring(1);
+		for (String proposal : proposals) {
+			String display = proposal;
+			if (proposal.charAt(0) == '^') {
+				proposal = proposal.substring(1);
 			}
-			if (entry.charAt(entry.length() - 1) == '$') {
-				entry = entry.substring(0, entry.length() - 1);
+			if (proposal.charAt(proposal.length() - 1) == '$') {
+				proposal = proposal.substring(0, proposal.length() - 1);
 			}
-			acceptor.accept(createCompletionProposal(entry, context));
+			acceptor.accept(createCompletionProposal(proposal, display, null, context));
 		}
 	}
 }
