@@ -20,7 +20,6 @@ public class HighlightingConfiguration implements IHighlightingConfiguration {
 	public static final String DEFAULT_ID = "default";
 	public static final String INVALID_TOKEN_ID = "error";
 
-	@Override
 	public void configure(IHighlightingConfigurationAcceptor acceptor) {
 		acceptor.acceptDefaultHighlighting(KEYWORD_ID, "Keyword", keywordTextStyle());
 		acceptor.acceptDefaultHighlighting(COMMENT_ID, "Comment", commentTextStyle());
