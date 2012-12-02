@@ -6,40 +6,43 @@ generate cucumber "http://www.agileware.org/natural/cucumber"
 Feature:
 	tags+=Tag*
 	'Feature:'
-	title=Title
-	narrative+=Narrative*
+	title=Title EOL+
+	narrative=Narrative?
 	background=Background?
 	scenarios+=(Scenario | ScenarioOutline)+;
 
 Background:
-	'Background:' EOL*
-	title=Title?
-	narrative+=Narrative*
+	'Background:'
+	title=Title? EOL+
+	narrative=Narrative?
 	steps+=Step+;
 	
 Scenario:
 	tags+=Tag*
-	'Scenario:' EOL*
-	title=Title?
-	narrative+=Narrative*
+	'Scenario:'
+	title=Title? EOL+
+	narrative=Narrative?
 	steps+=Step+;
 
 ScenarioOutline:
 	tags+=Tag*
-	'Scenario Outline:' EOL*
-	title=Title?
-	narrative+=Narrative*
+	'Scenario Outline:'
+	title=Title? EOL+
+	narrative=Narrative?
 	steps+=Step+
 	examples=Examples;
 	
 Step:
+	STEP_KEYWORD
 	description=StepDescription EOL*
-	attach+=(Table | DocString)*;
+	tables+=Table*
+	code=DocString?
+	tables+=Table*;
 
 Examples:
-	'Examples:' EOL*
-	title=Title?
-	narrative+=Narrative*
+	'Examples:' 
+	title=Title? EOL+
+	narrative=Narrative?
 	table=Table;
 	
 Table:
@@ -49,38 +52,38 @@ DocString:
 	content=DOC_STRING EOL*;
 
 Title:
-	(WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+;
+	(WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*;
 
 Narrative:
-	(WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+;
+	((WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+)+;
 
 StepDescription:
-	STEP_KEYWORD (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL?;
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
 	
-Tag: name=TAGNAME EOL?;
+Tag: id=TAGNAME EOL?;
 
-terminal INT returns ecore::EDouble: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
+terminal INT: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
 
-terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
+terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But') (' ' | '\t')+;
 
 terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
 	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ EOL;
+terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL;
 
-terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") EOL;
+terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") NL;
 
 terminal STRING:
 	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
 	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'";
 
-terminal SL_COMMENT: '#' !('\n' | '\r')* EOL;
+terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
 
-terminal TAGNAME: '@' !('@' | ' ' | '\t' | '\n' | '\r')+ ;
-
-terminal PIPE: '|';
+terminal TAGNAME: '@' !(' ' | '\t' | '\n' | '\r')+ ;
 
 terminal WORD: !('@' | '|' | ' ' | '\t' | '\n' | '\r') !(' ' | '\t' | '\n' | '\r')*;
 
 terminal WS: (' ' | '\t');
 
-terminal EOL: ('\r'? '\n'?);
+terminal EOL: NL;
+
+terminal fragment NL: ('\r'? '\n'?);

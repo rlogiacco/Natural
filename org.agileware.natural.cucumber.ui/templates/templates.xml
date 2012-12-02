@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <templates>
 	<template id="background" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Background" deleted="false" description="" enabled="true" name="Background">Background:&#13;
-    Given the user is logged in&#13;
+    ${cursor}Given the user is logged in&#13;
     And goes to landing page</template>
     
     <template id="docstring" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.StepDescription" deleted="false" description="DocString" enabled="true" name="DocString">"""&#13;
-this is unparsed content&#13;
+${cursor}this is unparsed content&#13;
 """</template>
 	
-	<template id="feature" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Feature" deleted="false" description="" enabled="true" name="Feature">Feature: feature description&#13;
+	<template id="feature" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Feature" deleted="false" description="" enabled="true" name="Feature">Feature: ${cursor}feature description&#13;
 	In order to do something&#13;
 	As someone&#13;
 	I want something else to happen</template>
 	
-	<template id="scenario" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Scenario" deleted="false" description="" enabled="true" name="Scenario">Scenario: scenario description&#13;
+	<template id="scenario" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Scenario" deleted="false" description="" enabled="true" name="Scenario">Scenario: ${cursor}scenario description&#13;
     Given something&#13;
     When an action is performed&#13;
     Then something should be asserted</template>
     
-    <template id="outline" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.ScenarioOutline" deleted="false" description="" enabled="true" name="Scenario Outline">Scenario Outline: scenario description&#13;
-	Given something with &lt;param_1&gt;&#13;
-	And something with &lt;param_2&gt;&#13;
-	Then check &lt;param_3&gt; is the output&#13;
-	&#13;
-	Examples:&#13;
-	| param_1		| param_2		| param_3		|&#13;
-	| value1_1		| value1_2		| value1_3		|&#13;
-	| value2_1		| value2_2		| value2_3		|&#13;
-	| value3_1		| value3_2		| value3_3		|&#13;</template>
+    <template id="outline" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.ScenarioOutline" deleted="false" description="" enabled="true" name="Scenario Outline">Scenario Outline: ${cursor}scenario description&#13;
+	Given something with &lt;${param_1}&gt;&#13;
+		And something with &lt;${param_2}&gt;&#13;
+		Then check &lt;${param_3}&gt; is the output&#13;
+		&#13;
+		Examples:&#13;
+		| ${param_1} | ${param_2} | ${param_3} |&#13;
+		| value1_1 | value1_2 | value1_3 |&#13;
+		| value2_1 | value2_2 | value2_3 |&#13;
+		| value3_1 | value3_2 | value3_3 |</template>
 	
-	<template id="and" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="And" enabled="true" name="Step">And something</template>
-	<template id="but" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="But" enabled="true" name="Step">But something</template>
-	<template id="given" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="Given" enabled="true" name="Step">Given something</template>
-	<template id="then" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="Then" enabled="true" name="Step">Then something</template>
-	<template id="when" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="When" enabled="true" name="Step">When something</template>
-	<template id="table" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.StepDescription" deleted="false" description="" enabled="true" name="Table Row">|		|		|		|		|</template>
+	<template id="and" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="And" enabled="true" name="Step">And ${something}</template>
+	<template id="but" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="But" enabled="true" name="Step">But ${something}</template>
+	<template id="given" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="Given" enabled="true" name="Step">Given ${something}</template>
+	<template id="then" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="Then" enabled="true" name="Step">Then ${something}</template>
+	<template id="when" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Step" deleted="false" description="When" enabled="true" name="Step">When ${something}</template>
+	<template id="table3" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.StepDescription" deleted="false" description="3 cols" enabled="true" name="Table Row">${cursor}${col_1_value} | ${col_2_value} | ${col_3_value} |</template>
+	<template id="table4" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.StepDescription" deleted="false" description="4 cols" enabled="true" name="Table Row">${cursor}${col_1_value} | ${col_2_value} | ${col_3_value} | ${col_4_value} |</template>
+	<template id="table6" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.StepDescription" deleted="false" description="6 cols" enabled="true" name="Table Row">${cursor}${col_1_value} | ${col_2_value} | ${col_3_value} | ${col_4_value} | ${col_5_value} | ${col_6_value} |</template>
 </templates>

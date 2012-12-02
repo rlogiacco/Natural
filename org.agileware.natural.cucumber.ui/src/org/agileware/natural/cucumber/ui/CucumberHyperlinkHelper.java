@@ -44,7 +44,6 @@ public class CucumberHyperlinkHelper extends HyperlinkHelper {
 				node = node.getParent();
 			}
 			String description = ((Step) eObject).getDescription();
-			description = description.substring(description.indexOf(" ") + 1);
 			hyperlinks.addAll(findLinkTargets(description, new Region(node.getOffset(), node.getText().trim().length())));
 		}
 		return hyperlinks.isEmpty() ? null : Iterables.toArray(hyperlinks, IHyperlink.class);

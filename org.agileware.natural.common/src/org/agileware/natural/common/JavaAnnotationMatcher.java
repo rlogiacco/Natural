@@ -1,9 +1,11 @@
 package org.agileware.natural.common;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IAnnotation;
@@ -75,6 +77,22 @@ public class JavaAnnotationMatcher {
 		System.out.println("Search took: " + (System.currentTimeMillis() - time) + "ms");
 	}
 	
+	public Collection<String> findProposals() {
+		if (cache.isEmpty()) {
+			findMatches("", new Command() {
+				@Override
+				public void match(String annotationValue, IMethod method) {}});
+		}
+		
+		Collection<String> proposals = new TreeSet<String>();
+		for (List<Entry> entries : cache.values()) {
+			for (Entry entry : entries) {
+				proposals.add(entry.getAnnotationValue());
+			}
+		}
+		return proposals;
+	}	
+	
 	public void evict(ICompilationUnit element) {
 		//TODO evict only those that match
 //		if (element != null) {
@@ -97,6 +115,10 @@ public class JavaAnnotationMatcher {
 		private Entry(String annotationValue, IMethod method) {
 			this.annotationValue = annotationValue;
 			this.method = method;
+		}
+		
+		public String getAnnotationValue() {
+			return annotationValue;
 		}
 	}
 }
