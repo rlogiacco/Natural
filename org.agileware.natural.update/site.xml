@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.agileware.natural.cucumber.feature_0.6.0.201211271233.jar" id="org.agileware.natural.cucumber.feature" version="0.6.0.201211271233">
+   <description name="Natural" url="http://piergiuseppe82.github.com/Natural/eclipse-plugins/update">
+      Natural is a collection of Eclipse plugins to enable rich smart editing of acceptance tests using natural language definition files. It currently supports Cucumber and JBehave syntax.
+   </description>
+   <feature url="features/org.agileware.natural.cucumber.feature_0.7.2.201212070055.jar" id="org.agileware.natural.cucumber.feature" version="0.7.2.201212070055">
       <category name="Natural"/>
    </feature>
-   <feature url="features/org.agileware.natural.jbehave.feature_0.3.0.201211271233.jar" id="org.agileware.natural.jbehave.feature" version="0.3.0.201211271233">
+   <feature url="features/org.agileware.natural.jbehave.feature_0.3.0.201212070055.jar" id="org.agileware.natural.jbehave.feature" version="0.3.0.201212070055">
       <category name="Natural"/>
    </feature>
    <category-def name="Natural" label="Natural">
       <description>
-         Natural is a collection of Eclipse plugins to enable rich smart editing of acceptance tests using natural language definition files. It currently supports Cucumber and JBehave syntax.
+         Rich editors for behavioral testing definition files
       </description>
    </category-def>
 </site>
