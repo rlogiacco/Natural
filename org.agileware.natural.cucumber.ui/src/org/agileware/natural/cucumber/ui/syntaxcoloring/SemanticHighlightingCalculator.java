@@ -41,17 +41,17 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 					node.getText().trim().indexOf(" "),
 					HighlightingConfiguration.STEP_KEYWORD);
 			if (step.eContainer() instanceof ScenarioOutline && step.getDescription() != null) {
-				this.provideHighlightingForPlaceholders(step.getDescription(), node, node.getText().indexOf(" "), 0, acceptor);	
+				this.provideHighlightingForPlaceholders(node.getText(), node, 0, acceptor);	
 			}
 		}
 	}
 
-	private void provideHighlightingForPlaceholders(String description, INode node, int offset, int current, IHighlightedPositionAcceptor acceptor) {
+	private void provideHighlightingForPlaceholders(String description, INode node, int current, IHighlightedPositionAcceptor acceptor) {
 		int start = description.indexOf('<', current);
 		int stop = description.indexOf('>', start);
 		if (start > 0 && stop > 0 && description.charAt(start + 1) != ' ') {
-			acceptor.addPosition(node.getOffset() + offset + start, stop - start + 1, HighlightingConfiguration.PLACEHOLDER);
-			this.provideHighlightingForPlaceholders(description, node, offset, stop + 1, acceptor);
+			acceptor.addPosition(node.getTotalOffset() + start, stop - start + 1, HighlightingConfiguration.PLACEHOLDER);
+			this.provideHighlightingForPlaceholders(description, node, stop + 1, acceptor);
 		}
 	}
 
