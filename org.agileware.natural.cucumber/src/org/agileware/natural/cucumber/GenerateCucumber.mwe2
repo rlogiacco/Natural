@@ -121,9 +121,9 @@ Workflow {
                 // fragment = refactoring.RefactorElementNameFragment {}
     
                 // provides a compare view
-                // fragment = compare.CompareFragment {
-                //    fileExtensions = file.extensions
-                // }
+                fragment = compare.CompareFragment {
+                    fileExtensions = file.extensions
+                }
     
                 // Serializer 2.0
                 // fragment = serializer.SerializerFragment {}
