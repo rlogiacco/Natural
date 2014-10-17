@@ -6,7 +6,7 @@
    <feature url="features/org.agileware.natural.cucumber.feature_0.7.5.qualifier.jar" id="org.agileware.natural.cucumber.feature" version="0.7.5.qualifier">
       <category name="Natural"/>
    </feature>
-   <category-def name="Natural" label="Behavioral Testing Editors">
+   <category-def name="Natural" label="Natural">
       <description>
          Rich editors for behavioral testing definition files
       </description>
