@@ -6,13 +6,16 @@
    <feature url="features/org.agileware.natural.cucumber.feature_0.7.3.201212080341.jar" id="org.agileware.natural.cucumber.feature" version="0.7.3.201212080341">
       <category name="Natural"/>
    </feature>
-   <feature url="features/org.agileware.natural.jbehave.feature_0.3.0.201212080341.jar" id="org.agileware.natural.jbehave.feature" version="0.3.0.201212080341">
+   <feature url="features/org.agileware.natural.jbehave.feature_0.3.0.201505011619.jar" id="org.agileware.natural.jbehave.feature" version="0.3.0.201505011619">
       <category name="Natural"/>
    </feature>
    <feature url="features/org.agileware.natural.cucumber.feature_0.7.4.201212082218.jar" id="org.agileware.natural.cucumber.feature" version="0.7.4.201212082218">
       <category name="Natural"/>
    </feature>
    <feature url="features/org.agileware.natural.cucumber.feature_0.7.5.201410172323.jar" id="org.agileware.natural.cucumber.feature" version="0.7.5.201410172323">
+      <category name="Natural"/>
+   </feature>
+   <feature url="features/org.agileware.natural.cucumber.feature_0.7.6.201505011619.jar" id="org.agileware.natural.cucumber.feature" version="0.7.6.201505011619">
       <category name="Natural"/>
    </feature>
    <category-def name="Natural" label="Natural">
