@@ -21,5 +21,6 @@ Import-Package: org.apache.log4j,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.agileware.natural.jbehave.ui.contentassist.antlr,
  org.agileware.natural.jbehave.ui.internal,
- org.agileware.natural.jbehave.ui.contentassist
+ org.agileware.natural.jbehave.ui.contentassist,
+ org.agileware.natural.jbehave.ui.quickfix
 Bundle-Activator: org.agileware.natural.jbehave.ui.internal.JBehaveActivator
