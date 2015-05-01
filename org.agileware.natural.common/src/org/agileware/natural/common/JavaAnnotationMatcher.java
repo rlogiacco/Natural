@@ -10,8 +10,10 @@ import java.util.TreeSet;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IAnnotation;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
+import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchParticipant;
@@ -26,9 +28,41 @@ public class JavaAnnotationMatcher {
 
 	@Inject
 	private AbstractAnnotationDescriptor descriptor;
-	
+
 	private Map<ICompilationUnit, List<Entry>> cache = new HashMap<ICompilationUnit, List<Entry>>();
-	
+
+	protected IJavaSearchScope getScope(String filter) {
+		if (filter == null)
+			return SearchEngine.createWorkspaceScope();
+		
+		String[] names = filter.split(",");
+		final List<IJavaElement> packages = new ArrayList<IJavaElement>();
+		
+		SearchPattern pattern = null;
+		for (String name : names) {
+			SearchPattern current = SearchPattern.createPattern(name.trim(), 
+					IJavaSearchConstants.PACKAGE, 
+					IJavaSearchConstants.ALL_OCCURRENCES,
+					SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
+			if (pattern == null) {
+				pattern = current;
+			} else {
+				pattern = SearchPattern.createOrPattern(pattern, current);
+			}
+		}
+		try {
+			new SearchEngine().search(pattern,
+					new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, SearchEngine.createWorkspaceScope(), new SearchRequestor() {
+						public void acceptSearchMatch(SearchMatch match) throws CoreException {
+							packages.add((IJavaElement) match.getElement());
+						}
+					}, null);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		return SearchEngine.createJavaSearchScope(packages.toArray(new IJavaElement[0]));
+	}
+
 	public void findMatches(final String description, final Command command) {
 		long time = System.currentTimeMillis();
 		if (!cache.isEmpty()) {
@@ -41,49 +75,64 @@ public class JavaAnnotationMatcher {
 			}
 			return;
 		}
+		
+		// combine search patterns
+		SearchPattern pattern = null;
 		for (final String annotationName : descriptor.getNames()) {
-			SearchPattern pattern = SearchPattern.createPattern(annotationName, IJavaSearchConstants.ANNOTATION_TYPE,
-					IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
-			SearchRequestor requestor = new SearchRequestor() {
-				public void acceptSearchMatch(SearchMatch match) throws CoreException {
-					if (match.getElement() instanceof IMethod) {
-						String des = description;
-						IMethod method = (IMethod) match.getElement();
-						IAnnotation type = method.getAnnotation(annotationName);
-						// Check annotation package
-						if (AbstractAnnotationDescriptor.checkPackage(type, descriptor.getPackage())) {
-							// verify pattern
-							String annotationValue = (String) type.getMemberValuePairs()[0].getValue();
-							List<Entry> entries = cache.get(method.getCompilationUnit());
-							if (entries == null) {
-								entries = new ArrayList<Entry>();
-								cache.put(method.getCompilationUnit(), entries);
-							}
-							entries.add(new Entry(annotationValue, method));
-							if (des.matches(annotationValue)) {
-								command.match(annotationValue, method);
-							}
-						}		
-					}
-				}
-			};
-			try {
-				new SearchEngine().search(pattern, new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, SearchEngine.createWorkspaceScope(),
-						requestor, null);
-			} catch (CoreException e) {
-				e.printStackTrace();
+			SearchPattern current = SearchPattern.createPattern(annotationName,
+					IJavaSearchConstants.ANNOTATION_TYPE,
+					IJavaSearchConstants.ANNOTATION_TYPE_REFERENCE,
+					SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
+			if (pattern == null) {
+				pattern = current;
+			} else {
+				pattern = SearchPattern.createOrPattern(pattern, current);
 			}
 		}
-		System.out.println("Search took: " + (System.currentTimeMillis() - time) + "ms");
+		// execute search
+		try {
+			new SearchEngine().search(pattern,
+					new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, 
+					this.getScope(null), 
+					new SearchRequestor() {
+						public void acceptSearchMatch(SearchMatch match) throws CoreException {
+							if (match.getElement() instanceof IMethod) {
+								IMethod method = (IMethod) match.getElement();
+								IAnnotation[] annotations = method.getAnnotations();
+								for (IAnnotation type : annotations) {
+									// check annotation package
+									if (AbstractAnnotationDescriptor.checkPackage(type, descriptor.getPackage())) {
+										// verify pattern
+										String annotationValue = (String) type.getMemberValuePairs()[0].getValue();
+										List<Entry> entries = cache.get(method.getCompilationUnit());
+										if (entries == null) {
+											entries = new ArrayList<Entry>();
+											cache.put(method.getCompilationUnit(), entries);
+										}
+										entries.add(new Entry(annotationValue, method));
+										if (description.matches(annotationValue)) {
+											command.match(annotationValue, method);
+										}
+									}
+								}
+							}
+						}
+					},
+					null);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		System.out.println("stepdef match lookup completed in " + (System.currentTimeMillis() - time) + "ms");
 	}
-	
+
 	public Collection<String> findProposals() {
 		if (cache.isEmpty()) {
 			findMatches("", new Command() {
 				@Override
-				public void match(String annotationValue, IMethod method) {}});
+				public void match(String annotationValue, IMethod method) { }
+			});
 		}
-		
+
 		Collection<String> proposals = new TreeSet<String>();
 		for (List<Entry> entries : cache.values()) {
 			for (Entry entry : entries) {
@@ -91,23 +140,17 @@ public class JavaAnnotationMatcher {
 			}
 		}
 		return proposals;
-	}	
-	
-	public void evict(ICompilationUnit element) {
-		//TODO evict only those that match
-//		if (element != null) {
-//			cache.remove(element);
-//			System.out.println(">>> Removed " + element.toString());
-//		} else {
-			cache.clear();
-			System.out.println(">>> Invalidated");
-//		}
 	}
-	
+
+	public void evict(ICompilationUnit element) {
+		cache.clear();
+		System.out.println(">>> cache cleared");
+	}
+
 	public static interface Command {
 		void match(String annotationValue, IMethod method);
 	}
-	
+
 	public static class Entry {
 		private String annotationValue;
 		private IMethod method;
@@ -116,7 +159,7 @@ public class JavaAnnotationMatcher {
 			this.annotationValue = annotationValue;
 			this.method = method;
 		}
-		
+
 		public String getAnnotationValue() {
 			return annotationValue;
 		}
