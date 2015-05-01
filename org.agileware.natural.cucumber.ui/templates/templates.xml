@@ -14,12 +14,12 @@ ${cursor}this is unparsed content&#13;
 	I want something else to happen</template>
 	
 	<template id="scenario" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.Scenario" deleted="false" description="" enabled="true" name="Scenario">Scenario: ${cursor}scenario description&#13;
-    Given something&#13;
+    Given a precondition is valid&#13;
     When an action is performed&#13;
     Then something should be asserted</template>
     
     <template id="outline" autoinsert="true" context="org.agileware.natural.cucumber.Cucumber.ScenarioOutline" deleted="false" description="" enabled="true" name="Scenario Outline">Scenario Outline: ${cursor}scenario description&#13;
-	Given something with &lt;${param_1}&gt;&#13;
+	Given a precondition has value &lt;${param_1}&gt;&#13;
 		And something with &lt;${param_2}&gt;&#13;
 		Then check &lt;${param_3}&gt; is the output&#13;
 		&#13;
