@@ -3,3 +3,4 @@
 */src-gen
 *.xml_gen
 .metadata
+eclipse-*
