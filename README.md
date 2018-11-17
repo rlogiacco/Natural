@@ -1,3 +1,5 @@
+[![Beerpay](https://beerpay.io/rlogiacco/Natural/badge.svg?style=flat)](https://beerpay.io/rlogiacco/Natural) [![Beerpay](https://beerpay.io/rlogiacco/Natural/make-wish.svg?style=flat)](https://beerpay.io/rlogiacco/Natural)
+
 # Please refer to the [project wiki][1] for info.
 
 ##### Natural installation can be achieved by adding the `Natural Plugin Update Site` with `http://rlogiacco.github.com/Natural` as URL.
