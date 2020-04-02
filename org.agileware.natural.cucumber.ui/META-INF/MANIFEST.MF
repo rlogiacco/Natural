@@ -25,5 +25,6 @@ Export-Package: org.agileware.natural.cucumber.ui,
  org.agileware.natural.cucumber.ui.contentassist.antlr,
  org.agileware.natural.cucumber.ui.internal,
  org.agileware.natural.cucumber.ui.contentassist,
- org.agileware.natural.cucumber.ui.quickfix
+ org.agileware.natural.cucumber.ui.quickfix,
+ org.agileware.natural.cucumber.ui.contentassist.antlr.internal
 Bundle-Activator: org.agileware.natural.cucumber.ui.CucumberActivator
