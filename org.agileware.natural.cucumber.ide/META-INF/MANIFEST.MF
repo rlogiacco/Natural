@@ -1,17 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.agileware.natural.cucumber.ide
-Bundle-SymbolicName: org.agileware.natural.cucumber.ide;singleton:=true
-Bundle-Version: 1.3.7.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ActivationPolicy: lazy
-Export-Package: org.agileware.natural.cucumber.ide.contentassist.antlr,
- org.agileware.natural.cucumber.ide.contentassist.antlr.internal
-Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
-Automatic-Module-Name: org.agileware.natural.cucumber.ide
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: org.agileware.natural.cucumber.ide
 Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.4.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.cucumber.ide; singleton:=true
