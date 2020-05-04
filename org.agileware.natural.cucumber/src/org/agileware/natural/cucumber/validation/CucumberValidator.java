@@ -8,7 +8,7 @@ import org.eclipse.xtext.validation.Check;
 
 import com.google.inject.Inject;
 
-public class CucumberJavaValidator extends AbstractCucumberJavaValidator {
+public class CucumberValidator extends AbstractCucumberValidator {
 	
 	@Inject
 	private JavaAnnotationMatcher matcher;

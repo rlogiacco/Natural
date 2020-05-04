@@ -26,7 +26,6 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 		super(plugin);
 	}
 
-	@Override
 	public Class<? extends IHyperlinkHelper> bindIHyperlinkHelper() {
 		return CucumberHyperlinkHelper.class;
 	}
