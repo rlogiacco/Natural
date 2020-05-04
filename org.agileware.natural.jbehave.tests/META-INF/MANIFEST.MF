@@ -7,12 +7,11 @@ Bundle-SymbolicName: org.agileware.natural.jbehave.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.agileware.natural.jbehave,
  org.agileware.natural.jbehave.ui,
- org.eclipse.core.runtime,
- org.eclipse.xtext,
- org.eclipse.xtext.junit4,
- org.eclipse.xtext.ui.junit,
- org.eclipse.ui.workbench;resolution:=optional,
- org.eclipse.xtext.xbase.lib,
+ org.eclipse.core.runtime;bundle-version="3.11.1",
+ org.eclipse.xtext;bundle-version="2.9.1",
+ org.eclipse.xtext.junit4;bundle-version="2.9.1",
+ org.eclipse.ui.workbench;bundle-version="3.107.1";resolution:=optional,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.9.1",
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
@@ -22,5 +21,5 @@ Import-Package: org.apache.log4j,
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.jbehave
