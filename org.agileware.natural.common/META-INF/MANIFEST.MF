@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse BDD Editors Common Library
 Bundle-SymbolicName: org.agileware.natural.common
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.2.1.qualifier
 Bundle-Activator: org.agileware.natural.common.Activator
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
- org.eclipse.jface.text;bundle-version="3.6.0";visibility:=reexport,
- org.eclipse.ui;bundle-version="3.6.0",
- org.eclipse.ui.ide;bundle-version="3.6.0",
- org.eclipse.jdt.ui;bundle-version="3.6.0",
- org.eclipse.jdt.core;bundle-version="3.6.0",
- org.eclipse.core.resources;bundle-version="3.6.0",
- com.google.guava;bundle-version="10.0.1",
+ org.eclipse.jface.text;bundle-version="3.10.0";visibility:=reexport,
+ org.eclipse.ui;bundle-version="3.107.0",
+ org.eclipse.ui.ide;bundle-version="3.11.0",
+ org.eclipse.jdt.ui;bundle-version="3.11.2",
+ org.eclipse.jdt.core;bundle-version="3.11.2",
+ org.eclipse.core.resources;bundle-version="3.10.1",
+ com.google.guava;bundle-version="15.0.0",
  com.google.inject;bundle-version="3.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Roberto Lo Giacco
 Export-Package: org.agileware.natural.common
