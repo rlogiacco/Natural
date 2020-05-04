@@ -25,7 +25,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
 Import-Package: org.apache.commons.logging,
  org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.cucumber; uses:="org.eclipse.xtext,  org.eclipse.xtext.service,  org.eclipse.xtext.common.types,  com.google.inject",
  org.agileware.natural.cucumber.cucumber;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
  org.agileware.natural.cucumber.cucumber.impl; uses:="org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.emf.ecore.impl,  org.eclipse.emf.common.notify,  org.agileware.natural.cucumber.cucumber",
