@@ -4,39 +4,88 @@
 package org.agileware.natural.jbehave.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.jbehave.jbehave.WantTo
+import org.agileware.natural.jbehave.jbehave.GivenStories
+import org.agileware.natural.jbehave.jbehave.Meta
 import org.agileware.natural.jbehave.jbehave.Narrative
+import org.agileware.natural.jbehave.jbehave.Scenario
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.services.JBehaveGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import org.agileware.natural.jbehave.jbehave.Step
+import org.agileware.natural.jbehave.jbehave.Table
+import org.agileware.natural.jbehave.jbehave.Examples
 
 class JBehaveFormatter extends AbstractFormatter2 {
 
 	@Inject extension JBehaveGrammarAccess
 
 	def dispatch void format(Story story, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		story.meta.format
+		// format narrative 
 		story.narrative.format
+
+		// format meta data
+		story.meta.format
+
+		// format scenarios
 		for (scenario : story.scenarios) {
 			scenario.format
 		}
+
+		println("********** DOCUMENT FORMAT **********")
+		println(document)
+	}
+
+	def dispatch void format(Scenario scenario, extension IFormattableDocument document) {
+
+		// format meta data
+		scenario.meta.format
+
+		// format given stories
+		scenario.given.format
 		
-		 println("********** DOCUMENT FORMAT **********")
-		 println(document)
+		// format conditions
+		for (condition : scenario.conditions) {
+			condition.format
+		}
+		
+		// format examples
+		scenario.examples.format
+
+		// indent interior
+		scenario.interior[indent]
 	}
 
 	def dispatch void format(Narrative narrative, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		narrative.inOrderTo.format
-		narrative.asA.format
-		narrative.wantTo.format
+		// indent interior
+		narrative.interior[indent]
+	}
+	
+	def dispatch void format(Step step, extension IFormattableDocument document) {
+		// format table
+		step.table.format
+		
+		// indent interior
+		step.interior[indent]
+	}
+	
+	def dispatch void format(Examples examples, extension IFormattableDocument document) {
+		// format table
+		examples.table.format
+		
+		// indent interior
+		examples.interior[indent]
 	}
 
-	def dispatch void format(WantTo wantTo, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+	def dispatch void format(Meta meta, extension IFormattableDocument document) {
+		// TODO special formatting for metadata?
 	}
 
-// TODO: implement for Scenario, GivenStories, Meta, Step, Examples
+	def dispatch void format(GivenStories given, extension IFormattableDocument document) {
+		// TODO special formatting for given stories?
+	}
+	
+	def dispatch void format(Table table, extension IFormattableDocument document) {
+		// TODO table formatting could be applied with a few AST modifications
+	}
 }
