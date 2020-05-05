@@ -34,12 +34,19 @@ class CucumberFormatter extends AbstractFormatter2 {
 		feature.background.format
 
 		// format scenarios
-		for (eObject : feature.scenarios) {
-			eObject.format
+		for (scenario : feature.scenarios) {
+			scenario.format
 		}
+
+		// indent interior
+		feature.interior[indent]
 
 		// format narrative
 		formatNarrative(feature.regionFor.feature(FEATURE__NARRATIVE))
+
+		// TODO remove debug outut
+		println("********** DOCUMENT FORMAT **********")
+		println(document)
 	}
 
 	def dispatch void format(Background background, extension IFormattableDocument document) {
@@ -47,6 +54,9 @@ class CucumberFormatter extends AbstractFormatter2 {
 		for (step : background.steps) {
 			step.format
 		}
+
+		// indent interior
+		feature.interior[indent]
 
 		// format narrative
 		formatNarrative(background.regionFor.feature(BACKGROUND__NARRATIVE))
@@ -63,6 +73,9 @@ class CucumberFormatter extends AbstractFormatter2 {
 		for (step : scenario.steps) {
 			step.format
 		}
+
+		// indent interior
+		feature.interior[indent]
 
 		// format narrative
 		formatNarrative(scenario.regionFor.feature(SCENARIO__NARRATIVE))
@@ -82,6 +95,9 @@ class CucumberFormatter extends AbstractFormatter2 {
 
 		// format examples
 		scenarioOutline.examples.format
+
+		// indent interior
+		feature.interior[indent]
 
 		// format narrative
 		formatNarrative(scenarioOutline.regionFor.feature(SCENARIO__NARRATIVE))
