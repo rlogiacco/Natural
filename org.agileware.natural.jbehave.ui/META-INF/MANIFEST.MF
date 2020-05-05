@@ -31,5 +31,4 @@ Export-Package: org.agileware.natural.jbehave.ui,
  org.agileware.natural.jbehave.ui.internal,
  org.agileware.natural.jbehave.ui.contentassist,
  org.agileware.natural.jbehave.ui.quickfix
-Bundle-Activator: org.agileware.natural.jbehave.ui.JBehaveActivator
-
+Bundle-Activator: org.agileware.natural.jbehave.ui.internal.JbehaveActivator
