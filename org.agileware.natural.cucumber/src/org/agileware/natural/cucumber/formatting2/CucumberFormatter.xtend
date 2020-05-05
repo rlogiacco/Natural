@@ -44,9 +44,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// format narrative
 		formatNarrative(feature.regionFor.feature(FEATURE__NARRATIVE))
 
-		// TODO remove debug outut
-		println("********** DOCUMENT FORMAT **********")
-		println(document)
+		// println("********** DOCUMENT FORMAT **********")
+		// println(document)
 	}
 
 	def dispatch void format(Background background, extension IFormattableDocument document) {
@@ -116,6 +115,9 @@ class CucumberFormatter extends AbstractFormatter2 {
 		for (tables : step.tables) {
 			tables.format
 		}
+		
+		// indent interior
+		step.interior[indent]
 	}
 
 	def dispatch void format(Table table, extension IFormattableDocument document) {
