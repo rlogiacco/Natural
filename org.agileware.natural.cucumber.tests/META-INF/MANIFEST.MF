@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.rlogiacco.eclipse.cucumber.tests
+Bundle-Name: org.agileware.natural.cucumber.tests
 Bundle-Vendor: My Company
 Bundle-Version: 1.4.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.cucumber.tests;singleton:=true

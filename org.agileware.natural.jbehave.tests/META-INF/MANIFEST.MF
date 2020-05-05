@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.rlogiacco.eclipse.jbehave.tests
+Bundle-Name: org.agileware.natural.jbehave.tests
 Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.jbehave.tests;singleton:=true
