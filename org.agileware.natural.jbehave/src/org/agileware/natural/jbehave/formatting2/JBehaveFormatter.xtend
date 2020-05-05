@@ -4,7 +4,7 @@
 package org.agileware.natural.jbehave.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.jbehave.jbehave.IWantTo
+import org.agileware.natural.jbehave.jbehave.WantTo
 import org.agileware.natural.jbehave.jbehave.Narrative
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.services.JBehaveGrammarAccess
@@ -22,16 +22,19 @@ class JBehaveFormatter extends AbstractFormatter2 {
 		for (scenario : story.scenarios) {
 			scenario.format
 		}
+		
+		 println("********** DOCUMENT FORMAT **********")
+		 println(document)
 	}
 
 	def dispatch void format(Narrative narrative, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		narrative.inOrderTo.format
 		narrative.asA.format
-		narrative.IWantTo.format
+		narrative.wantTo.format
 	}
 
-	def dispatch void format(IWantTo iWantTo, extension IFormattableDocument document) {
+	def dispatch void format(WantTo wantTo, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 	}
 

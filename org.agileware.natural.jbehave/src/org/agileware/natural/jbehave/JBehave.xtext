@@ -13,7 +13,7 @@ Narrative:
 	'Narrative:' 
 	inOrderTo=InOrderTo 
 	asA=AsA
-	iWantTo=IWantTo;
+	wantTo=WantTo;
 	
 Scenario:
 	'Scenario:'
@@ -44,7 +44,7 @@ InOrderTo:
 AsA:
 	AS_A content=NarrativeElementContent;
 
-IWantTo:
+WantTo:
 	I_WANT_TO content=NarrativeElementContent;
 
 Examples:
