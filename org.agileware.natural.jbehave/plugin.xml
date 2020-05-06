@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.agileware.org/natural/jbehave" 
        class = "org.agileware.natural.jbehave.jbehave.JbehavePackage"
-       genModel = "org/agileware/natural/jbehave/JBehave.genmodel" /> 
+       genModel = "model/generated/JBehave.genmodel" /> 
 	
   </extension>
 

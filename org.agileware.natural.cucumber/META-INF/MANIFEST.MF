@@ -63,3 +63,4 @@ Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.ecli
  org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext.service,org.eclipse.xtext",
  org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation"
 Bundle-ClassPath: .
+Automatic-Module-Name: org.agileware.natural.cucumber

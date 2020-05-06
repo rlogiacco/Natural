@@ -38,3 +38,4 @@ Export-Package: org.agileware.natural.jbehave.ui;
  org.agileware.natural.jbehave.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
  org.agileware.natural.jbehave.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
 Bundle-Activator: org.agileware.natural.jbehave.ui.internal.JbehaveActivator
+Automatic-Module-Name: org.agileware.natural.jbehave.ui

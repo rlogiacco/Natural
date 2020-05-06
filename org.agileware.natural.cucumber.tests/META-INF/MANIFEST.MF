@@ -25,3 +25,4 @@ Import-Package: org.apache.commons.logging,
  org.junit.runners.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.cucumber.tests;x-internal=true;uses:="com.google.inject,org.eclipse.xtext.testing,org.agileware.natural.cucumber"
+Automatic-Module-Name: org.agileware.natural.cucumber.tests

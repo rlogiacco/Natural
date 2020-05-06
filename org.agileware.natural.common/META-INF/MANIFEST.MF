@@ -22,3 +22,4 @@ Export-Package: org.agileware.natural.common;
    org.eclipse.jface.text,
    org.eclipse.jface.text.hyperlink,
    org.eclipse.jdt.core.search"
+Automatic-Module-Name: org.agileware.natural.common

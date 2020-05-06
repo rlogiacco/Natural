@@ -39,3 +39,4 @@ Export-Package: org.agileware.natural.cucumber.ui;
  org.agileware.natural.cucumber.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
  org.agileware.natural.cucumber.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
 Bundle-Activator: org.agileware.natural.cucumber.ui.CucumberActivator
+Automatic-Module-Name: org.agileware.natural.cucumber.ui

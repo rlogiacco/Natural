@@ -61,3 +61,4 @@ Export-Package: org.agileware.natural.jbehave;uses:="com.google.inject,org.eclip
    org.eclipse.xtext.serializer",
  org.agileware.natural.jbehave.services;uses:="org.eclipse.xtext.service,org.eclipse.xtext",
  org.agileware.natural.jbehave.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation"
+Automatic-Module-Name: org.agileware.natural.jbehave

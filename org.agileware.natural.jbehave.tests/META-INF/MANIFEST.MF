@@ -25,3 +25,4 @@ Import-Package: org.apache.commons.logging,
  org.junit.runners.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.jbehave.tests;x-internal=true;uses:="com.google.inject,org.agileware.natural.jbehave,org.eclipse.xtext.testing"
+Automatic-Module-Name: org.agileware.natural.jbehave.tests

@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.agileware.org/natural/cucumber" 
        class = "org.agileware.natural.cucumber.cucumber.CucumberPackage"
-       genModel = "org/agileware/natural/cucumber/Cucumber.genmodel" /> 
+       genModel = "model/generated/Cucumber.genmodel" /> 
 	
   </extension>
 
