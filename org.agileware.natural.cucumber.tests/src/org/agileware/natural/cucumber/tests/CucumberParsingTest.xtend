@@ -8,23 +8,37 @@ import org.agileware.natural.cucumber.cucumber.Feature
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+
+import static org.hamcrest.CoreMatchers.*
+import static org.hamcrest.MatcherAssert.*
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
 class CucumberParsingTest {
+
 	@Inject
 	ParseHelper<Feature> parseHelper
-	
+
 	@Test
-	def void loadModel() {
+	def void parseHappyPath() {
 		val result = parseHelper.parse('''
-			Hello Xtext!
+			@version:Release-2 
+			Feature: Add a new pet 
+				In order to sell a pet
+			 	As a store owner
+			 	I want to add a new pet to the catalog
+			
+			Scenario: Add a dog 
+				Given I have the following pet 
+					| name | status    |
+					| Fido | available |
+				When I add the pet to the store 
+				Then the pet should be available in the store 
+				And foo bar
 		''')
-		Assert.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assert.assertTrue('''Unexpected errors: «errors.join(", ")»''', errors.isEmpty)
+		assertThat(result, notNullValue())
+		assertThat(result.eResource.errors, equalTo(#[]))
 	}
 }
