@@ -16,4 +16,9 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.17.100";visibility:=r
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Roberto Lo Giacco
-Export-Package: org.agileware.natural.common
+Export-Package: org.agileware.natural.common;
+  uses:="org.osgi.framework,
+   org.eclipse.jdt.core,
+   org.eclipse.jface.text,
+   org.eclipse.jface.text.hyperlink,
+   org.eclipse.jdt.core.search"

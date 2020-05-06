@@ -27,8 +27,14 @@ Import-Package: org.apache.commons.logging,
  org.apache.log4j,
  org.eclipse.xtext.ui.codemining;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.jbehave.ui,
- org.agileware.natural.jbehave.ui.internal,
- org.agileware.natural.jbehave.ui.contentassist,
- org.agileware.natural.jbehave.ui.quickfix
+Export-Package: org.agileware.natural.jbehave.ui;
+  uses:="org.osgi.framework,
+   com.google.inject,
+   org.eclipse.xtext.ui,
+   org.eclipse.core.resources,
+   org.eclipse.xtext.ui.guice,
+   org.eclipse.ui.plugin",
+ org.agileware.natural.jbehave.ui.contentassist;uses:="org.eclipse.emf.ecore,org.eclipse.xtext.ui.editor.contentassist,org.eclipse.xtext",
+ org.agileware.natural.jbehave.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
+ org.agileware.natural.jbehave.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
 Bundle-Activator: org.agileware.natural.jbehave.ui.internal.JbehaveActivator
