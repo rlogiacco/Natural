@@ -3,18 +3,31 @@ grammar org.agileware.natural.jbehave.JBehave hidden(SPACE, SL_COMMENT)
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate jbehave "http://www.agileware.org/natural/jbehave"
 
+// The story describes a feature via description, narrative and a set of scenarios
+// Story := Description? Meta? Narrative? GivenStories? Lifecycle? Scenario+ ;
 Story:
 	description+=Description*
 	meta=Meta?
 	narrative=Narrative?
 	scenarios+=Scenario+;
 
+// The narrative is identified by keyword "Narrative:" (or equivalent in I18n-ed locale),
+// It is followed by the narrative elements
+// Narrative:= "Narrative:" ( InOrderTo AsA IWantTo | AsA IWantTo SoThat ) ;
 Narrative:
-	'Narrative:' 
-	inOrderTo=InOrderTo 
+	'Narrative:'
+	inOrderTo=InOrderTo
 	asA=AsA
-	wantTo=WantTo;
-	
+	wantTo=WantTo
+	soThat=SoThat;
+
+// The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
+// which is optional in the case of a single scenario.
+// It can optionally be followed by a title, which is expressed by any sequence of words
+// that must not contain any keywords at start of lines.
+// It is followed by one or more Steps.
+// Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
+// Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;	
 Scenario:
 	'Scenario:'
 	description+=Description+
@@ -23,52 +36,158 @@ Scenario:
 	conditions+=Step+
 	examples=Examples?;
 
+// The comma-separated list of story resources that specify the stories to be run before a story or a scenario
+// GivenStories:= "GivenStories:" (StoryPath ','?)+ ;
 GivenStories:
 	'GivenStories:'
 	resources+=StoryPath+;
 
+// The lifecycle is identified by keyword "Lifecycle:" (or equivalent in I18n-ed locale),
+// It is followed by the lifecycle elements
+// Lifecycle:= "Lifecycle:" LifecycleBefore? LifecycleAfter?
+// TODO...
+
+// The before lifecyle element identified by keyword "Before:" (or equivalent in I18n-ed locale),
+// followed by one or more steps
+// LifecycleBefore:= "Before:" (Scope? Step+)+
+// TODO...
+
+// The after lifecyle element identified by keyword "After:" (or equivalent in I18n-ed locale),
+// followed by one or more sets of scope, outcome, meta filter and steps
+// LifecycleAfter:= "After:" (Scope? Outcome? MetaFilter? Step+)+
+// TODO...
+
+// The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),
+// Scope:= "Scope:" "STEP" | "SCENARIO" | "STORY"
+// TODO...
+
+// The outcome element identified by keyword "Outcome:" (or equivalent in I18n-ed locale),
+// Outcome:= "Outcome:" "ANY" | "SUCCESS" | "FAILURE" ;
+// TODO...
+
+// The meta filter element identified by keyword "MetaFilter:" (or equivalent in I18n-ed locale),
+// MetaFilter:= "MetaFilter:" (Word Space?)*
+// TODO...
+
+// The story resource path
+// StoryPath := PathCharacter+ ;
 StoryPath:
 	path=PATH ','?;
 
-Meta: {Meta}
-	'Meta:' 
+// The meta is identified by keyword "Meta:" (or equivalent in I18n-ed locale),
+// It is followed by any number of meta elements
+// Meta:= "Meta:" (MetaElement)* ;
+Meta:
+	{Meta}
+	'Meta:'
 	elements+=Tag*;
-	
+
+// The scenario step is a step starting work followed by any number of characters
+// Step := StepStartingWord StepContent ;
 Step:
 	description=StepDescription EOL*
 	table=Table?;
 
+// The step starting words (or equivalent in I18n-ed locale)
+// StepStartingWord := ("Given" | "When" | "Then" | "And" | "!--" ) ;
+// TODO...
+
+// The step content is any sequence of characters that do not match a step starting word
+// StepContent := ? Any sequence of StepCharacter that does not match StepStartingWord ? ;
+// TODO...
+
+// All characters are allowed in a scenario step content, including newlines
+// StepCharacter := ? Any Unicode character ? ;
+// TODO...
+
+// The narrative elements
+////
+
+// InOrderTo:= "In order to" NarrativeElementContent ;
 InOrderTo:
 	IN_ORDER_TO content=NarrativeElementContent;
 
+// AsA:= "As a" NarrativeElementContent ;
 AsA:
 	AS_A content=NarrativeElementContent;
 
+// IWantTo:= "I want to" NarrativeElementContent ;
 WantTo:
 	I_WANT_TO content=NarrativeElementContent;
 
+// SoThat:= "So that" NarrativeElementContent ;
+SoThat:
+	SO_THAT content=NarrativeElementContent;
+
+// The examples table
+// Examples := "Examples:" ExamplesTable ;
 Examples:
-	'Examples:' 
+	'Examples:'
 	table=Table;
-	
+
+// The examples table comprises of a header row and data rows
+// ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;	
 Table:
 	rows+=TABLE_ROW+ EOL*;
 
+// The examples table header contains the column names, separated by ExamplesTableColumnSeparator
+// ExamplesTableHeader := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
+// TODO...
+
+// The examples table row contains the column values, separated by ExamplesTableColumnSeparator
+// ExamplesTableRow := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
+// TODO...
+
+// The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
+// ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
+// TODO...
+
+// The examples table column separator
+// ExamplesTableColumnSeparator := "|" ;
+// TODO...
+
+// The free-text description
+// Title := (Word Space?)* ;
+// TODO...
+
+// The Description is expressed by any sequence of words that must not contain any keywords at start of lines.
+// Description := (Word Space?)* ;
 Description:
 	Content EOL+;
 
 StepDescription:
-	STEP_KEYWORD (STRING | WORD | INT | ANY | PLACEHOLDER)+;
-	
+	STEP_KEYWORD
+	(STRING | WORD | INT | ANY | PLACEHOLDER)+;
+
+// The narrative element content is any sequence of characters that do not match a narrative starting word
+// NarrativeElementContent := ? Any sequence of NarrativeCharacter that does not match NarrativeStartingWord ? ;
 NarrativeElementContent:
-	(STRING | WORD | INT | ANY | PLACEHOLDER) (AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
+	(STRING | WORD | INT | ANY | PLACEHOLDER)
+	(AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
 
 Content:
-	(STRING | WORD | INT | ANY | PLACEHOLDER) (AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
+	(STRING | WORD | INT | ANY | PLACEHOLDER)
+	(AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
 
+// The comment
+// Comment := Any sequence of characters starting from "!--" keyword
+// TODO...
+
+// The meta element is identified by keyword "@" (or equivalent in I18n-ed locale),
+// It is followed by a name-value pair, where the value can be empty or have multiple words
+// MetaElement:= "@" Space? Word Space (Word Space?)* ;
 Tag: AT name=WORD EOL?;
 
+// All characters are allowed in a narrative content, including newlines
+// NarrativeCharacter := ? Any Unicode character ? ;
+// TODO...
 
+// The narrative starting words (or equivalent in I18n-ed locale)
+// NarrativeStartingWord := ("In order to" | "As a" | "I want to" | "So that") ;
+// TODO...
+
+// The keywords which are reserved (or equivalent in I18n-ed locale)
+// KeyWord := "Scenario:" | "GivenStories:" | "Given" | "When" | "Then" | "And" | "!--" ;
 terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | '!--');
 
 terminal IN_ORDER_TO: 'In order to';
@@ -77,15 +196,26 @@ terminal AS_A: 'As a';
 
 terminal I_WANT_TO: 'I want to';
 
-terminal PLACEHOLDER: '<' ('a'..'z' | 'A'..'Z') !('>' | '\n' | '\r')* '>';
-	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ SPACE* EOL;
+terminal SO_THAT: 'So that';
 
-terminal WORD: ('a'..'z' | 'A'..'Z') !(SPACE | '\n' | '\r')*;
+terminal PLACEHOLDER:
+	'<' ('a'..'z' | 'A'..'Z') !('>' | '\n' | '\r')* '>';
 
-terminal PATH: '/' ('/' | '.' | '_' | 'a'..'z' | 'A'..'Z' | '0'..'9')+;
+terminal TABLE_ROW:
+	'|' (!('|' | '\n' | '\r')* '|')+ SPACE* EOL;
 
-terminal INT returns ecore::EDouble: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
+// The word is any sequence of non-space characters that does not match a KeyWord
+// Word := ? Any sequence of NonSpaceCharacter that does not match KeyWord ? ;
+terminal WORD:
+	('a'..'z' | 'A'..'Z') !(SPACE | '\n' | '\r')*;
+
+// The characters allowed in a resource path
+// PathCharacter := "/" | "." | "_" | Letter | Digit ;
+terminal PATH:
+	'/' ('/' | '.' | '_' | 'a'..'z' | 'A'..'Z' | '0'..'9')+;
+
+terminal INT returns ecore::EDouble:
+	'-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 terminal STRING:
 	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
@@ -93,8 +223,24 @@ terminal STRING:
 
 terminal SL_COMMENT: '#' !('\n' | '\r')* EOL;
 
+// The space character
+// Space := ? Unicode space character ? ;
 terminal SPACE: (' ' | '\t');
 
+	// The non-space character
+// NonSpaceCharacter := ? Any Unicode character except Space ? ;
+// TODO...
+
+// The letter characters
+// Letter := ? Any Unicode letter character ? ;
+// TODO...
+
+// The digit characters
+//Digit := ? Any Unicode digit character ? ;
+// TODO...
+
+// The new line character
+// Newline := ? Unicode newline character ? ;
 terminal EOL: '\r'? '\n'?;
 
 terminal AT: '@';
