@@ -3,9 +3,6 @@
  */
 package org.agileware.natural.cucumber.tests
 
-import static org.hamcrest.MatcherAssert.*
-import static org.hamcrest.CoreMatchers.*
-
 import com.google.inject.Inject
 import org.agileware.natural.cucumber.cucumber.Feature
 import org.eclipse.xtext.testing.InjectWith
@@ -14,20 +11,24 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.hamcrest.CoreMatchers.*
+import static org.hamcrest.MatcherAssert.*
+
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
 class CucumberParsingTest {
+
 	@Inject
 	ParseHelper<Feature> parseHelper
-	
+
 	@Test
 	def void parseHappyPath() {
 		val result = parseHelper.parse('''
 			@version:Release-2 
 			Feature: Add a new pet 
 				In order to sell a pet
-			  As a store owner
-			  I want to add a new pet to the catalog
+			 	As a store owner
+			 	I want to add a new pet to the catalog
 			
 			Scenario: Add a dog 
 				Given I have the following pet 
@@ -38,9 +39,6 @@ class CucumberParsingTest {
 				And foo bar
 		''')
 		assertThat(result, notNullValue())
-		assertThat(result.eResource.errors, notNullValue())
-		
-		// val errors = result.eResource.errors
-		//Assert.assertTrue('''Unexpected errors: «errors.join(", ")»''', errors.isEmpty)
+		assertThat(result.eResource.errors, equalTo(#[]))
 	}
 }
