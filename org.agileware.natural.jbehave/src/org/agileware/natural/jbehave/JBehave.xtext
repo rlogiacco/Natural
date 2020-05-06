@@ -18,7 +18,7 @@ Narrative:
 	'Narrative:'
 	inOrderTo=InOrderTo
 	asA=AsA
-	wantTo=WantTo
+	wantTo=IWantTo
 	soThat=SoThat;
 
 // The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
@@ -112,7 +112,7 @@ AsA:
 	AS_A content=NarrativeElementContent;
 
 // IWantTo:= "I want to" NarrativeElementContent ;
-WantTo:
+IWantTo:
 	I_WANT_TO content=NarrativeElementContent;
 
 // SoThat:= "So that" NarrativeElementContent ;
