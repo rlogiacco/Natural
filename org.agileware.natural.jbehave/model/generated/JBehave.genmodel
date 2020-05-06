@@ -16,7 +16,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JBehave.ecore#//Narrative/inOrderTo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JBehave.ecore#//Narrative/asA"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JBehave.ecore#//Narrative/wantTo"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JBehave.ecore#//Narrative/soThat"/>
     </genClasses>
     <genClasses ecoreClass="JBehave.ecore#//Scenario">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JBehave.ecore#//Scenario/description"/>
@@ -46,9 +45,6 @@
     </genClasses>
     <genClasses ecoreClass="JBehave.ecore#//IWantTo">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JBehave.ecore#//IWantTo/content"/>
-    </genClasses>
-    <genClasses ecoreClass="JBehave.ecore#//SoThat">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JBehave.ecore#//SoThat/content"/>
     </genClasses>
     <genClasses ecoreClass="JBehave.ecore#//Examples">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JBehave.ecore#//Examples/table"/>

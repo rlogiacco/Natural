@@ -16,8 +16,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="asA" eType="#//AsA" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="wantTo" eType="#//IWantTo"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="soThat" eType="#//SoThat"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scenario">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" unique="false"
@@ -53,9 +51,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IWantTo">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SoThat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Examples">

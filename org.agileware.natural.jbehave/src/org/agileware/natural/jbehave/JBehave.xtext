@@ -18,8 +18,7 @@ Narrative:
 	'Narrative:'
 	inOrderTo=InOrderTo
 	asA=AsA
-	wantTo=IWantTo
-	soThat=SoThat;
+	wantTo=IWantTo;
 
 // The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
 // which is optional in the case of a single scenario.
@@ -116,8 +115,7 @@ IWantTo:
 	I_WANT_TO content=NarrativeElementContent;
 
 // SoThat:= "So that" NarrativeElementContent ;
-SoThat:
-	SO_THAT content=NarrativeElementContent;
+// TODO...
 
 // The examples table
 // Examples := "Examples:" ExamplesTable ;
