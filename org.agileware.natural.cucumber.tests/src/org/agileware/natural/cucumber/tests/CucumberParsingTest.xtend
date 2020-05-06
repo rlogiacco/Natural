@@ -3,12 +3,14 @@
  */
 package org.agileware.natural.cucumber.tests
 
+import static org.hamcrest.MatcherAssert.*
+import static org.hamcrest.CoreMatchers.*
+
 import com.google.inject.Inject
 import org.agileware.natural.cucumber.cucumber.Feature
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -35,8 +37,10 @@ class CucumberParsingTest {
 				Then the pet should be available in the store 
 				And foo bar
 		''')
-		Assert.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assert.assertTrue('''Unexpected errors: «errors.join(", ")»''', errors.isEmpty)
+		assertThat(result, notNullValue())
+		assertThat(result.eResource.errors, notNullValue())
+		
+		// val errors = result.eResource.errors
+		//Assert.assertTrue('''Unexpected errors: «errors.join(", ")»''', errors.isEmpty)
 	}
 }
