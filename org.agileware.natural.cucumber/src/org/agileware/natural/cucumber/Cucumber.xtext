@@ -9,7 +9,7 @@ Feature:
 	title=Title EOL+
 	narrative=Narrative?
 	background=Background?
-	scenarios+=(AbstractScenario)+;
+	scenarios+=(AbstractScenario)*;
 
 Background:
 	tags+=Tag*
@@ -26,7 +26,7 @@ Scenario:
 	'Scenario:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+;
+	steps+=Step*;
 
 ScenarioOutline:
 	{ScenarioOutline}
