@@ -77,7 +77,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 		scenario.interior[indent]
 
 		// format narrative
-		formatNarrative(scenario.regionFor.feature(SCENARIO__NARRATIVE))
+		formatNarrative(scenario.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
 	}
 
 	def dispatch void format(ScenarioOutline scenarioOutline, extension IFormattableDocument document) {
@@ -93,13 +93,15 @@ class CucumberFormatter extends AbstractFormatter2 {
 		}
 
 		// format examples
-		scenarioOutline.examples.format
+		for (example : scenarioOutline.examples) {
+			example.format
+		}
 
 		// indent interior
 		scenarioOutline.interior[indent]
 
 		// format narrative
-		formatNarrative(scenarioOutline.regionFor.feature(SCENARIO__NARRATIVE))
+		formatNarrative(scenarioOutline.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
 	}
 
 	def dispatch void format(Examples examples, extension IFormattableDocument document) {
