@@ -14,7 +14,6 @@ import org.junit.runner.RunWith
 import static org.agileware.natural.cucumber.tests.CucumberMatchers.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
-import org.agileware.natural.cucumber.cucumber.Scenario
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
@@ -30,20 +29,20 @@ class CucumberParsingTest {
 			  The quick brown fox
 			  Jumps over the lazy dog
 			  # But only on days that end in 'Y'
-
+			
 			Scenario: Jack and Jill
 			  Given Jack and Jill went up a hill
 			  When Jack fell down
 			  Then Jill came tumbling after
 		''')
-		
+
 		assertThat(feature, notNullValue())
 		assertThat(feature.title, equalTo("Hello, Cucumber!"))
 		assertThat(feature.narrative, equalToCompressingWhiteSpace('''
 			The quick brown fox
 			Jumps over the lazy dog
 		'''))
-		
+
 		val scenarios = feature.scenarios
 		assertThat(scenarios, hasSize(1))
 		assertThat(scenarios, hasItem(withScenario("Jack and Jill")))
@@ -51,18 +50,18 @@ class CucumberParsingTest {
 		val steps = scenarios.get(0).steps
 		assertThat(steps, hasSize(3))
 		assertThat(steps, hasItems(
-				withStep("Jack and Jill went up a hill"),
-				withStep("Jack fell down"),
-				withStep("Jill came tumbling after")
+			withStep("Jack and Jill went up a hill"),
+			withStep("Jack fell down"),
+			withStep("Jill came tumbling after")
 		))
 	}
-	
+
 	@Test
 	def void featureOnly() {
 		val feature = parseHelper.parse('''
 			Feature: Hello, Cucumber!
 		''')
-		
+
 		assertThat(feature, notNullValue())
 		assertThat(feature.title, equalTo("Hello, Cucumber!"))
 	}
@@ -76,8 +75,8 @@ class CucumberParsingTest {
 			@pet_store
 			Feature: Add a new pet 
 				In order to sell a pet
-			 	As a store owner
-			 	I want to add a new pet to the catalog
+					As a store owner
+					I want to add a new pet to the catalog
 				# But only on days that end in 'Y'
 			
 			@setup
@@ -119,7 +118,7 @@ class CucumberParsingTest {
 					|    12 |   2 |   10 |
 					|    20 |   5 |   15 |
 		''')
-		
+
 		assertThat(feature, notNullValue())
 		assertThat(feature.eResource.errors, empty())
 	}
