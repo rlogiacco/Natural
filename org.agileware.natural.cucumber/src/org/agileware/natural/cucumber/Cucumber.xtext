@@ -35,7 +35,7 @@ ScenarioOutline:
 	title=Title? EOL+
 	narrative=Narrative?
 	steps+=Step+
-	examples=Examples;
+	examples+=Examples+;
 	
 // TODO: Step should be made into an abstract element
 //       with different kinds for the specific action.
