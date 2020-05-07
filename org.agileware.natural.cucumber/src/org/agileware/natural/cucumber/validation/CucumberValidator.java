@@ -5,6 +5,7 @@ import org.agileware.natural.cucumber.cucumber.CucumberPackage;
 import org.agileware.natural.cucumber.cucumber.Step;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.CheckType;
 
 import com.google.inject.Inject;
 
@@ -13,7 +14,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	@Inject
 	private JavaAnnotationMatcher matcher;
 
-	@Check
+	@Check(CheckType.EXPENSIVE)
 	public void checkStepMatching(Step step) {
 		final Counter counter = new Counter();
 		String description = step.getDescription().trim();
