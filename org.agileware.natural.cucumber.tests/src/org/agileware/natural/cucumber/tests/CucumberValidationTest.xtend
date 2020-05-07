@@ -11,6 +11,8 @@ import org.eclipse.xtext.validation.Issue
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.agileware.natural.cucumber.tests.CucumberMatchers.*
+import static org.agileware.natural.cucumber.validation.IssueCode.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
 
@@ -36,5 +38,18 @@ class CucumberValidationTest {
 		''')
 
 		assertThat(issues, not(empty()))
+		assertThat(issues, containsInAnyOrder(theError(MissingScenarios)))
+	}
+
+	@Test
+	def void missingSteps() {
+		val issues = validate('''
+			Feature: Hello, Cucumber!
+			Scenario: Goobye, World!
+		''')
+
+		println(issues)
+		assertThat(issues, not(empty()))
+		assertThat(issues, containsInAnyOrder(theError(MissingSteps)))
 	}
 }
