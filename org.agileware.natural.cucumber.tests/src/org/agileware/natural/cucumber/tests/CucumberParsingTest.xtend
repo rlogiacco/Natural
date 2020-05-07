@@ -11,8 +11,10 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.hamcrest.CoreMatchers.*
+import static org.agileware.natural.cucumber.tests.CucumberMatchers.*
 import static org.hamcrest.MatcherAssert.*
+import static org.hamcrest.Matchers.*
+import org.agileware.natural.cucumber.cucumber.Scenario
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
@@ -22,21 +24,53 @@ class CucumberParsingTest {
 	ParseHelper<Feature> parseHelper
 
 	@Test
-	def void parseHappyPath() {
+	def void helloCucumber() {
+		val feature = parseHelper.parse('''
+			Feature: Hello, Cucumber!
+			  The quick brown fox
+			  Jumps over the lazy dog
+
+			Scenario: Jack and Jill
+			  Given Jack and Jill went up a hill
+			  When Jack fell down
+			  Then Jill came tumbling after
+		''')
+		
+		assertThat(feature, notNullValue())
+		assertThat(feature.title, equalTo("Hello, Cucumber!"))
+		
+		val scenarios = feature.scenarios
+		assertThat(scenarios, hasSize(1))
+		assertThat(scenarios, hasItem(withScenario("Jack and Jill")))
+
+		val steps = scenarios.get(0).steps
+		assertThat(steps, hasSize(3))
+		assertThat(steps, hasItems(
+				withStep("Jack and Jill went up a hill"),
+				withStep("Jack fell down"),
+				withStep("Jill came tumbling after")
+		))
+	}	
+
+	@Test
+	def void allSupportedSyntax() {
 		val result = parseHelper.parse('''
-			@version:Release-2 
+			@release:Release-2 
+			@version:1.0.0
+			@pet_store
 			Feature: Add a new pet 
 				In order to sell a pet
 			 	As a store owner
 			 	I want to add a new pet to the catalog
+				# But only on days that end in 'Y'
 			
+			@fido
 			Scenario: Add a dog 
 				Given I have the following pet 
 					| name | status    |
 					| Fido | available |
 				When I add the pet to the store 
 				Then the pet should be available in the store 
-				And foo bar
 		''')
 		assertThat(result, notNullValue())
 		assertThat(result.eResource.errors, equalTo(#[]))
