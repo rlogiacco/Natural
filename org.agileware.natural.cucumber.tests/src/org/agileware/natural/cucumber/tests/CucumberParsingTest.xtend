@@ -29,6 +29,7 @@ class CucumberParsingTest {
 			Feature: Hello, Cucumber!
 			  The quick brown fox
 			  Jumps over the lazy dog
+			  # But only on days that end in 'Y'
 
 			Scenario: Jack and Jill
 			  Given Jack and Jill went up a hill
@@ -38,6 +39,10 @@ class CucumberParsingTest {
 		
 		assertThat(feature, notNullValue())
 		assertThat(feature.title, equalTo("Hello, Cucumber!"))
+		assertThat(feature.narrative, equalToCompressingWhiteSpace('''
+			The quick brown fox
+			Jumps over the lazy dog
+		'''))
 		
 		val scenarios = feature.scenarios
 		assertThat(scenarios, hasSize(1))
@@ -54,7 +59,8 @@ class CucumberParsingTest {
 
 	@Test
 	def void allSupportedSyntax() {
-		val result = parseHelper.parse('''
+		// TODO: this is still missing a lot of odd-ball cases
+		val feature = parseHelper.parse('''
 			@release:Release-2 
 			@version:1.0.0
 			@pet_store
@@ -64,15 +70,43 @@ class CucumberParsingTest {
 			 	I want to add a new pet to the catalog
 				# But only on days that end in 'Y'
 			
-			@fido
-			Scenario: Add a dog 
-				Given I have the following pet 
+			#TODO: tag support
+			Background: Add a dog 
+				Given I have the following pet
 					| name | status    |
 					| Fido | available |
-				When I add the pet to the store 
+				And I add the pet to the store   		 # extra whitespace
+			
+			@add
+			@fido
+			Scenario: Add a dog 
 				Then the pet should be available in the store 
+				
+			@update
+			@fido
+			Scenario: Update a dog 
+				Given the pet is available in the store
+				When I update the pet with  
+					| name | status      |
+					| Fido | unavailable |
+				Then the pet should be unavailable in the store 
+			
+			@eat-pickles	
+			Scenario Outline: Eating pickles
+				Given there are <start> pickles
+				When I eat <eat> pickles
+				Then I should have <left> pickles
+			
+				#TODO: tag support
+				Examples:
+					| start | eat | left |
+					|    12 |   5 |    7 |
+					|    20 |   5 |   15 |
+					
+				#TODO multiple example support
 		''')
-		assertThat(result, notNullValue())
-		assertThat(result.eResource.errors, equalTo(#[]))
+		
+		assertThat(feature, notNullValue())
+		assertThat(feature.eResource.errors, empty())
 	}
 }
