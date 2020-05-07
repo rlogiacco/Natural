@@ -5,6 +5,7 @@ import static org.agileware.natural.cucumber.validation.IssueCodes.*;
 
 import org.agileware.natural.common.JavaAnnotationMatcher;
 import org.agileware.natural.cucumber.cucumber.Feature;
+import org.agileware.natural.cucumber.cucumber.AbstractScenario;
 import org.agileware.natural.cucumber.cucumber.Step;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.xtext.validation.Check;
@@ -17,10 +18,18 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	@Inject
 	private JavaAnnotationMatcher matcher;
 
-	@Check(CheckType.FAST)
+	@Check
 	public void featureHasScenarios(Feature model) {
 		if (model.getScenarios().isEmpty()) {
 			error(MissingScenarios.value(), model, FEATURE__SCENARIOS, MissingScenarios.code());
+		}
+	}
+	
+	@Check
+	public void scenariosHasSteps(AbstractScenario model) {
+		if (model.getSteps().isEmpty()) {
+			String title = model.getTitle();
+			error(MissingSteps.value(title), model, ABSTRACT_SCENARIO__STEPS, MissingSteps.code());
 		}
 	}
 
