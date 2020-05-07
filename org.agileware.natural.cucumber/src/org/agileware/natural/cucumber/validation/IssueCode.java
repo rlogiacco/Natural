@@ -4,7 +4,7 @@ import java.util.Formatter;
 import java.util.Locale;
 
 // TODO: load values from localized property file
-public enum IssueCodes {
+public enum IssueCode {
 	MissingScenarios("Scenarios are undefined. At least one Scenario is needed to complete the Feature."),
 	MissingSteps("Scenario `%s` does not have any steps."),
 	MissingStepDefinition("No definition found for `%s`."),
@@ -14,18 +14,18 @@ public enum IssueCodes {
 
 	private final Formatter formatter;
 
-	private final String value;
+	private final String message;
 
 	public String code() {
 		return PREFIX + this.toString();
 	}
 
-	public String value(Object... tokens) {
-		return formatter.format(this.value, tokens).toString();
+	public String message(Object... tokens) {
+		return formatter.format(this.message, tokens).toString();
 	}
 
-	private IssueCodes(String value) {
-		this.value = value;
+	private IssueCode(String message) {
+		this.message = message;
 		this.formatter = new Formatter(new StringBuilder(), Locale.US);
 	}
 }

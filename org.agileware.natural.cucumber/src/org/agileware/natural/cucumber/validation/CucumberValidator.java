@@ -1,7 +1,7 @@
 package org.agileware.natural.cucumber.validation;
 
 import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.*;
-import static org.agileware.natural.cucumber.validation.IssueCodes.*;
+import static org.agileware.natural.cucumber.validation.IssueCode.*;
 
 import org.agileware.natural.common.JavaAnnotationMatcher;
 import org.agileware.natural.cucumber.cucumber.Feature;
@@ -21,7 +21,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	@Check
 	public void featureHasScenarios(Feature model) {
 		if (model.getScenarios().isEmpty()) {
-			error(MissingScenarios.value(), model, FEATURE__SCENARIOS, MissingScenarios.code());
+			error(MissingScenarios.message(), model, FEATURE__SCENARIOS, MissingScenarios.code());
 		}
 	}
 	
@@ -29,7 +29,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	public void scenariosHasSteps(AbstractScenario model) {
 		if (model.getSteps().isEmpty()) {
 			String title = model.getTitle();
-			error(MissingSteps.value(title), model, ABSTRACT_SCENARIO__STEPS, MissingSteps.code());
+			error(MissingSteps.message(title), model, ABSTRACT_SCENARIO__STEPS, MissingSteps.code());
 		}
 	}
 
@@ -39,9 +39,9 @@ public class CucumberValidator extends AbstractCucumberValidator {
 		String description = model.getDescription().trim();
 		matcher.findMatches(description, counter);
 		if (counter.get() == 0) {
-			warning(MissingStepDefinition.value(description), STEP__DESCRIPTION, MissingStepDefinition.code());
+			warning(MissingStepDefinition.message(description), STEP__DESCRIPTION, MissingStepDefinition.code());
 		} else if (counter.get() > 1) {
-			warning(MultipleStepDefinitions.value(description), STEP__DESCRIPTION, MultipleStepDefinitions.code());
+			warning(MultipleStepDefinitions.message(description), STEP__DESCRIPTION, MultipleStepDefinitions.code());
 		}
 	}
 
