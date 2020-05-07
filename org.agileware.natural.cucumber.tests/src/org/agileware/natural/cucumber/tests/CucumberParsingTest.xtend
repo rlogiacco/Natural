@@ -55,7 +55,17 @@ class CucumberParsingTest {
 				withStep("Jack fell down"),
 				withStep("Jill came tumbling after")
 		))
-	}	
+	}
+	
+	@Test
+	def void featureOnly() {
+		val feature = parseHelper.parse('''
+			Feature: Hello, Cucumber!
+		''')
+		
+		assertThat(feature, notNullValue())
+		assertThat(feature.title, equalTo("Hello, Cucumber!"))
+	}
 
 	@Test
 	def void allSupportedSyntax() {
