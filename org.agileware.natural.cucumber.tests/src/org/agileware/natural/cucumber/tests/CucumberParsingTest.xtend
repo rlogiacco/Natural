@@ -70,7 +70,7 @@ class CucumberParsingTest {
 			 	I want to add a new pet to the catalog
 				# But only on days that end in 'Y'
 			
-			#TODO: tag support
+			@setup
 			Background: Add a dog 
 				Given I have the following pet
 					| name | status    |
@@ -97,7 +97,7 @@ class CucumberParsingTest {
 				When I eat <eat> pickles
 				Then I should have <left> pickles
 			
-				#TODO: tag support
+				@hungry
 				Examples:
 					| start | eat | left |
 					|    12 |   5 |    7 |

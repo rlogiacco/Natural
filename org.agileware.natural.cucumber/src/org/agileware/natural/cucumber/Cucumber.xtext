@@ -12,6 +12,7 @@ Feature:
 	scenarios+=(AbstractScenario)+;
 
 Background:
+	tags+=Tag*
 	'Background:'
 	title=Title? EOL+
 	narrative=Narrative?
@@ -36,6 +37,10 @@ ScenarioOutline:
 	steps+=Step+
 	examples=Examples;
 	
+// TODO: Step should be made into an abstract element
+//       with different kinds for the specific action.
+//       this will allow us to provide warnings, if for
+//       example, the Scenario is messing a Then statement
 Step:
 	STEP_KEYWORD
 	description=StepDescription EOL*
@@ -44,6 +49,7 @@ Step:
 	tables+=Table*;
 
 Examples:
+	tags+=Tag*
 	'Examples:' 
 	title=Title? EOL+
 	narrative=Narrative?
