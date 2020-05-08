@@ -1,4 +1,4 @@
-package org.agileware.natural.common;
+package org.agileware.natural.stepmatcher;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

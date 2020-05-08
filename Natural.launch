@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
 <setAttribute key="additional_plugins">
-<setEntry value="org.agileware.natural.common:1.2.2.qualifier:default:true:default:default"/>
+<setEntry value="org.agileware.natural.stepmatcher:1.2.2.qualifier:default:true:default:default"/>
 <setEntry value="org.agileware.natural.cucumber.ide:1.4.0.qualifier:default:true:default:default"/>
 <setEntry value="org.agileware.natural.cucumber.tests:1.4.0.qualifier:default:true:default:default"/>
 <setEntry value="org.agileware.natural.cucumber.ui.tests:1.4.0.qualifier:default:true:default:default"/>

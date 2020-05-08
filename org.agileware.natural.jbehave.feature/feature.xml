@@ -68,7 +68,7 @@ to corresponding Java annotated classes.
          unpack="false"/>
 
    <plugin
-         id="org.agileware.natural.common"
+         id="org.agileware.natural.stepmatcher"
          download-size="0"
          install-size="0"
          version="0.0.0"

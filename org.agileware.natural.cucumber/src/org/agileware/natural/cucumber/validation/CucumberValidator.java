@@ -3,10 +3,10 @@ package org.agileware.natural.cucumber.validation;
 import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.*;
 import static org.agileware.natural.cucumber.validation.IssueCode.*;
 
-import org.agileware.natural.common.JavaAnnotationMatcher;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.AbstractScenario;
 import org.agileware.natural.cucumber.cucumber.Step;
+import org.agileware.natural.stepmatcher.JavaAnnotationMatcher;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
