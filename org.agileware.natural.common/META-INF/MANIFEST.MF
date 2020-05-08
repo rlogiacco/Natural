@@ -7,3 +7,4 @@ Automatic-Module-Name: org.agileware.natural.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Roberto Lo Giacco
 Bundle-ActivationPolicy: lazy
+Export-Package: org.agileware.natural.common.validation

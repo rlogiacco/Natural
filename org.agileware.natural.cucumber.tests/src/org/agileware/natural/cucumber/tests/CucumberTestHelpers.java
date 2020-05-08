@@ -11,7 +11,7 @@ import java.util.List;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
 import org.agileware.natural.cucumber.cucumber.Step;
-import org.agileware.natural.cucumber.validation.IssueCode;
+import org.agileware.natural.cucumber.validation.CucumberIssueCode;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.formatter.FormatterTestHelper;
@@ -65,14 +65,14 @@ public class CucumberTestHelpers {
 		return hasProperty("description", equalTo(description));
 	}
 
-	static public Matcher<Issue> theError(IssueCode issue) {
+	static public Matcher<Issue> theError(CucumberIssueCode issue) {
 		return allOf(
 				hasProperty("severity", equalTo(Severity.ERROR)), 
 				hasProperty("code", equalTo(issue.code()))
 		);
 	}
 
-	static public Matcher<Issue> theWarning(IssueCode issue) {
+	static public Matcher<Issue> theWarning(CucumberIssueCode issue) {
 		return allOf(
 				hasProperty("severity", equalTo(Severity.WARNING)), 
 				hasProperty("code", equalTo(issue.code()))

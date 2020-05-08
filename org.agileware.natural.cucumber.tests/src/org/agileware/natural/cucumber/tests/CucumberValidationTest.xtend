@@ -6,10 +6,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.agileware.natural.cucumber.tests.CucumberTestHelpers.*
-import static org.agileware.natural.cucumber.validation.IssueCode.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
 import com.google.inject.Inject
+import static org.agileware.natural.cucumber.validation.CucumberIssueCode.*
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
