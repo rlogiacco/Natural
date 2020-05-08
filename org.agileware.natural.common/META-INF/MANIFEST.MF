@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.agileware.natural.common
+Bundle-SymbolicName: org.agileware.natural.common;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Automatic-Module-Name: org.agileware.natural.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Roberto Lo Giacco
+Bundle-ActivationPolicy: lazy
