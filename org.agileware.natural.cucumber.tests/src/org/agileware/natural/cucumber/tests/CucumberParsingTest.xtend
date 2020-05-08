@@ -3,28 +3,25 @@
  */
 package org.agileware.natural.cucumber.tests
 
-import com.google.inject.Inject
-import org.agileware.natural.cucumber.cucumber.Feature
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
-import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.agileware.natural.cucumber.tests.CucumberMatchers.*
+import static org.agileware.natural.cucumber.tests.CucumberTestHelpers.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
+import com.google.inject.Inject
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
 class CucumberParsingTest {
 
-	@Inject
-	ParseHelper<Feature> parseHelper
-
+	@Inject CucumberTestHelpers _th
+	
 	@Test
 	def void helloCucumber() {
-		val feature = parseHelper.parse('''
+		val feature = _th.parse('''
 			Feature: Hello, Cucumber!
 			  The quick brown fox
 			  Jumps over the lazy dog
@@ -58,7 +55,7 @@ class CucumberParsingTest {
 
 	@Test
 	def void featureOnly() {
-		val feature = parseHelper.parse('''
+		val feature = _th.parse('''
 			Feature: Hello, Cucumber!
 		''')
 
@@ -69,7 +66,7 @@ class CucumberParsingTest {
 	@Test
 	def void allSupportedSyntax() {
 		// TODO: this is still missing a lot of odd-ball cases
-		val feature = parseHelper.parse('''
+		val feature = _th.parse('''
 			@release:Release-2 
 			@version:1.0.0
 			@pet_store
