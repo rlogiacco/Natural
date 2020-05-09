@@ -57,6 +57,9 @@ Workflow {
 				generateStub = true
 				generateXtendStub = false
 			}
+			parserGenerator = {
+				debugGrammar = true
+			}
 		}
 	}
 }
