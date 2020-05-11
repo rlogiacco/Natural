@@ -4,5 +4,5 @@
 package org.agileware.natural.jbehave.serializer;
 
 
-public class JBehaveSyntacticSequencer extends AbstractJBehaveSyntacticSequencer {
+public class JbehaveSyntacticSequencer extends AbstractJbehaveSyntacticSequencer {
 }

@@ -1,7 +1,7 @@
 package org.agileware.natural.jbehave.validation;
  
 
-public class JBehaveValidator extends AbstractJBehaveValidator {
+public class JbehaveValidator extends AbstractJbehaveValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

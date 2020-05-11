@@ -10,7 +10,7 @@ import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
  * 
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
-public class JBehaveDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
+public class JbehaveDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
 /*
 	//Labels and icons can be computed like this:

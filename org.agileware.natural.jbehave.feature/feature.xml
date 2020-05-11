@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.agileware.natural.jbehave.feature"
-      label="JBehave Editor"
+      label="Jbehave Editor"
       version="0.4.0.qualifier"
       provider-name="Roberto Lo Giacco">
 
    <description url="https://github.com/rlogiacco/bdd-eclipse/wiki">
-      JBehave story file editor providing syntax highlighting, auto
+      Jbehave story file editor providing syntax highlighting, auto
 completion, feature outline, grammar validation and hyperlink
 to corresponding Java annotated classes.
    </description>

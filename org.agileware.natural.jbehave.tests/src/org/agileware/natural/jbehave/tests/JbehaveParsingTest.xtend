@@ -15,8 +15,8 @@ import static org.hamcrest.CoreMatchers.*
 import static org.hamcrest.MatcherAssert.*
 
 @RunWith(XtextRunner)
-@InjectWith(JBehaveInjectorProvider)
-class JBehaveParsingTest {
+@InjectWith(JbehaveInjectorProvider)
+class JbehaveParsingTest {
 	
 	@Inject
 	ParseHelper<Story> parseHelper

@@ -3,10 +3,10 @@
 */
 package org.agileware.natural.jbehave.ui.contentassist;
 
-import org.agileware.natural.jbehave.ui.contentassist.AbstractJBehaveProposalProvider;
+import org.agileware.natural.jbehave.ui.contentassist.AbstractJbehaveProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
-public class JBehaveProposalProvider extends AbstractJBehaveProposalProvider {
+public class JbehaveProposalProvider extends AbstractJbehaveProposalProvider {
 
 }

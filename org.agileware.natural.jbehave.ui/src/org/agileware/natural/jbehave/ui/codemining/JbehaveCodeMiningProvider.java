@@ -12,7 +12,7 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.IAcceptor;
 
 @SuppressWarnings("restriction")
-public class JBehaveCodeMiningProvider extends AbstractXtextCodeMiningProvider {
+public class JbehaveCodeMiningProvider extends AbstractXtextCodeMiningProvider {
 	@Override
 	protected void createCodeMinings(IDocument document, XtextResource resource, CancelIndicator indicator,
 		IAcceptor<? super ICodeMining> acceptor) throws BadLocationException {

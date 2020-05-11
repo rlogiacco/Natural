@@ -12,13 +12,13 @@ import org.agileware.natural.jbehave.jbehave.Scenario
 import org.agileware.natural.jbehave.jbehave.Step
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.jbehave.Table
-import org.agileware.natural.jbehave.services.JBehaveGrammarAccess
+import org.agileware.natural.jbehave.services.JbehaveGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
-class JBehaveFormatter extends AbstractFormatter2 {
+class JbehaveFormatter extends AbstractFormatter2 {
 
-	@Inject extension JBehaveGrammarAccess
+	@Inject extension JbehaveGrammarAccess
 
 	def dispatch void format(Story story, extension IFormattableDocument document) {
 		// format narrative 

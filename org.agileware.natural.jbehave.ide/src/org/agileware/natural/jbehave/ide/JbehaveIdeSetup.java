@@ -5,18 +5,18 @@ package org.agileware.natural.jbehave.ide;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.agileware.natural.jbehave.JBehaveRuntimeModule;
-import org.agileware.natural.jbehave.JBehaveStandaloneSetup;
+import org.agileware.natural.jbehave.JbehaveRuntimeModule;
+import org.agileware.natural.jbehave.JbehaveStandaloneSetup;
 import org.eclipse.xtext.util.Modules2;
 
 /**
  * Initialization support for running Xtext languages as language servers.
  */
-public class JBehaveIdeSetup extends JBehaveStandaloneSetup {
+public class JbehaveIdeSetup extends JbehaveStandaloneSetup {
 
 	@Override
 	public Injector createInjector() {
-		return Guice.createInjector(Modules2.mixin(new JBehaveRuntimeModule(), new JBehaveIdeModule()));
+		return Guice.createInjector(Modules2.mixin(new JbehaveRuntimeModule(), new JbehaveIdeModule()));
 	}
 	
 }

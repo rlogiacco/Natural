@@ -13,10 +13,10 @@ import com.google.inject.Inject;
  * 
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
-public class JBehaveLabelProvider extends DefaultEObjectLabelProvider {
+public class JbehaveLabelProvider extends DefaultEObjectLabelProvider {
 
 	@Inject
-	public JBehaveLabelProvider(AdapterFactoryLabelProvider delegate) {
+	public JbehaveLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
 
