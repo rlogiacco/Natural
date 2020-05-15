@@ -9,33 +9,35 @@ Feature:
 	title=Title EOL+
 	narrative=Narrative?
 	background=Background?
-	scenarios+=(AbstractScenario)*;
+	scenarios+=(AbstractScenario)*
+;
 
-Background:
+Background: {Background} 
 	tags+=Tag*
 	'Background:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+;
+	steps+=Step*
+;
 	
 AbstractScenario: (Scenario | ScenarioOutline);
 
-Scenario:
-	{Scenario}
+Scenario: {Scenario}
 	tags+=Tag*
 	'Scenario:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step*;
+	steps+=Step*
+;
 
-ScenarioOutline:
-	{ScenarioOutline}
+ScenarioOutline: {ScenarioOutline}
 	tags+=Tag*
 	('Scenario' 'Outline:')
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+
-	examples+=Examples+;
+	steps+=Step*
+	examples+=Examples+
+;
 	
 // TODO: Step should be made into an abstract element
 //       with different kinds for the specific action.
@@ -43,42 +45,58 @@ ScenarioOutline:
 //       example, the Scenario is messing a Then statement
 Step:
 	STEP_KEYWORD
-	description=StepDescription EOL*
-	tables+=Table*
-	code=DocString?
-	tables+=Table*;
+	description=StepDescription EOL+
+	(table=Table | code=DocString)?
+;
 
 Examples:
 	tags+=Tag*
 	'Examples:' 
 	title=Title? EOL+
 	narrative=Narrative?
-	table=Table;
+	table=Table
+;
 	
-Table:
-	rows+=TABLE_ROW+ EOL*;
+Table: {Table}
+	rows+=TableRow+
+;
+
+TableRow: '|' 
+	cells+=TableCell
+	EOL
+;
+
+TableCell: TABLE_CELL;
 	
 DocString:
-	content=DOC_STRING EOL*;
+	content=DOC_STRING EOL;
 
 Title:
-	(WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*;
+	(WORD | INT | STRING | PLACEHOLDER)
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+;
 
 Narrative:
-	((WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+)+;
+	(
+		(WORD | INT | STRING | PLACEHOLDER)
+		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+		EOL
+	)+
+;
 
 StepDescription:
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+
+;
 	
 Tag: id=TAGNAME EOL?;
 
 terminal INT: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
 
-terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But') (' ' | '\t')+;
+terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
 
 terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
 	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL;
+terminal TABLE_CELL: !('|' | '\n' | '\r') '|';
 
 terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") NL;
 
@@ -96,4 +114,4 @@ terminal WS: (' ' | '\t');
 
 terminal EOL: NL;
 
-terminal fragment NL: ('\r'? '\n'?);
+terminal fragment NL: ('\r'? '\n');

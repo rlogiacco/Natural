@@ -113,10 +113,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Step step, extension IFormattableDocument document) {
-		// format tables
-		for (tables : step.tables) {
-			tables.format
-		}
+		// format table
+		step.table.format()
 		
 		// indent interior
 		step.interior[indent]
