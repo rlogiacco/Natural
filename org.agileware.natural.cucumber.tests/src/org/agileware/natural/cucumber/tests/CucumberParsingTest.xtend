@@ -23,33 +23,24 @@ class CucumberParsingTest {
 	def void helloCucumber() {
 		val feature = _th.parse('''
 			Feature: Hello, Cucumber!
-			  The quick brown fox
-			  Jumps over the lazy dog
-			  # But only on days that end in 'Y'
-			
 			Scenario: Jack and Jill
 			  Given Jack and Jill went up a hill
-			  When Jack fell down
-			  Then Jill came tumbling after
 		''')
 
+		// Should parse without issues
 		assertThat(feature, notNullValue())
+		assertThat(feature.eResource.errors, empty())
+		
 		assertThat(feature.title, equalTo("Hello, Cucumber!"))
-		assertThat(feature.narrative, equalToCompressingWhiteSpace('''
-			The quick brown fox
-			Jumps over the lazy dog
-		'''))
 
 		val scenarios = feature.scenarios
 		assertThat(scenarios, hasSize(1))
 		assertThat(scenarios, hasItem(withScenario("Jack and Jill")))
 
 		val steps = scenarios.get(0).steps
-		assertThat(steps, hasSize(3))
+		assertThat(steps, hasSize(1))
 		assertThat(steps, hasItems(
-			withStep("Jack and Jill went up a hill"),
-			withStep("Jack fell down"),
-			withStep("Jill came tumbling after")
+			withStep("Given", "Jack and Jill went up a hill")
 		))
 	}
 

@@ -30,6 +30,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//ScenarioOutline/examples"/>
     </genClasses>
     <genClasses ecoreClass="Cucumber.ecore#//Step">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Step/keyword"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Step/description"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Step/table"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Step/code"/>

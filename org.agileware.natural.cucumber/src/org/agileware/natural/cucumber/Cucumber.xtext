@@ -44,8 +44,8 @@ ScenarioOutline: {ScenarioOutline}
 //       this will allow us to provide warnings, if for
 //       example, the Scenario is messing a Then statement
 Step:
-	STEP_KEYWORD
-	description=StepDescription EOL+
+	keyword=STEP_KEYWORD
+	description=StepDescription EOL
 	(table=Table | code=DocString)?
 ;
 

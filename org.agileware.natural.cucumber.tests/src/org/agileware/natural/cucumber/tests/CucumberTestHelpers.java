@@ -61,8 +61,11 @@ public class CucumberTestHelpers {
 		return hasProperty("title", equalTo(title));
 	}
 
-	static public Matcher<Step> withStep(String description) {
-		return hasProperty("description", equalTo(description));
+	static public Matcher<Step> withStep(String keyword, String description) {
+		return allOf(
+				hasProperty("keyword", equalTo(keyword)),
+				hasProperty("description", equalTo(description))
+		);
 	}
 
 	static public Matcher<Issue> theError(CucumberIssueCode issue) {
