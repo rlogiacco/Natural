@@ -22,6 +22,7 @@ class CucumberFormatterTest {
 			Feature: The quick brown fox 
 			Jumps over
 			The lazy dog
+			
 		'''
 
 		val expectation = '''

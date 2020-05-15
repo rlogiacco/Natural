@@ -6,7 +6,7 @@ generate cucumber "http://www.agileware.org/natural/cucumber"
 Feature:
 	tags+=Tag*
 	'Feature:'
-	title=Title EOL+
+	title=Text EOL+
 	narrative=Narrative?
 	background=Background?
 	scenarios+=(AbstractScenario)*
@@ -15,7 +15,7 @@ Feature:
 Background: {Background} 
 	tags+=Tag*
 	'Background:'
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 ;
@@ -25,7 +25,7 @@ AbstractScenario: (Scenario | ScenarioOutline);
 Scenario: {Scenario}
 	tags+=Tag*
 	'Scenario:'
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 ;
@@ -33,7 +33,7 @@ Scenario: {Scenario}
 ScenarioOutline: {ScenarioOutline}
 	tags+=Tag*
 	('Scenario' 'Outline:')
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 	examples+=Examples+
@@ -45,14 +45,14 @@ ScenarioOutline: {ScenarioOutline}
 //       example, the Scenario is messing a Then statement
 Step:
 	keyword=STEP_KEYWORD
-	description=StepDescription EOL
+	description=Text EOL
 	(table=Table | code=DocString)?
 ;
 
 Examples:
 	tags+=Tag*
 	'Examples:' 
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	table=Table
 ;
@@ -71,22 +71,17 @@ TableCell: TABLE_CELL;
 DocString:
 	content=DOC_STRING EOL;
 
-Title:
-	(WORD | INT | STRING | PLACEHOLDER)
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
-;
-
 Narrative:
-	(
-		(WORD | INT | STRING | PLACEHOLDER)
-		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
-		EOL
-	)+
+    lines+=TextLine+
+    ( -> EOL EOL?)
 ;
 
-StepDescription:
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+
+TextLine:
+	value=Text
+	EOL
 ;
+
+Text: (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
 	
 Tag: id=TAGNAME EOL?;
 

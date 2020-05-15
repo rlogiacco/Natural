@@ -26,114 +26,114 @@ class CucumberFormatter extends AbstractFormatter2 {
 
 	def dispatch void format(Feature feature, extension IFormattableDocument document) {
 		// format top-level tags
-		for (tag : feature.tags) {
-			tag.format
-		}
-
-		// format background
-		feature.background.format
-
-		// format scenarios
-		for (scenario : feature.scenarios) {
-			scenario.format
-		}
-
-		// indent interior
-		feature.interior[indent]
-
-		// format narrative
-		formatNarrative(feature.regionFor.feature(FEATURE__NARRATIVE))
+//		for (tag : feature.tags) {
+//			tag.format
+//		}
+//
+//		// format background
+//		feature.background.format
+//
+//		// format scenarios
+//		for (scenario : feature.scenarios) {
+//			scenario.format
+//		}
+//
+//		// indent interior
+//		feature.interior[indent]
+//
+//		// format narrative
+//		formatNarrative(feature.regionFor.feature(FEATURE__NARRATIVE))
 
 		// println("********** DOCUMENT FORMAT **********")
 		// println(document)
 	}
 
-	def dispatch void format(Background background, extension IFormattableDocument document) {
-		// format steps
-		for (step : background.steps) {
-			step.format
-		}
-
-		// indent interior
-		background.interior[indent]
-
-		// format narrative
-		formatNarrative(background.regionFor.feature(BACKGROUND__NARRATIVE))
-	}
-
-	def dispatch void format(Scenario scenario, extension IFormattableDocument document) {
-
-		// format scenario tags
-		for (tag : scenario.tags) {
-			tag.format
-		}
-
-		// format steps
-		for (step : scenario.steps) {
-			step.format
-		}
-
-		// indent interior
-		scenario.interior[indent]
-
-		// format narrative
-		formatNarrative(scenario.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
-	}
-
-	def dispatch void format(ScenarioOutline scenarioOutline, extension IFormattableDocument document) {
-
-		// format scenario tags
-		for (tag : scenarioOutline.tags) {
-			tag.format
-		}
-
-		// format steps
-		for (step : scenarioOutline.steps) {
-			step.format
-		}
-
-		// format examples
-		for (example : scenarioOutline.examples) {
-			example.format
-		}
-
-		// indent interior
-		scenarioOutline.interior[indent]
-
-		// format narrative
-		formatNarrative(scenarioOutline.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
-	}
-
-	def dispatch void format(Examples examples, extension IFormattableDocument document) {
-		// format table
-		examples.table.format
-
-		// format narrative
-		formatNarrative(examples.regionFor.feature(EXAMPLES__NARRATIVE))
-	}
-
-	def dispatch void format(Step step, extension IFormattableDocument document) {
-		// format table
-		step.table.format()
-		
-		// indent interior
-		step.interior[indent]
-	}
-
-	def dispatch void format(Table table, extension IFormattableDocument document) {
-		// TODO tables could in theory be formatted with a slightly different AST
-	}
-
-	def dispatch void format(DocString docString, extension IFormattableDocument document) {
-		// TODO ...
-	}
-
-	def dispatch void format(Tag tag, extension IFormattableDocument document) {
-		// TODO ...
-	}
-
-	def void formatNarrative(ISemanticRegion narrative) {
-		// TODO cleanup indentation
-		// narrative.prepend[indent]
-	}
+//	def dispatch void format(Background background, extension IFormattableDocument document) {
+//		// format steps
+//		for (step : background.steps) {
+//			step.format
+//		}
+//
+//		// indent interior
+//		background.interior[indent]
+//
+//		// format narrative
+//		formatNarrative(background.regionFor.feature(BACKGROUND__NARRATIVE))
+//	}
+//
+//	def dispatch void format(Scenario scenario, extension IFormattableDocument document) {
+//
+//		// format scenario tags
+//		for (tag : scenario.tags) {
+//			tag.format
+//		}
+//
+//		// format steps
+//		for (step : scenario.steps) {
+//			step.format
+//		}
+//
+//		// indent interior
+//		scenario.interior[indent]
+//
+//		// format narrative
+//		formatNarrative(scenario.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
+//	}
+//
+//	def dispatch void format(ScenarioOutline scenarioOutline, extension IFormattableDocument document) {
+//
+//		// format scenario tags
+//		for (tag : scenarioOutline.tags) {
+//			tag.format
+//		}
+//
+//		// format steps
+//		for (step : scenarioOutline.steps) {
+//			step.format
+//		}
+//
+//		// format examples
+//		for (example : scenarioOutline.examples) {
+//			example.format
+//		}
+//
+//		// indent interior
+//		scenarioOutline.interior[indent]
+//
+//		// format narrative
+//		formatNarrative(scenarioOutline.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
+//	}
+//
+//	def dispatch void format(Examples examples, extension IFormattableDocument document) {
+//		// format table
+//		examples.table.format
+//
+//		// format narrative
+//		formatNarrative(examples.regionFor.feature(EXAMPLES__NARRATIVE))
+//	}
+//
+//	def dispatch void format(Step step, extension IFormattableDocument document) {
+//		// format table
+//		step.table.format()
+//		
+//		// indent interior
+//		step.interior[indent]
+//	}
+//
+//	def dispatch void format(Table table, extension IFormattableDocument document) {
+//		// TODO tables could in theory be formatted with a slightly different AST
+//	}
+//
+//	def dispatch void format(DocString docString, extension IFormattableDocument document) {
+//		// TODO ...
+//	}
+//
+//	def dispatch void format(Tag tag, extension IFormattableDocument document) {
+//		// TODO ...
+//	}
+//
+//	def void formatNarrative(ISemanticRegion narrative) {
+//		// TODO cleanup indentation
+//		// narrative.prepend[indent]
+//	}
 }

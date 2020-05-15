@@ -23,6 +23,9 @@ class CucumberParsingTest {
 	def void helloCucumber() {
 		val feature = _th.parse('''
 			Feature: Hello, Cucumber!
+			  The quick brown fox
+			  Jumps over the lazy dog
+			
 			Scenario: Jack and Jill
 			  Given Jack and Jill went up a hill
 		''')
@@ -48,10 +51,14 @@ class CucumberParsingTest {
 	def void featureOnly() {
 		val feature = _th.parse('''
 			Feature: Hello, Cucumber!
+			  The quick brown fox
+			  Jumps over the lazy dog
 		''')
 
 		assertThat(feature, notNullValue())
 		assertThat(feature.title, equalTo("Hello, Cucumber!"))
+		assertThat(feature.narrative, notNullValue())
+		assertThat(feature.narrative.lines, hasSize(2))
 	}
 
 	@Test
