@@ -13,7 +13,6 @@ import org.agileware.natural.cucumber.cucumber.Feature
 import org.agileware.natural.cucumber.cucumber.Scenario
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.GrammarToDot
 import org.eclipse.xtext.IGrammarAccess
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -28,15 +27,8 @@ class CucumberGenerator extends AbstractGenerator {
 
 	@Inject extension IGrammarAccess
 
-	@Inject extension GrammarToDot
-
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		fsa.generateFile(resource.getURI().toString(), toCucumberCode(resource.contents.head as Feature))
-		fsa.generateFile("Cucumber.dot", toDotCode())
-	}
-
-	protected def String toDotCode() {
-		return grammar.draw
 	}
 
 	protected def toCucumberCode(Feature feature) '''
