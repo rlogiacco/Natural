@@ -41,7 +41,7 @@ ScenarioOutline: {ScenarioOutline}
 Step:
 	keyword=STEP_KEYWORD
 	description=StepDescription EOL*
-	(table=Table | code=DocString)?
+	(table=Table | text=DocString)?
 ;
 
 Example:
@@ -53,12 +53,23 @@ Example:
 ;
 	
 Table:
-	rows+=TABLE_ROW+
-	EOL*
+	rows+=TableRow+
+	EOL?
 ;
+
+TableRow:
+	cols+=TableCol+
+	TABLE_ROW_END
+;
+
+TableCol: '|'
+	cell=TableCell
+;
+
+TableCell: (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
 	
 DocString:
-	content=DOC_STRING
+	value=DOC_STRING
 	EOL*
 ;
 
@@ -85,7 +96,7 @@ terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
 
 terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
 	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL;
+terminal TABLE_ROW_END: '|' (NL | EOF);
 
 terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") NL;
 

@@ -32,7 +32,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Step/keyword"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Step/description"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Step/table"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Step/code"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Step/text"/>
     </genClasses>
     <genClasses ecoreClass="Cucumber.ecore#//Example">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Example/tags"/>
@@ -41,10 +41,16 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Example/table"/>
     </genClasses>
     <genClasses ecoreClass="Cucumber.ecore#//Table">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Table/rows"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Table/rows"/>
+    </genClasses>
+    <genClasses ecoreClass="Cucumber.ecore#//TableRow">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//TableRow/cols"/>
+    </genClasses>
+    <genClasses ecoreClass="Cucumber.ecore#//TableCol">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//TableCol/cell"/>
     </genClasses>
     <genClasses ecoreClass="Cucumber.ecore#//DocString">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//DocString/content"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//DocString/value"/>
     </genClasses>
     <genClasses ecoreClass="Cucumber.ecore#//Tag">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Tag/id"/>

@@ -20,6 +20,6 @@ public class CucumberOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	
 	protected boolean _isLeaf(Step modelElement) {
 		// only allow expansion of step nodes with tables
-		return modelElement.getTable() == null && modelElement.getCode() == null;
+		return modelElement.getTable() == null && modelElement.getText() == null;
 	}
 }

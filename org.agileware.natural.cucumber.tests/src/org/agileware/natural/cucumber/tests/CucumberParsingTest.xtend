@@ -112,6 +112,21 @@ class CucumberParsingTest {
 		// Should parse without issues
 		assertThat(feature, notNullValue())
 		assertThat(feature.eResource.errors, empty())
+		assertThat(feature.scenarios, hasSize(1))
+		
+		val steps = feature.scenarios.get(0).steps
+		assertThat(steps, hasSize(2))
+		assertThat(steps, hasItems(
+			withStep("Given", "the pet"),
+			withStep("Then", "the owner")
+		))
+		
+		assertThat(steps.get(0).table, notNullValue())
+		assertThat(steps.get(1).text.value, equalToCompressingWhiteSpace('''
+		  """
+		  Is sad to see him go
+		  """
+		'''))
 	}
 
 	@Test
