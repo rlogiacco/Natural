@@ -16,21 +16,17 @@ class CucumberFormatterTest {
 	@Inject CucumberTestHelpers _th
 	
 	@Test
-	def void indentNarrative() {
-
+	def void formatNarrative() {
 		val toBeFormatted = '''
 			Feature: The quick brown fox 
 			Jumps over
 			The lazy dog
-			
 		'''
-
 		val expectation = '''
 			Feature: The quick brown fox 
-				Jumps over
-				The lazy dog
+			Jumps over
+			The lazy dog
 		'''
-
 		_th.assertFormatted(toBeFormatted, expectation)
 	}
 }
