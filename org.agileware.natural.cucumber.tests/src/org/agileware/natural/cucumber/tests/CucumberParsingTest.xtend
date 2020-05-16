@@ -3,6 +3,7 @@
  */
 package org.agileware.natural.cucumber.tests
 
+import com.google.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
@@ -11,7 +12,6 @@ import org.junit.runner.RunWith
 import static org.agileware.natural.cucumber.tests.CucumberTestHelpers.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
-import com.google.inject.Inject
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
@@ -60,6 +60,39 @@ class CucumberParsingTest {
 		assertThat(feature.narrative, notNullValue())
 		assertThat(feature.narrative.lines, hasSize(2))
 	}
+	
+	@Test
+	def void scenarioWithBackgroun() {
+		val feature = _th.parse('''
+			Feature: Jack and Jill
+			
+			Background: 
+			  Given Jack and Jill went up a hill
+			  
+			Scenario: Jack falls down
+			  When "Jack" falls down
+			  Then "Jill" comes tumbling after
+		''')
+
+		// Should parse without issues
+		assertThat(feature, notNullValue())
+		assertThat(feature.eResource.errors, empty())
+		
+		assertThat(feature.title, equalTo("Jack and Jill"))
+		
+		val background = feature.background
+		assertThat(background, notNullValue())
+		assertThat(background.steps, hasItems(
+			withStep("Given", "Jack and Jill went up a hill")
+		))
+
+		assertThat(feature.scenarios, hasItem(withScenario("Jack falls down")))
+		assertThat(feature.scenarios, hasSize(1))
+		assertThat(feature.scenarios.get(0).steps, hasItems(
+			withStep("When", "\"Jack\" falls down"),
+			withStep("Then", "\"Jill\" comes tumbling after")
+		))
+	}
 
 	@Test
 	def void allSupportedSyntax() {
@@ -70,16 +103,15 @@ class CucumberParsingTest {
 			@pet_store
 			Feature: Add a new pet 
 				In order to sell a pet
-					As a store owner
-					I want to add a new pet to the catalog
-				# But only on days that end in 'Y'
+				As a store owner
+				I want to add a new pet to the catalog
 			
 			@setup
 			Background: Add a dog 
 				Given I have the following pet
 					| name | status    |
 					| Fido | available |
-				And I add the pet to the store   		 # extra whitespace
+				And I add the pet to the store
 			
 			@add
 			@fido
@@ -112,6 +144,7 @@ class CucumberParsingTest {
 					| start | eat | left |
 					|    12 |   2 |   10 |
 					|    20 |   5 |   15 |
+			
 		''')
 
 		assertThat(feature, notNullValue())
