@@ -39,8 +39,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// indent interior
 		model.interior[indent]
 
-		println("********** DOCUMENT FORMAT **********")
-		println(document)
+		//println("********** DOCUMENT FORMAT **********")
+		//println(document)
 	}
 	
 	def dispatch void format(Tag model, extension IFormattableDocument document) {
