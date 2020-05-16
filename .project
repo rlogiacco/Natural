@@ -3,6 +3,20 @@
 	<name>Natural</name>
 	<comment></comment>
 	<projects>
+		<project>org.agileware.natural.common</project>
+		<project>org.agileware.natural.cucumber</project>
+		<project>org.agileware.natural.cucumber.feature</project>
+		<project>org.agileware.natural.cucumber.ide</project>
+		<project>org.agileware.natural.cucumber.tests</project>
+		<project>org.agileware.natural.cucumber.ui</project>
+		<project>org.agileware.natural.cucumber.ui.tests</project>
+		<project>org.agileware.natural.jbehave</project>
+		<project>org.agileware.natural.jbehave.feature</project>
+		<project>org.agileware.natural.jbehave.ide</project>
+		<project>org.agileware.natural.jbehave.tests</project>
+		<project>org.agileware.natural.jbehave.ui</project>
+		<project>org.agileware.natural.jbehave.ui.tests</project>
+		<project>org.agileware.natural.stepmatcher</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>

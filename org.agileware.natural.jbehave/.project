@@ -3,6 +3,7 @@
 	<name>org.agileware.natural.jbehave</name>
 	<comment></comment>
 	<projects>
+		<project>org.agileware.natural.common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

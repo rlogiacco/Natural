@@ -3,6 +3,8 @@
 	<name>org.agileware.natural.cucumber</name>
 	<comment></comment>
 	<projects>
+		<project>org.agileware.natural.common</project>
+		<project>org.agileware.natural.stepmatcher</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
