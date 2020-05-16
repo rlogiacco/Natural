@@ -4,21 +4,10 @@
 package org.agileware.natural.cucumber.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.cucumber.cucumber.Background
-import org.agileware.natural.cucumber.cucumber.DocString
-import org.agileware.natural.cucumber.cucumber.Examples
 import org.agileware.natural.cucumber.cucumber.Feature
-import org.agileware.natural.cucumber.cucumber.Scenario
-import org.agileware.natural.cucumber.cucumber.ScenarioOutline
-import org.agileware.natural.cucumber.cucumber.Step
-import org.agileware.natural.cucumber.cucumber.Table
-import org.agileware.natural.cucumber.cucumber.Tag
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
-
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.*
 
 class CucumberFormatter extends AbstractFormatter2 {
 

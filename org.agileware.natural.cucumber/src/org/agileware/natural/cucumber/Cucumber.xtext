@@ -13,43 +13,38 @@ Feature:
 ;
 
 Background: {Background} 
-	tags+=Tag*
 	'Background:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+
+	steps+=Step*
 ;
 	
 AbstractScenario: (Scenario | ScenarioOutline);
 
-Scenario: {Scenario}
+Scenario: {Scenario} 
 	tags+=Tag*
 	'Scenario:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+
+	steps+=Step*
 ;
 
 ScenarioOutline: {ScenarioOutline}
 	tags+=Tag*
-	('Scenario' 'Outline:')
+	'Scenario' 'Outline:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+
-	examples+=Examples+
+	steps+=Step*
+	examples+=Example+
 ;
 	
-// TODO: Step should be made into an abstract element
-//       with different kinds for the specific action.
-//       this will allow us to provide warnings, if for
-//       example, the Scenario is messing a Then statement
 Step:
 	keyword=STEP_KEYWORD
-	description=StepDescription EOL
+	description=StepDescription EOL*
 	(table=Table | code=DocString)?
 ;
 
-Examples:
+Example:
 	tags+=Tag*
 	'Examples:' 
 	title=Title? EOL+
@@ -57,34 +52,27 @@ Examples:
 	table=Table
 ;
 	
-Table: {Table}
-	rows+=TableRow+
+Table:
+	rows+=TABLE_ROW+
+	EOL*
 ;
-
-TableRow: '|' 
-	cells+=TableCell
-	EOL
-;
-
-TableCell: TABLE_CELL;
 	
 DocString:
-	content=DOC_STRING EOL;
+	content=DOC_STRING
+	EOL*
+;
+
+Title:
+	(WORD | INT | STRING | PLACEHOLDER)
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+;
 
 Narrative:
-    lines+=TextLine+
-    ( -> EOL EOL?)
+	(
+		(WORD | INT | STRING | PLACEHOLDER)
+		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+
+	)+
 ;
-
-TextLine:
-	value=TextLineValue
-	EOL
-;
-TextLineValue:
-	(WORD | INT | STRING | PLACEHOLDER | TAGNAME)+
-;
-
-Title: (WORD | INT | STRING | PLACEHOLDER | TAGNAME)+;
 
 StepDescription:
 	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
@@ -97,7 +85,7 @@ terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
 
 terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
 	
-terminal TABLE_CELL: !('|' | '\n' | '\r') '|';
+terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL;
 
 terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") NL;
 

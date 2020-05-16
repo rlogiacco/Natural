@@ -1,10 +1,17 @@
 package org.agileware.natural.cucumber.validation;
 
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.*;
-import static org.agileware.natural.cucumber.validation.CucumberIssueCode.*;
+import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.ABSTRACT_SCENARIO__STEPS;
+import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.BACKGROUND__STEPS;
+import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.FEATURE__SCENARIOS;
+import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.STEP__DESCRIPTION;
+import static org.agileware.natural.cucumber.validation.CucumberIssueCode.MissingScenarios;
+import static org.agileware.natural.cucumber.validation.CucumberIssueCode.MissingStepDefinition;
+import static org.agileware.natural.cucumber.validation.CucumberIssueCode.MissingSteps;
+import static org.agileware.natural.cucumber.validation.CucumberIssueCode.MultipleStepDefinitions;
 
-import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.AbstractScenario;
+import org.agileware.natural.cucumber.cucumber.Background;
+import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Step;
 import org.agileware.natural.stepmatcher.JavaAnnotationMatcher;
 import org.eclipse.jdt.core.IMethod;
@@ -22,6 +29,14 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	public void featureHasScenarios(Feature model) {
 		if (model.getScenarios().isEmpty()) {
 			error(MissingScenarios.message(), model, FEATURE__SCENARIOS, MissingScenarios.code());
+		}
+	}
+	
+	@Check
+	public void backgrounHasSteps(Background model) {
+		if (model.getSteps().isEmpty()) {
+			String title = model.getTitle();
+			error(MissingSteps.message(title), model, BACKGROUND__STEPS, MissingSteps.code());
 		}
 	}
 	

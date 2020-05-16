@@ -29,6 +29,8 @@ class CucumberValidationTest {
 
 	@Test
 	def void missingSteps() {
+		// TODO: test failure!
+		
 		val issues = _th.validate('''
 			Feature: Hello, Cucumber!
 			Scenario: Goobye, World!
