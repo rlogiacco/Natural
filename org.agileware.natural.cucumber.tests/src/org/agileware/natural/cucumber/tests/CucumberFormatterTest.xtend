@@ -27,8 +27,8 @@ class CucumberFormatterTest {
 
 		val expectation = '''
 			Feature: The quick brown fox 
-			    Jumps over
-			    The lazy dog
+				Jumps over
+				The lazy dog
 		'''
 
 		_th.assertFormatted(toBeFormatted, expectation)

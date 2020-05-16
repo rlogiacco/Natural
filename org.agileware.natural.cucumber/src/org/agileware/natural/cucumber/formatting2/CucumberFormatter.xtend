@@ -4,7 +4,17 @@
 package org.agileware.natural.cucumber.formatting2
 
 import com.google.inject.Inject
+import org.agileware.natural.cucumber.cucumber.Background
+import org.agileware.natural.cucumber.cucumber.DocString
+import org.agileware.natural.cucumber.cucumber.Example
 import org.agileware.natural.cucumber.cucumber.Feature
+import org.agileware.natural.cucumber.cucumber.Narrative
+import org.agileware.natural.cucumber.cucumber.NarrativeLine
+import org.agileware.natural.cucumber.cucumber.Scenario
+import org.agileware.natural.cucumber.cucumber.ScenarioOutline
+import org.agileware.natural.cucumber.cucumber.Step
+import org.agileware.natural.cucumber.cucumber.Table
+import org.agileware.natural.cucumber.cucumber.Tag
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -13,116 +23,122 @@ class CucumberFormatter extends AbstractFormatter2 {
 
 	@Inject extension CucumberGrammarAccess
 
-	def dispatch void format(Feature feature, extension IFormattableDocument document) {
+	def dispatch void format(Feature model, extension IFormattableDocument document) {
 		// format top-level tags
-//		for (tag : feature.tags) {
-//			tag.format
-//		}
-//
-//		// format background
-//		feature.background.format
-//
-//		// format scenarios
-//		for (scenario : feature.scenarios) {
-//			scenario.format
-//		}
-//
-//		// indent interior
-//		feature.interior[indent]
-//
-//		// format narrative
-//		formatNarrative(feature.regionFor.feature(FEATURE__NARRATIVE))
+		for (t : model.tags) t.format()
+		
+		// format narrative
+		model.narrative.format()
 
-		// println("********** DOCUMENT FORMAT **********")
-		// println(document)
+		// format background
+		model.background.format()
+
+		// format scenarios
+		for (s : model.scenarios) s.format()
+
+		// indent interior
+		model.interior[indent]
+
+		println("********** DOCUMENT FORMAT **********")
+		println(document)
+	}
+	
+	def dispatch void format(Tag model, extension IFormattableDocument document) {
+		// TODO ...
 	}
 
-//	def dispatch void format(Background background, extension IFormattableDocument document) {
-//		// format steps
-//		for (step : background.steps) {
-//			step.format
-//		}
-//
-//		// indent interior
-//		background.interior[indent]
-//
-//		// format narrative
-//		formatNarrative(background.regionFor.feature(BACKGROUND__NARRATIVE))
-//	}
-//
-//	def dispatch void format(Scenario scenario, extension IFormattableDocument document) {
-//
-//		// format scenario tags
-//		for (tag : scenario.tags) {
-//			tag.format
-//		}
-//
-//		// format steps
-//		for (step : scenario.steps) {
-//			step.format
-//		}
-//
-//		// indent interior
-//		scenario.interior[indent]
-//
-//		// format narrative
-//		formatNarrative(scenario.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
-//	}
-//
-//	def dispatch void format(ScenarioOutline scenarioOutline, extension IFormattableDocument document) {
-//
-//		// format scenario tags
-//		for (tag : scenarioOutline.tags) {
-//			tag.format
-//		}
-//
-//		// format steps
-//		for (step : scenarioOutline.steps) {
-//			step.format
-//		}
-//
-//		// format examples
-//		for (example : scenarioOutline.examples) {
-//			example.format
-//		}
-//
-//		// indent interior
-//		scenarioOutline.interior[indent]
-//
-//		// format narrative
-//		formatNarrative(scenarioOutline.regionFor.feature(ABSTRACT_SCENARIO__NARRATIVE))
-//	}
-//
-//	def dispatch void format(Examples examples, extension IFormattableDocument document) {
-//		// format table
-//		examples.table.format
-//
-//		// format narrative
-//		formatNarrative(examples.regionFor.feature(EXAMPLES__NARRATIVE))
-//	}
-//
-//	def dispatch void format(Step step, extension IFormattableDocument document) {
-//		// format table
-//		step.table.format()
-//		
-//		// indent interior
-//		step.interior[indent]
-//	}
-//
-//	def dispatch void format(Table table, extension IFormattableDocument document) {
-//		// TODO tables could in theory be formatted with a slightly different AST
-//	}
-//
-//	def dispatch void format(DocString docString, extension IFormattableDocument document) {
-//		// TODO ...
-//	}
-//
-//	def dispatch void format(Tag tag, extension IFormattableDocument document) {
-//		// TODO ...
-//	}
-//
-//	def void formatNarrative(ISemanticRegion narrative) {
-//		// TODO cleanup indentation
-//		// narrative.prepend[indent]
-//	}
+	def dispatch void format(Narrative model, extension IFormattableDocument document) {
+		// Format lines
+		for (l : model.lines) {
+			l.format()
+		}
+		
+		// indent interior
+		model.interior[indent]
+	}
+
+	def dispatch void format(NarrativeLine model, extension IFormattableDocument document) {
+		// Add indentation to left side of line
+		//model.prepend[indent]
+	}
+
+	def dispatch void format(Background model, extension IFormattableDocument document) {
+		// format narrative
+		model.narrative.format()
+		
+		// format steps
+		for (s : model.steps) s.format()
+
+		// indent interior
+		model.interior[indent]
+	}
+
+	def dispatch void format(Scenario model, extension IFormattableDocument document) {
+		// format tags
+		for (t : model.tags) t.format()
+		
+		// format narrative
+		model.narrative.format()
+		
+		// format steps
+		for (s : model.steps) s.format()
+		
+		// indent interior
+		model.interior[indent]
+	}
+
+	def dispatch void format(ScenarioOutline model, extension IFormattableDocument document) {
+		// format tags
+		for (t : model.tags) t.format()
+		
+		// format narrative
+		model.narrative.format()
+		
+		// format steps
+		for (s : model.steps) s.format()
+
+		// format examples
+		for (e : model.examples) e.format()
+
+		// indent interior
+		model.interior[indent]
+	}
+
+	def dispatch void format(Step model, extension IFormattableDocument document) {
+		// format table
+		if(model.table !== null) model.table.format()
+		
+		// format text
+		if(model.text !== null) model.text.format()
+		
+		// indent interior
+		model.interior[indent]
+	}
+	
+	def dispatch void format(Table model, extension IFormattableDocument document) {
+		// TODO...
+	}
+
+	def dispatch void format(DocString model, extension IFormattableDocument document) {
+		// TODO...
+	}
+	
+	def dispatch void format(Example model, extension IFormattableDocument document) {
+		// format tags
+		for (t : model.tags) t.format()
+
+		// format narrative
+		model.narrative.format()
+		
+		// format table
+		model.table.format()
+		
+		// indent interior
+		model.interior[indent]
+	}
+
+
+
+
+
 }
