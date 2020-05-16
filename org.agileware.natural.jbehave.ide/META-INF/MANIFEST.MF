@@ -12,9 +12,9 @@ Require-Bundle: org.agileware.natural.jbehave,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.jbehave.ide;x-internal:=true,
  org.agileware.natural.jbehave.ide.contentassist.antlr;
-  uses:="org.eclipse.xtext.ide.editor.contentassist.antlr.internal,
-   org.agileware.natural.jbehave.ide.contentassist.antlr.internal,
+  uses:="org.agileware.natural.jbehave.ide.contentassist.antlr.internal,
    org.eclipse.xtext.ide.editor.contentassist.antlr,
+   org.eclipse.xtext.ide.editor.contentassist.antlr.internal,
    org.eclipse.xtext.ide.editor.partialEditing,
    org.agileware.natural.jbehave.services,
    org.eclipse.xtext",
