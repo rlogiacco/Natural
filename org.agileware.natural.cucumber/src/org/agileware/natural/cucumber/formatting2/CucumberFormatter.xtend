@@ -30,12 +30,14 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def dispatch void format(Feature model, extension IFormattableDocument document) {
 		println(textRegionAccess)
 		
+		model.prepend[setNewLines(0)]
+		
 		// format top-level tags
 		for (t : model.tags) t.format()
 		
 		// Adjust spacing around Feature: keyword
 		model.regionFor.keyword(featureAccess.featureKeyword_1)
-				.prepend[setNewLines(0); noSpace]
+				.prepend[noSpace]
 				.append[oneSpace]
 		
 		// Trim whitespace around title
@@ -55,7 +57,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Tag model, extension IFormattableDocument document) {
-		// TODO ...
+		model.append[newLine]
 	}
 
 	def dispatch void format(Narrative model, extension IFormattableDocument document) {
@@ -187,4 +189,5 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def dispatch void format(DocString model, extension IFormattableDocument document) {
 		// TODO...
 	}
+
 }
