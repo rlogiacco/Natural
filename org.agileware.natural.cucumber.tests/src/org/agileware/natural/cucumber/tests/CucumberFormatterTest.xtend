@@ -18,7 +18,7 @@ class CucumberFormatterTest {
 	@Test
 	def void simpleFormatting() {
 		val toBeFormatted = '''
-			@alpha @beta
+			@alpha  @beta  
 			Feature: The quick brown fox  
 				Jumps over  
 				The lazy dog

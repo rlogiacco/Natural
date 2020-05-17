@@ -28,7 +28,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 	@Inject extension CucumberGrammarAccess
 
 	def dispatch void format(Feature model, extension IFormattableDocument document) {
-		println(textRegionAccess)
+		// println(textRegionAccess)
 		
 		model.prepend[setNewLines(0)]
 		
@@ -57,7 +57,10 @@ class CucumberFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Tag model, extension IFormattableDocument document) {
-		model.append[newLine]
+		// Trim white space around tags and place in single line
+		model.surround[noSpace].append[newLine]
+		model.regionFor.feature(TAG__ID)
+			.surround[noSpace]
 	}
 
 	def dispatch void format(Narrative model, extension IFormattableDocument document) {
