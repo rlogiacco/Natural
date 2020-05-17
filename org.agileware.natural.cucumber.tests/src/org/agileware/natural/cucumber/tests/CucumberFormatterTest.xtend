@@ -18,21 +18,24 @@ class CucumberFormatterTest {
 	@Test
 	def void simpleFormatting() {
 		val toBeFormatted = '''
+			@alpha @beta
 			Feature: The quick brown fox  
-			Jumps over  
-			The lazy dog
+				Jumps over  
+				The lazy dog
 			Scenario: Jack and Jill  
-			When Jack falls down  
-			Then Jill comes tumbling after  
+				When Jack falls down  
+				Then Jill comes tumbling after  
 		'''
 		val expectation = '''
+			@alpha
+			@beta
 			Feature: The quick brown fox
-			Jumps over
-			The lazy dog
+				Jumps over
+				The lazy dog
 			
 			Scenario: Jack and Jill
-			When Jack falls down
-			Then Jill comes tumbling after
+				When Jack falls down
+				Then Jill comes tumbling after
 		'''
 		_th.assertFormatted(toBeFormatted, expectation)
 	}
