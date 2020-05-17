@@ -39,4 +39,23 @@ class CucumberFormatterTest {
 		'''
 		_th.assertFormatted(toBeFormatted, expectation)
 	}
+
+	@Test
+	def void scenarioIndentation() {
+		val toBeFormatted = '''
+			Feature: The quick brown fox
+			
+			Scenario: Jack and Jill
+			When Jack falls down
+			Then Jill comes tumbling after
+		'''
+		val expectation = '''
+			Feature: The quick brown fox
+			
+			Scenario: Jack and Jill
+				When Jack falls down
+				Then Jill comes tumbling after
+		'''
+		_th.assertFormatted(toBeFormatted, expectation)
+	}
 }
