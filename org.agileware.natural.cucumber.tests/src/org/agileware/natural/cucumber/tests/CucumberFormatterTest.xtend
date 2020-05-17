@@ -14,18 +14,25 @@ import org.junit.runner.RunWith
 class CucumberFormatterTest {
 
 	@Inject CucumberTestHelpers _th
-	
+
 	@Test
-	def void formatNarrative() {
+	def void simpleFormatting() {
 		val toBeFormatted = '''
-			Feature: The quick brown fox 
-			Jumps over
+			Feature: The quick brown fox  
+			Jumps over  
 			The lazy dog
+			Scenario: Jack and Jill  
+			When Jack falls down  
+			Then Jill comes tumbling after  
 		'''
 		val expectation = '''
-			Feature: The quick brown fox 
+			Feature: The quick brown fox
 			Jumps over
 			The lazy dog
+			
+			Scenario: Jack and Jill
+			When Jack falls down
+			Then Jill comes tumbling after
 		'''
 		_th.assertFormatted(toBeFormatted, expectation)
 	}

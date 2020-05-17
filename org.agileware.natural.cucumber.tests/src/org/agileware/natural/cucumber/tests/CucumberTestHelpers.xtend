@@ -79,15 +79,15 @@ class CucumberTestHelpers {
 				
 	'''
 	
-	@Inject extension ISerializer
+
 
 	def Feature parse(CharSequence content) throws Exception {
 		return parseHelper.parse(content)
 	}
 	
-	def String serialize(Feature model) throws Exception {
-		return model.serialize(SaveOptions.newBuilder.format().getOptions())
-	}
+//	def String serialize(Feature model) throws Exception {
+//		return model.serialize(SaveOptions.newBuilder.format().getOptions())
+//	}
 
 	def List<Issue> validate(String contet) throws Exception {
 		var Feature model = parseHelper.parse(contet)
