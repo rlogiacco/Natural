@@ -80,24 +80,22 @@ class CucumberTestHelpers {
 	'''
 	
 
-
-	def Feature parse(CharSequence content) throws Exception {
+	def Feature parse(CharSequence content) {
 		return parseHelper.parse(content)
 	}
-	
-//	def String serialize(Feature model) throws Exception {
-//		return model.serialize(SaveOptions.newBuilder.format().getOptions())
-//	}
 
-	def List<Issue> validate(String contet) throws Exception {
-		var Feature model = parseHelper.parse(contet)
+	def List<Issue> validate(String contet) {
+		val model = parseHelper.parse(contet)
 		assertThat(model, notNullValue())
+		
 		return validationTestHelper.validate(model)
 	}
 
 	def void assertFormatted(String toBeFormatted, String expectation) {
 		formatterTestHelper.assertFormatted(
-			formatterRequestProvider.get().setToBeFormatted(toBeFormatted).setExpectation(expectation))
+				formatterRequestProvider.get()
+						.setToBeFormatted(toBeFormatted)
+						.setExpectation(expectation))
 	}
 
 	def static Matcher<Scenario> withScenario(String title) {

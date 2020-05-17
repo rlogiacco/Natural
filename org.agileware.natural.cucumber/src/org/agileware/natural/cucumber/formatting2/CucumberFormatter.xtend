@@ -23,6 +23,17 @@ import org.eclipse.xtext.formatting2.IFormattableDocument
 
 import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.*
 
+/**
+ * Each AST element has been given its own formatting directive so they can be individually
+ * formatted on its own. As a consequence, each element should apply formatting rules
+ * without any assumptions about elements not contained within its own node. This means,
+ * for example, indentation rules should be applied by a parent node, and not the target node.
+ * This will ensure formatting is preserved within the document as a whole, whilst formatting
+ * individual elements.
+ * 
+ * TODO: There are still some cases where the above "law" is being violated. This will need
+ *       to be fixed for formatting to work correctly.
+ */
 class CucumberFormatter extends AbstractFormatter2 {
 	
 	@Inject extension CucumberGrammarAccess
@@ -30,17 +41,18 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def dispatch void format(Feature model, extension IFormattableDocument document) {
 		// println(textRegionAccess)
 		
+		// Remove blank lines at the top of document
 		model.prepend[setNewLines(0)]
 		
 		// format top-level tags
 		for (t : model.tags) t.format()
 		
-		// Adjust spacing around Feature: keyword
+		// Adjust spacing around keyword
 		model.regionFor.keyword(featureAccess.featureKeyword_1)
 				.prepend[noSpace]
 				.append[oneSpace]
 		
-		// Trim whitespace around title
+		// Trim whitespace at the end of title
 		model.regionFor.feature(FEATURE__TITLE)
 				.append[noSpace]
 
@@ -57,7 +69,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Tag model, extension IFormattableDocument document) {
-		// Trim white space around tags and place in single line
+		// Trim white space around tags and place each tag in single line
 		model.surround[noSpace].append[newLine]
 		model.regionFor.feature(TAG__ID)
 			.surround[noSpace]
@@ -69,6 +81,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(NarrativeLine model, extension IFormattableDocument document) {
+		// Trim whitespace at the end of each line
 		model.regionFor.feature(NARRATIVE_LINE__VALUE)
 				.append[noSpace]
 	}
@@ -82,7 +95,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 		model.regionFor.keyword(backgroundAccess.backgroundKeyword_1)
 				.append[oneSpace]
 		
-		// Trim whitespace around title
+		// Trim whitespace at the end of title
 		model.regionFor.feature(BACKGROUND__TITLE)
 				.append[noSpace]
 		
@@ -102,16 +115,23 @@ class CucumberFormatter extends AbstractFormatter2 {
 		model.regionFor.keyword(scenarioAccess.scenarioKeyword_2)
 				.append[oneSpace]
 		
-		// Trim whitespace around title
+		// Trim whitespace at end of title
 		model.regionFor.feature(ABSTRACT_SCENARIO__TITLE)
 				.append[noSpace]
 		
-
 		// format narrative
 		model.narrative.format()
 
 		// format steps
 		for (s : model.steps) s.format()
+		
+		// Indent steps block
+		if(model.steps.size() > 1) {
+			
+		}
+		else if(model.steps.size() === 1) {
+			
+		}
 	}
 
 	def dispatch void format(ScenarioOutline model, extension IFormattableDocument document) {
@@ -126,7 +146,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 		model.regionFor.keyword(scenarioOutlineAccess.scenarioKeyword_2)
 				.append[oneSpace]
 		
-		// Trim whitespace around title
+		// Trim whitespace at end of title
 		model.regionFor.feature(ABSTRACT_SCENARIO__TITLE)
 				.append[noSpace]
 				
@@ -161,7 +181,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 		model.regionFor.feature(STEP__KEYWORD)
 				.append[oneSpace]
 				
-		// Trim whitespace around description, including any additional NL
+		// Trim whitespace at the end of description
 		model.regionFor.feature(STEP__DESCRIPTION)
 				.append[noSpace]
 				
@@ -177,7 +197,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 
 	def dispatch void format(TableRow model, extension IFormattableDocument document) {
 		
-		// Trim whitespace at before/after collumns 
+		// Trim whitespace before and after each row
 		model.surround[noSpace]
 		
 		// format cols
