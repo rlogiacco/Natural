@@ -9,6 +9,8 @@ import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.agileware.natural.cucumber.tests.CucumberTestHelpers.EXAMPLE_FEATURE
+
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
 class CucumberFormatterTest {
@@ -41,21 +43,32 @@ class CucumberFormatterTest {
 	}
 
 	@Test
-	def void scenarioIndentation() {
+	def void indentSteps() {
 		val toBeFormatted = '''
-			Feature: The quick brown fox
+			Feature: Jack and Jill
 			
-			Scenario: Jack and Jill
+			Background:
+			Given Jack and Jill went up the hill
+			
+			Scenario: Jack falls down
 			When Jack falls down
 			Then Jill comes tumbling after
 		'''
 		val expectation = '''
-			Feature: The quick brown fox
+			Feature: Jack and Jill
 			
-			Scenario: Jack and Jill
+			Background:
+				Given Jack and Jill went up the hill
+			
+			Scenario: Jack falls down
 				When Jack falls down
 				Then Jill comes tumbling after
 		'''
 		_th.assertFormatted(toBeFormatted, expectation)
+	}
+	
+	@Test
+	def void preserveValidFormatting() {
+		_th.assertFormatted(EXAMPLE_FEATURE)
 	}
 }

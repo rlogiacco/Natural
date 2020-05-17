@@ -7,10 +7,7 @@ import org.agileware.natural.cucumber.cucumber.Feature
 import org.agileware.natural.cucumber.cucumber.Scenario
 import org.agileware.natural.cucumber.cucumber.Step
 import org.agileware.natural.cucumber.validation.CucumberIssueCode
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.diagnostics.Severity
-import org.eclipse.xtext.resource.SaveOptions
-import org.eclipse.xtext.serializer.ISerializer
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.formatter.FormatterTestHelper
 import org.eclipse.xtext.testing.formatter.FormatterTestRequest
@@ -96,6 +93,12 @@ class CucumberTestHelpers {
 				formatterRequestProvider.get()
 						.setToBeFormatted(toBeFormatted)
 						.setExpectation(expectation))
+	}
+
+	def void assertFormatted(String toBeFormatted) {
+		formatterTestHelper.assertFormatted(
+				formatterRequestProvider.get()
+						.setToBeFormatted(toBeFormatted))
 	}
 
 	def static Matcher<Scenario> withScenario(String title) {
