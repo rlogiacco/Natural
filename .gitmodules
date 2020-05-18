@@ -1,0 +1,4 @@
+[submodule "update-site"]
+	path = update-site
+	url = https://github.com/rlogiacco/Natural.git
+	branch = gh-pages
