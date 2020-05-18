@@ -8,7 +8,7 @@
 
 After many years an awesome developer has finally decided to step up and share the burden of bringing this plugin to its next stages: thanks **[Aaron R. Miller](https://github.com/drkstr101)** for your contributions, but above all, thanks for your enthusiasm and for reinvigorating the project!
 
-This doesn't mean we wouldn't appreciate your help so don't be shy and submit your contributions! If you are unable or unwilling to contribute your time, please consider a donation! <!--: we have opened a [Github Sponsors account][5]. -->
+This doesn't mean we wouldn't appreciate your help so don't be shy and submit your contributions! If you are unable or unwilling to contribute your time, please consider a donation: we have opened a [Github Sponsors account][5].
 
 ##### Natural installation can be achieved by adding the `Natural Plugin Update Site` with `http://rlogiacco.github.com/Natural` as URL.
 
