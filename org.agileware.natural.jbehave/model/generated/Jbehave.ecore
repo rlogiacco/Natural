@@ -7,10 +7,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="#//Meta" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="narrative" eType="#//Narrative"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
-        eType="#//Scenario" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lifecycle" eType="#//Lifecycle"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
+        eType="#//Scenario" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Description">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lines" unique="false" upperBound="-1"
@@ -25,11 +25,15 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Narrative">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inOrderTo" eType="#//InOrderTo"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="asA" eType="#//AsA" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="wantTo" eType="#//IWantTo"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NarrativeA" eSuperTypes="#//Narrative">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inOrderTo" eType="#//InOrderTo"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NarrativeB" eSuperTypes="#//Narrative">
     <eStructuralFeatures xsi:type="ecore:EReference" name="soThat" eType="#//SoThat"
         containment="true"/>
   </eClassifiers>
@@ -123,16 +127,12 @@
     <eLiterals name="AND" value="3" literal="And"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Examples">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//ExamplesTable"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExamplesTable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//ExamplesTableRow"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExamplesTableRow"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TableRow" eSuperTypes="#//ExamplesTableRow">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cells" unique="false" upperBound="-1"
+  <eClassifiers xsi:type="ecore:EClass" name="Table">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="header" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rows" unique="false" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

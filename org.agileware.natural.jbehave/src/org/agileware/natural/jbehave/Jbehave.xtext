@@ -9,30 +9,32 @@ generate jbehave "http://www.agileware.org/natural/jbehave"
 // The story describes a feature via description, narrative and a set of scenarios
 // Story := Description? Meta? Narrative? GivenStories? Lifecycle? Scenario+ ;
 Story:
-	description=Description?
-	meta=Meta?
-	narrative=Narrative
+	(description=Description EOL+)?
+	(meta=Meta EOL+)?
+	(narrative=Narrative EOL+)?
+	(lifecycle=Lifecycle EOL+)?
 	scenarios+=Scenario
-	lifecycle=Lifecycle?
+    (EOL+ scenarios+=Scenario)*
 ;
 
 // The Description is expressed by any sequence of words that must not contain any keywords at start of lines.
 // Description := (Word Space?)* ;
 Description:
 	lines+=DescriptionLine
+    (EOL lines+=DescriptionLine)*
 ;
 
 DescriptionLine:
-	((WORD) (WORD)* EOL)+
+	WORD+
 ;
 
 // The meta is identified by keyword "Meta:" (or equivalent in I18n-ed locale),
 // It is followed by any number of meta elements
 // Meta:= "Meta:" (MetaElement)* ;
-Meta:
-	{Meta}
+Meta: {Meta}
 	'Meta:'
-	elements+=MetaElement*
+	elements+=MetaElement
+    (EOL elements+=MetaElement)*
 ;
 
 // The meta element is identified by keyword "@" (or equivalent in I18n-ed locale),
@@ -41,10 +43,10 @@ Meta:
 MetaElement:
 	'@'
 	key=WORD
-	(':' value=MetaElementValue)?
+	(value=MetaElementValue)?
 ;
 
-MetaElementValue: (WORD) (WORD)*;
+MetaElementValue: WORD+;
 
 // Narrative
 ////
@@ -52,62 +54,49 @@ MetaElementValue: (WORD) (WORD)*;
 // The narrative is identified by keyword "Narrative:" (or equivalent in I18n-ed locale),
 // It is followed by the narrative elements
 // Narrative:= "Narrative:" ( InOrderTo AsA IWantTo | AsA IWantTo SoThat ) ;
-// TODO: should be implemented as 2 distinct ordered groups
-Narrative:
+Narrative: NarrativeA | NarrativeB;
+
+NarrativeA: {NarrativeA}
 	'Narrative:'
-	inOrderTo=InOrderTo
-	asA=AsA
-	wantTo=IWantTo
-	soThat=SoThat?
+	inOrderTo=InOrderTo asA=AsA wantTo=IWantTo
 ;
 
-//Narrative: (NarrativeA | NarrativeB);
-
-//NarrativeA:
-//	'Narrative:'
-//	inOrderTo=InOrderTo
-//	asA=AsA
-//	wantTo=IWantTo
-//;
-
-//NarrativeB:
-//	'Narrative:'
-//	asA=AsA
-//	wantTo=IWantTo
-//	soThat=SoThat
-//;
+NarrativeB: {NarrativeB}
+	'Narrative:'
+	asA=AsA wantTo=IWantTo soThat=SoThat
+;
 
 // InOrderTo:= "In order to" NarrativeElementContent ;
 InOrderTo:
+	EOL
 	IN_ORDER_TO
 	content=NarrativeElementContent
-	EOL
 ;
 
 // AsA:= "As a" NarrativeElementContent ;
 AsA:
+	EOL
 	AS_A
 	content=NarrativeElementContent
-	EOL
 ;
 
 // IWantTo:= "I want to" NarrativeElementContent ;
 IWantTo:
+	EOL
 	I_WANT_TO
 	content=NarrativeElementContent
-	EOL
 ;
 	
 // SoThat:= "So that" NarrativeElementContent ; 
 SoThat:
+	EOL
 	SO_THAT
 	content=NarrativeElementContent
-	EOL
 ;
 
 // The narrative element content is any sequence of characters that do not match a narrative starting word
 // NarrativeElementContent := ? Any sequence of NarrativeCharacter that does not match NarrativeStartingWord ? ;
-NarrativeElementContent: (WORD) (WORD)*;
+NarrativeElementContent: WORD+;
 
 terminal IN_ORDER_TO: 'In order to';
 terminal AS_A: 'As a';
@@ -124,30 +113,34 @@ terminal SO_THAT: 'So that';
 // It is followed by one or more Steps.
 // Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
 // Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
-Scenario:
-	{Scenario}
+Scenario: {Scenario}
 	'Scenario:'
-	title=Title EOL+
-	meta=Meta?
-	given=GivenStories?
-	steps+=Step+
-	examples=Examples?
+	title=Title EOL
+	(meta=Meta EOL+)?
+	(given=GivenStories EOL+)?
+	steps+=Step
+    (EOL steps+=Step)*
+	(EOL+ examples=Examples)?
 ;
 
 // The free-text description
 // Title := (Word Space?)* ;
-Title: (WORD) (WORD)*;
+Title: WORD+;
 	
 // The comma-separated list of story resources that specify the stories to be run before a story or a scenario
 // GivenStories:= "GivenStories:" (StoryPath ','?)+ ;
 GivenStories:
 	'GivenStories:'
-	resources+=StoryPath+;
+	resources+=StoryPath
+    (EOL resources+=StoryPath)*
+;
 	
 // The story resource path
 // StoryPath := PathCharacter+ ;
 StoryPath:
-	path=PATH ','?;
+	path=PATH 
+	','?
+;
 
 // The characters allowed in a resource path
 // PathCharacter := "/" | "." | "_" | Letter | Digit ;
@@ -160,8 +153,7 @@ terminal PATH:
 // The lifecycle is identified by keyword "Lifecycle:" (or equivalent in I18n-ed locale),
 // It is followed by the lifecycle elements
 // Lifecycle:= "Lifecycle:" LifecycleBefore? LifecycleAfter?
-Lifecycle:
-	{Lifecycle}
+Lifecycle: {Lifecycle}
 	'Lifecycle:'
 	before=LifecycleBefore?
 	after=LifecycleAfter?
@@ -221,8 +213,7 @@ enum OutcomeType: ANY
  
 // The meta filter element identified by keyword "MetaFilter:" (or equivalent in I18n-ed locale),
 // MetaFilter:= "MetaFilter:" (Word Space?)*
-MetaFilter: 
-	{MetaFilter} 
+MetaFilter: {MetaFilter} 
 	"MetaFilter:"
 	elements+=MetaElement*
 ;
@@ -235,7 +226,6 @@ MetaFilter:
 Step:
 	type=StepStartingWord
 	content=StepContent
-	EOL
 ;
 	
 StepContent: (WORD | NUMBER | EXAMPLE_WORD)+;
@@ -260,16 +250,15 @@ terminal EXAMPLE_WORD:
 // The examples table
 // Examples := "Examples:" ExamplesTable ;
 Examples:
-	'Examples:' EOL+
-	table=ExamplesTable
+	'Examples:'
+	table=Table
 ;
 
 // The examples table comprises of a header row and data rows
 // ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
-// TODO: header row should be distinct semantically
-ExamplesTable:
-	{ExamplesTable}
-	rows+=ExamplesTableRow*
+Table:
+	header=TABLE_ROW
+    (EOL rows+=TABLE_ROW)+
 ;
 
 // The examples table header contains the column names, separated by ExamplesTableColumnSeparator
@@ -277,17 +266,12 @@ ExamplesTable:
 
 // The examples table row contains the column values, separated by ExamplesTableColumnSeparator
 // ExamplesTableRow := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
-ExamplesTableRow:
-	{TableRow}
-	'|' cells+=ExamplesTableCell EOL
-;
 
-ExamplesTableCell: TABLE_CELL;
-	
 // The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
 // ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
-terminal TABLE_CELL: !('|' | '\n' | '\r') '|';
 
+terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL;
+	
 
 // Common Elements
 ////
@@ -298,11 +282,13 @@ terminal WORD:
 ;
 
 terminal NUMBER returns ecore::EDouble:
-	'-'? (DIGIT)+ ('.' (DIGIT)+)?;
+	'-'? (DIGIT)+ ('.' (DIGIT)+)?
+;
 
 //terminal STRING:
 //	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
-//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'"
+//;
 
 terminal SL_COMMENT: '#' !('\n' | '\r')* EOL;
 
