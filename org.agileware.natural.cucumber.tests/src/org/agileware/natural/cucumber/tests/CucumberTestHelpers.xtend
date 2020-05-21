@@ -1,7 +1,6 @@
 package org.agileware.natural.cucumber.tests
 
 import com.google.inject.Inject
-import com.google.inject.Provider
 import java.util.List
 import org.agileware.natural.cucumber.cucumber.Feature
 import org.agileware.natural.cucumber.cucumber.Scenario
@@ -9,8 +8,6 @@ import org.agileware.natural.cucumber.cucumber.Step
 import org.agileware.natural.cucumber.validation.CucumberIssueCode
 import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.formatter.FormatterTestHelper
-import org.eclipse.xtext.testing.formatter.FormatterTestRequest
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.eclipse.xtext.validation.Issue
@@ -26,8 +23,6 @@ import static org.hamcrest.Matchers.notNullValue
 class CucumberTestHelpers {
 	@Inject public ParseHelper<Feature> parseHelper
 	@Inject public ValidationTestHelper validationTestHelper
-	@Inject public FormatterTestHelper formatterTestHelper
-	@Inject public Provider<FormatterTestRequest> formatterRequestProvider
 	
 	public static String EXAMPLE_FEATURE = '''
 		@release:Release-2 
@@ -86,19 +81,6 @@ class CucumberTestHelpers {
 		assertThat(model, notNullValue())
 		
 		return validationTestHelper.validate(model)
-	}
-
-	def void assertFormatted(String toBeFormatted, String expectation) {
-		formatterTestHelper.assertFormatted(
-				formatterRequestProvider.get()
-						.setToBeFormatted(toBeFormatted)
-						.setExpectation(expectation))
-	}
-
-	def void assertFormatted(String toBeFormatted) {
-		formatterTestHelper.assertFormatted(
-				formatterRequestProvider.get()
-						.setToBeFormatted(toBeFormatted))
 	}
 
 	def static Matcher<Scenario> withScenario(String title) {
