@@ -4,43 +4,77 @@
 package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
-import org.agileware.natural.jbehave.jbehave.Story
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
-import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.hamcrest.CoreMatchers.*
 import static org.hamcrest.MatcherAssert.*
+import static org.hamcrest.Matchers.*
+import org.agileware.natural.jbehave.jbehave.NarrativeA
+import org.agileware.natural.jbehave.jbehave.NarrativeB
 
 @RunWith(XtextRunner)
 @InjectWith(JbehaveInjectorProvider)
 class JbehaveParsingTest {
 	
-	@Inject
-	ParseHelper<Story> parseHelper
+	@Inject JbehaveTestHelpers _th
 	
 	@Test
-	def void parseHappyPath() {
-		val result = parseHelper.parse('''
+	def void narrativeTypeA() {
+		val model = _th.parse('''
 			Narrative:
 			In order to sell a pet
 			As a store owner
 			I want to add a new pet to the catalog
-			
-			Scenario: Adding a pet
-			Meta:
-			@tag component:Pet Store Api
-			
-			Given I have the following pet:
-			|name | status    |
-			|Fido | available |
-			When I add the pet to the store
-			Then the pet should be available in the store
 		''')
 		
-		assertThat(result, notNullValue())
-		assertThat(result.eResource.errors, equalTo(#[]))
+		assertThat(model, notNullValue())
+		
+		val narrative = model.narrative as NarrativeA
+		assertThat(narrative, notNullValue())
+		assertThat(narrative.inOrderTo, notNullValue())
+		assertThat(narrative.asA, notNullValue())
+		assertThat(narrative.wantTo, notNullValue())
+	}
+	
+	@Test
+	def void narrativeTypeB() {
+		val model = _th.parse('''
+			Narrative:
+			As a store owner
+			I want to add a new pet to the catalog
+			So that I can sell a pet
+		''')
+		
+		assertThat(model, notNullValue())
+		
+		val narrative = model.narrative as NarrativeB
+		assertThat(narrative, notNullValue())
+		assertThat(narrative.asA, notNullValue())
+		assertThat(narrative.wantTo, notNullValue())
+		assertThat(narrative.soThat, notNullValue())
+	}
+	@Test
+	def void narrativeWithDescriptionAndMeta() {
+		val model = _th.parse('''
+			The quick brown fox
+			Jumps over the lazy dog
+			
+			Meta:
+			@author Mauro
+			@themes UI Usability
+			
+			Narrative:
+			In order to sell a pet
+			As a store owner
+			I want to add a new pet to the catalog
+		''')
+		
+		assertThat(model, notNullValue())
+		assertThat(model.description, notNullValue())
+		assertThat(model.description.lines, hasSize(2))
+		assertThat(model.meta, notNullValue())
+		assertThat(model.narrative, notNullValue())
 	}
 }
