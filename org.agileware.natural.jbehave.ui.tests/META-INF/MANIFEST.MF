@@ -6,7 +6,8 @@ Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.agileware.natural.jbehave.ui.tests;x-internal=true
+Export-Package: org.agileware.natural.jbehave.ui.tests;x-internal=true,
+ org.agileware.natural.jbehave2.ui.tests;x-internal=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.workbench;resolution:=optional,
  org.eclipse.xtext.testing,
