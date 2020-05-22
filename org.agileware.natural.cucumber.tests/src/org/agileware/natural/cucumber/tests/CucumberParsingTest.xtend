@@ -36,7 +36,6 @@ class CucumberParsingTest {
 		
 		assertThat(feature.title, equalTo("Hello, Cucumber!"))
 		assertThat(feature.narrative, notNullValue())
-		assertThat(feature.narrative.lines, hasSize(2))
 
 		val scenarios = feature.scenarios
 		assertThat(scenarios, hasSize(1))

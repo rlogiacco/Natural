@@ -79,18 +79,10 @@ Title:
 ;
 
 Narrative:
-    lines+=NarrativeLine+
-    ( -> EOL?)
-;
-
-NarrativeLine:
-    value=LineValue
-    EOL
-;
-
-LineValue:
-	(WORD | INT | STRING | PLACEHOLDER)
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+	(
+		(WORD | INT | STRING | PLACEHOLDER)
+		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+
+	)+
 ;
 
 StepDescription:
