@@ -15,6 +15,58 @@ import static org.hamcrest.Matchers.*
 class JbehaveTestHelpers {
 	@Inject public ParseHelper<Story> parseHelper
 	@Inject public ValidationTestHelper validationTestHelper
+	
+	public static final String EXAMPLE_STORY = '''
+		A story is a collection of scenarios
+		 
+		Narrative:
+		In order to communicate effectively to the business some functionality
+		As a development team
+		I want to use Behaviour-Driven Development
+		 
+		Lifecycle: 
+		Before:
+		Scope: STORY
+		Given a step that is executed before each story
+		Scope: SCENARIO
+		Given a step that is executed before each scenario
+		Scope: STEP
+		Given a step that is executed before each scenario step
+		After:
+		Scope: STEP
+		Given a step that is executed after each scenario step
+		Scope: SCENARIO
+		Outcome: ANY
+		Given a step that is executed after each scenario regardless of outcome
+		Outcome: SUCCESS 
+		Given a step that is executed after each successful scenario
+		Outcome: FAILURE 
+		Given a step that is executed after each failed scenario
+		Scope: STORY
+		Outcome: ANY
+		Given a step that is executed after each story regardless of outcome
+		Outcome: SUCCESS
+		Given a step that is executed after each successful story
+		Outcome: FAILURE
+		Given a step that is executed after each failed story
+		 
+		Scenario:  A scenario is a collection of executable steps of different type
+		 
+		Given step represents a precondition to an event
+		When step represents the occurrence of the event
+		Then step represents the outcome of the event
+		 
+		Scenario:  Another scenario exploring different combination of events
+		 
+		Given a [precondition]
+		When a negative event occurs
+		Then a the outcome should [be-captured]    
+		 
+		Examples: 
+		|precondition|be-captured|
+		|abc|be captured    |
+		|xyz|not be captured|
+	'''
 
 	def Story parse(CharSequence content) {
 		return parseHelper.parse(content)

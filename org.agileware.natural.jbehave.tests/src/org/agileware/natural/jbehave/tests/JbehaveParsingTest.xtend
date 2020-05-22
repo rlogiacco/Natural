@@ -11,6 +11,7 @@ import org.junit.runner.RunWith
 
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
+import static org.agileware.natural.jbehave.tests.JbehaveTestHelpers.*
 import org.agileware.natural.jbehave.jbehave.NarrativeA
 import org.agileware.natural.jbehave.jbehave.NarrativeB
 
@@ -55,6 +56,7 @@ class JbehaveParsingTest {
 		assertThat(narrative.wantTo, notNullValue())
 		assertThat(narrative.soThat, notNullValue())
 	}
+	
 	@Test
 	def void narrativeWithDescriptionAndMeta() {
 		val model = _th.parse('''
@@ -76,5 +78,13 @@ class JbehaveParsingTest {
 		assertThat(model.description.lines, hasSize(2))
 		assertThat(model.meta, notNullValue())
 		assertThat(model.narrative, notNullValue())
+	}
+	
+	@Test
+	def void allSupportedSyntax() {
+		val model = _th.parse(EXAMPLE_STORY)
+		
+		assertThat(model, notNullValue())
+		assertThat(model.eResource.errors, empty())
 	}
 }
