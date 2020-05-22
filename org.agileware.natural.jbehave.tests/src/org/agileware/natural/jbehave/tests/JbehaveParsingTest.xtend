@@ -81,6 +81,27 @@ class JbehaveParsingTest {
 	}
 	
 	@Test
+	def void simpleScenarios() {
+		val model = _th.parse('''
+			Narrative:
+			In order to communicate effectively to the business some functionality
+			As a development team
+			I want to use Behaviour-Driven Development
+			
+			Scenario: A scenario is a collection of executable steps of different type
+			Given step represents a precondition to an event
+			When step represents the occurrence of the event
+			Then step represents the outcome of the event
+		''')
+		
+		assertThat(model, notNullValue())
+		assertThat(model.narrative, notNullValue())
+		
+		val scenarios = model.scenarios
+		assertThat(scenarios, hasSize(1))
+	}
+	
+	@Test
 	def void allSupportedSyntax() {
 		val model = _th.parse(EXAMPLE_STORY)
 		
