@@ -3,6 +3,7 @@ package org.agileware.natural.jbehave.tests
 import com.google.inject.Inject
 import java.util.List
 import org.agileware.natural.jbehave.jbehave.Story
+import org.agileware.natural.jbehave.serializer.JbehaveSerializer
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
@@ -15,6 +16,8 @@ import static org.hamcrest.Matchers.*
 class JbehaveTestHelpers {
 	@Inject public ParseHelper<Story> parseHelper
 	@Inject public ValidationTestHelper validationTestHelper
+	
+	@Inject JbehaveSerializer serializer
 	
 	public static final String EXAMPLE_STORY = '''
 		A story is a collection of scenarios
@@ -77,5 +80,10 @@ class JbehaveTestHelpers {
 		assertThat(model, notNullValue())
 
 		return validationTestHelper.validate(model)
+	}
+	
+	def void trace(String group, Story model) {
+		println("------------------" + group + "------------------")
+		println(serializer.serialize(model))
 	}
 }
