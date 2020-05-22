@@ -13,8 +13,7 @@ Story:
 	(meta=Meta EOL+)?
 	(narrative=Narrative EOL+)?
 	(lifecycle=Lifecycle EOL+)?
-	scenarios+=Scenario
-	(EOL+ scenarios+=Scenario)*
+	scenarios+=Scenario*
 ;
 
 // The Description is expressed by any sequence of words that must not contain any keywords at start of lines.
@@ -288,7 +287,7 @@ terminal TABLE_ROW:
 ////
 
 terminal WORD: 
-	(LETTER) (LETTER | DIGIT)*
+	(LETTER | DIGIT) (LETTER | DIGIT | '_' | '-' | '.')*
 ;
 
 terminal NUMBER returns ecore::EDouble:

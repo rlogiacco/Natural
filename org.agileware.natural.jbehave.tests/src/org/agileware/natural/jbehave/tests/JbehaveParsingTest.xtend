@@ -4,16 +4,16 @@
 package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
+import org.agileware.natural.jbehave.jbehave.NarrativeA
+import org.agileware.natural.jbehave.jbehave.NarrativeB
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.agileware.natural.jbehave.tests.JbehaveTestHelpers.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
-import static org.agileware.natural.jbehave.tests.JbehaveTestHelpers.*
-import org.agileware.natural.jbehave.jbehave.NarrativeA
-import org.agileware.natural.jbehave.jbehave.NarrativeB
 
 @RunWith(XtextRunner)
 @InjectWith(JbehaveInjectorProvider)
@@ -31,7 +31,8 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		
+		_th.trace("narrativeTypeA", model)
+
 		val narrative = model.narrative as NarrativeA
 		assertThat(narrative, notNullValue())
 		assertThat(narrative.inOrderTo, notNullValue())
@@ -49,6 +50,7 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
+		_th.trace("narrativeTypeB", model)
 		
 		val narrative = model.narrative as NarrativeB
 		assertThat(narrative, notNullValue())
@@ -74,6 +76,8 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
+		_th.trace("narrativeWithDescriptionAndMeta", model)
+		
 		assertThat(model.description, notNullValue())
 		assertThat(model.description.lines, hasSize(2))
 		assertThat(model.meta, notNullValue())
@@ -95,6 +99,8 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
+		_th.trace("simpleScenarios", model)
+		
 		assertThat(model.narrative, notNullValue())
 		
 		val scenarios = model.scenarios
@@ -106,6 +112,8 @@ class JbehaveParsingTest {
 		val model = _th.parse(EXAMPLE_STORY)
 		
 		assertThat(model, notNullValue())
+		_th.trace("allSupportedSyntax", model)
+		
 		assertThat(model.eResource.errors, empty())
 	}
 }
