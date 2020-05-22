@@ -85,15 +85,15 @@ class JbehaveSerializer {
 	'''
 	
 	def String serialize(AsA model) '''
-		In order to «model.content»
+		As a «model.content»
 	'''
 	
 	def String serialize(IWantTo model) '''
-		In order to «model.content»
+		I want to «model.content»
 	'''
 	
 	def String serialize(SoThat model) '''
-		In order to «model.content»
+		So that «model.content»
 	'''
 	
 	def String serialize(Scenario model) '''
