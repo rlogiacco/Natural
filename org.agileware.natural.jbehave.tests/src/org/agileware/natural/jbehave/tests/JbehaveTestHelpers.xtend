@@ -2,12 +2,17 @@ package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
 import java.util.List
+import org.agileware.natural.jbehave.jbehave.AsA
+import org.agileware.natural.jbehave.jbehave.IWantTo
+import org.agileware.natural.jbehave.jbehave.InOrderTo
+import org.agileware.natural.jbehave.jbehave.SoThat
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.serializer.JbehaveSerializer
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.eclipse.xtext.validation.Issue
+import org.hamcrest.Matcher
 
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.*
@@ -70,6 +75,30 @@ class JbehaveTestHelpers {
 		|abc|be captured    |
 		|xyz|not be captured|
 	'''
+	
+	def static Matcher<Story> hasNarrative(Matcher... matchers) {
+		return hasProperty("narrative", allOf(matchers))
+	}
+	
+	def static Matcher<InOrderTo> inOrderTo(String content) {
+		return hasProperty("inOrderTo", 
+				hasProperty("content", equalTo(content)))
+	}
+	
+	def static Matcher<AsA> asA(String content) {
+		return hasProperty("asA", 
+				hasProperty("content", equalTo(content)))
+	}
+	
+	def static Matcher<IWantTo> iWantTo(String content) {
+		return hasProperty("wantTo", 
+				hasProperty("content", equalTo(content)))
+	}
+	
+	def static Matcher<SoThat> soThat(String content) {
+		return hasProperty("soThat", 
+				hasProperty("content", equalTo(content)))
+	}
 
 	def Story parse(CharSequence content) {
 		return parseHelper.parse(content)

@@ -33,11 +33,11 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("narrativeTypeA", model)
 
-		val narrative = model.narrative as NarrativeA
-		assertThat(narrative, notNullValue())
-		assertThat(narrative.inOrderTo, notNullValue())
-		assertThat(narrative.asA, notNullValue())
-		assertThat(narrative.wantTo, notNullValue())
+		assertThat(model, hasNarrative(
+			inOrderTo("sell a pet"),
+			asA("store owner"),
+			iWantTo("add a new pet to the catalog")
+		))
 	}
 	
 	@Test
@@ -52,11 +52,11 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("narrativeTypeB", model)
 		
-		val narrative = model.narrative as NarrativeB
-		assertThat(narrative, notNullValue())
-		assertThat(narrative.asA, notNullValue())
-		assertThat(narrative.wantTo, notNullValue())
-		assertThat(narrative.soThat, notNullValue())
+		assertThat(model, hasNarrative(
+			asA("store owner"),
+			iWantTo("add a new pet to the catalog"),
+			soThat("I can sell a pet")
+		))
 	}
 	
 	@Test
@@ -81,7 +81,12 @@ class JbehaveParsingTest {
 		assertThat(model.description, notNullValue())
 		assertThat(model.description.lines, hasSize(2))
 		assertThat(model.meta, notNullValue())
-		assertThat(model.narrative, notNullValue())
+
+		assertThat(model, hasNarrative(
+			inOrderTo("sell a pet"),
+			asA("store owner"),
+			iWantTo("add a new pet to the catalog")
+		))
 	}
 	
 	@Test
@@ -102,7 +107,7 @@ class JbehaveParsingTest {
 			 
 			Given a [precondition]
 			When a negative event occurs
-			Then a the outcome should [be-captured]    
+			Then a the outcome should <be-captured>    
 			 
 			Examples: 
 			|precondition|be-captured|
@@ -113,10 +118,19 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("simpleScenarios", model)
 		
-		assertThat(model.narrative, notNullValue())
+		assertThat(model, hasNarrative(
+			inOrderTo("communicate effectively to the business some functionality"),
+			asA("development team"),
+			iWantTo("use Behaviour-Driven Development")
+		))
 		
-		val scenarios = model.scenarios
-		assertThat(scenarios, hasSize(2))
+		assertThat(model.scenarios, hasSize(2))
+		
+		val s1 = model.scenarios.get(0)
+		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
+		
+		val s2 = model.scenarios.get(1)
+		assertThat(s2.title, equalTo("Another scenario exploring different combination of events"))
 	}
 	
 	@Test
