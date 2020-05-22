@@ -118,8 +118,7 @@ terminal SO_THAT: 'So that';
 // Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
 // Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
 Scenario: {Scenario}
-	'Scenario:'
-	title=Title EOL
+	'Scenario:' (title=Title)? EOL+
 	(meta=Meta EOL+)?
 	(given=GivenStories EOL+)?
 	steps+=Step
@@ -250,7 +249,8 @@ enum StepStartingWord:
 
 // TODO: support multiple wrapping symbols / quotations
 terminal EXAMPLE_WORD:
-	('"'? '<' WORD '>' '"'?)
+	('<' WORD '>')
+	| ('[' WORD ']')
 ;
 
 

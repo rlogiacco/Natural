@@ -24,17 +24,22 @@ class JbehaveSerializer {
 	def String serialize(Story model) '''
 		«IF model.description !== null»
 			«serialize(model.description)»
+			
 		«ENDIF»
 		«IF model.meta !== null»
 			«serialize(model.meta)»
+			
 		«ENDIF»
 		«IF model.narrative !== null»
 			«serialize(model.narrative)»
+			
 		«ENDIF»
 		«IF model.lifecycle !== null»
 			«serialize(model.lifecycle)»
+			
 		«ENDIF»
 		«FOR s : model.scenarios»
+		
 			«serialize(s)»
 		«ENDFOR»
 	'''
@@ -92,7 +97,7 @@ class JbehaveSerializer {
 	'''
 	
 	def String serialize(Scenario model) '''
-		'Scenario:' «model.title»
+		Scenario: «model.title»
 		«IF model.meta !== null»
 			«serialize(model.meta)»
 		«ENDIF»
