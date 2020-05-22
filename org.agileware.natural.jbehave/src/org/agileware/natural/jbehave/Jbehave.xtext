@@ -24,15 +24,12 @@ Description:
 	(EOL lines+=DescriptionLine)*
 ;
 
-DescriptionLine:
-	WORD+
-;
+DescriptionLine: WORD+;
 
 // The meta is identified by keyword "Meta:" (or equivalent in I18n-ed locale),
 // It is followed by any number of meta elements
 // Meta:= "Meta:" (MetaElement)* ;
-Meta:
-	{Meta}
+Meta: {Meta}
 	'Meta:'
 	elements+=MetaElement
 	(EOL elements+=MetaElement)*
@@ -44,10 +41,10 @@ Meta:
 MetaElement:
 	'@'
 	key=WORD
-	(value=MetaElementValue)?;
+	(value=MetaElementValue)?
+;
 
-MetaElementValue:
-	WORD+;
+MetaElementValue: WORD+;
 
 
 // Narrative
@@ -60,14 +57,12 @@ Narrative:
 	NarrativeA | NarrativeB
 ;
 
-NarrativeA:
-	{NarrativeA}
+NarrativeA: {NarrativeA}
 	'Narrative:'
 	inOrderTo=InOrderTo asA=AsA wantTo=IWantTo
 ;
 
-NarrativeB:
-	{NarrativeB}
+NarrativeB: {NarrativeB}
 	'Narrative:'
 	asA=AsA wantTo=IWantTo soThat=SoThat
 ;
@@ -102,24 +97,16 @@ SoThat:
 
 // The narrative element content is any sequence of characters that do not match a narrative starting word
 // NarrativeElementContent := ? Any sequence of NarrativeCharacter that does not match NarrativeStartingWord ? ;
-NarrativeElementContent:
-	WORD+
-;
+NarrativeElementContent: WORD+;
 
-terminal IN_ORDER_TO:
-	'In order to'
-;
+terminal IN_ORDER_TO: 'In order to';
 
-terminal AS_A:
-	'As a'
-;
+terminal AS_A: 'As a';
 
-terminal I_WANT_TO:
-	'I want to';
+terminal I_WANT_TO: 'I want to';
 
-terminal SO_THAT:
-	'So that'
-;
+terminal SO_THAT: 'So that';
+
 
 // Scenario
 ////
@@ -131,8 +118,7 @@ terminal SO_THAT:
 // It is followed by one or more Steps.
 // Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
 // Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
-Scenario:
-	{Scenario}
+Scenario: {Scenario}
 	'Scenario:'
 	title=Title EOL
 	(meta=Meta EOL+)?
@@ -163,20 +149,20 @@ StoryPath:
 	','?
 ;
 
-	// The characters allowed in a resource path
+// The characters allowed in a resource path
 // PathCharacter := "/" | "." | "_" | Letter | Digit ;
 terminal PATH:
 	'/' ('/' | '.' | '_' | LETTER | DIGIT)+
 ;
 
-	// Lifecycle
+
+// Lifecycle
 ////
 
 // The lifecycle is identified by keyword "Lifecycle:" (or equivalent in I18n-ed locale),
 // It is followed by the lifecycle elements
 // Lifecycle:= "Lifecycle:" LifecycleBefore? LifecycleAfter?
-Lifecycle:
-	{Lifecycle}
+Lifecycle: {Lifecycle}
 	'Lifecycle:'
 	before=LifecycleBefore?
 	after=LifecycleAfter?
@@ -216,8 +202,7 @@ Scope:
 	type=ScopeType
 ;
 
-enum ScopeType:
-	STEP
+enum ScopeType: STEP
 	| SCENARIO
 	| STORY
 ;
@@ -229,19 +214,18 @@ Outcome:
 	type=OutcomeType
 ;
 
-enum OutcomeType:
-	ANY
+enum OutcomeType: ANY
 	| SUCCESS
 	| FAILURE
 ;
 
 // The meta filter element identified by keyword "MetaFilter:" (or equivalent in I18n-ed locale),
 // MetaFilter:= "MetaFilter:" (Word Space?)*
-MetaFilter:
-	{MetaFilter}
+MetaFilter: {MetaFilter}
 	"MetaFilter:"
 	elements+=MetaElement*
 ;
+
 
 // Step
 ////
@@ -295,15 +279,16 @@ Table:
 
 // The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
 // ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
-terminal TABLE_ROW:
+terminal TABLE_ROW: 
 	'|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL
 ;
 
-	// Common Elements
+
+// Common Terminals
 ////
-terminal WORD:
-	(LETTER)
-	(LETTER | DIGIT)*
+
+terminal WORD: 
+	(LETTER) (LETTER | DIGIT)*
 ;
 
 terminal NUMBER returns ecore::EDouble:
@@ -314,6 +299,7 @@ terminal NUMBER returns ecore::EDouble:
 //	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
 //	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'"
 //;
+
 terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
 
 terminal fragment LETTER: ('a'..'z' | 'A'..'Z');
@@ -324,9 +310,7 @@ terminal WS: (' ' | '\t')+;
 
 terminal EOL: NL;
 
-terminal fragment NL:
-	('\r'? '\n')
-;
+terminal fragment NL: ('\r'? '\n');
 
 terminal ANY:
 	.;
