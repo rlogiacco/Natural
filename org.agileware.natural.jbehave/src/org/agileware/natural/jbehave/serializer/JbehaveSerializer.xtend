@@ -39,8 +39,8 @@ class JbehaveSerializer {
 			
 		«ENDIF»
 		«FOR s : model.scenarios»
-		
 			«serialize(s)»
+			
 		«ENDFOR»
 	'''
 	
@@ -98,16 +98,20 @@ class JbehaveSerializer {
 	
 	def String serialize(Scenario model) '''
 		Scenario: «model.title»
+		
 		«IF model.meta !== null»
 			«serialize(model.meta)»
+			
 		«ENDIF»
 		«IF model.given !== null»
 			«serialize(model.given)»
+			
 		«ENDIF»
 		«FOR s : model.steps»
 			«serialize(s)»
 		«ENDFOR»
 		«IF model.examples !== null»
+			
 			«serialize(model.examples)»
 		«ENDIF»
 	'''
