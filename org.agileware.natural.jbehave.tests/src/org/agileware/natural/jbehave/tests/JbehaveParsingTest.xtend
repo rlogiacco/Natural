@@ -154,6 +154,49 @@ class JbehaveParsingTest {
 		assertThat(s2.examples.table.rows, hasSize(2))
 	}
 	
+	
+	@Test
+	def void scenarioWithLifecycle() {
+		val model = _th.parse('''
+			Narrative:
+			In order to communicate effectively to the business some functionality
+			As a development team
+			I want to use Behaviour-Driven Development
+			
+			Lifecycle: 
+			Before:
+			Scope: STORY
+			Given a step that is executed before each story
+			Scope: SCENARIO
+			Given a step that is executed before each scenario
+			
+			Scenario: A scenario is a collection of executable steps of different type
+			When step represents the occurrence of the event
+			Then step represents the outcome of the event
+		''')
+		
+		assertThat(model, notNullValue())
+		_th.trace("scenariosWithLifecycle", model)
+		
+		// Check narrative
+		assertThat(model, hasNarrative(
+			inOrderTo("communicate effectively to the business some functionality"),
+			asA("development team"),
+			iWantTo("use Behaviour-Driven Development")
+		))
+		
+		// Check Scenarios
+		////
+		
+		assertThat(model.scenarios, hasSize(1))
+		val s1 = model.scenarios.get(0)
+		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
+		assertThat(s1.steps, hasItems(
+				theStep(WHEN, "step represents the occurrence of the event"),
+				theStep(THEN, "step represents the outcome of the event")
+		))
+	}
+	
 	@Test
 	def void allSupportedSyntax() {
 		val model = _th.parse(EXAMPLE_STORY)
