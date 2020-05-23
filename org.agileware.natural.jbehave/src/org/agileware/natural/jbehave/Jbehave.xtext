@@ -267,7 +267,7 @@ Examples:
 // ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
 Table:
 	header=TABLE_ROW
-	(EOL rows+=TABLE_ROW)+
+	rows+=TABLE_ROW+
 ;
 
 // The examples table header contains the column names, separated by ExamplesTableColumnSeparator

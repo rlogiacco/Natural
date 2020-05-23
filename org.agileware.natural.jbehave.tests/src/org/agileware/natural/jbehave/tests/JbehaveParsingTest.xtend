@@ -140,6 +140,10 @@ class JbehaveParsingTest {
 				theStep(WHEN, "a negative event occurs"),
 				theStep(THEN, "the outcome should <be-captured>")
 		))
+		assertThat(s2.examples, notNullValue())
+		assertThat(s2.examples.table, notNullValue())
+		assertThat(s2.examples.table.header, not(emptyString()))
+		assertThat(s2.examples.table.rows, hasSize(2))
 	}
 	
 	@Test
