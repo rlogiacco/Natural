@@ -174,11 +174,13 @@ class JbehaveParsingTest {
 			Before:
 			Scope: STORY
 			Given a step that is executed before each story
+			And another step that is executed before each story
 			Scope: SCENARIO
 			Given a step that is executed before each scenario
 			After:
 			Scope: STEP
 			Given a step that is executed after each scenario step
+			And another step that is executed after each scenario step
 			Scope: STORY
 			Outcome: ANY
 			Given a step that is executed after each story regardless of outcome

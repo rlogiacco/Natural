@@ -176,8 +176,8 @@ LifecycleBefore:
 ;
 
 LifecycleBeforeElement:
-	scope=Scope?
-	steps+=Step+
+	scope=Scope
+	(EOL steps+=Step)+
 ;
 
 // The after lifecyle element identified by keyword "After:" (or equivalent in I18n-ed locale),
@@ -189,23 +189,11 @@ LifecycleAfter:
 ;
 
 LifecycleAfterElement:
-	scope=Scope?
-	steps+=Step+
+	scope=Scope
+	(EOL outcome=Outcome)?
+	(EOL steps+=Step)+
+	(EOL+ filter=MetaFilter)?
 ;
-
-//LifecycleAfterElement:
-//	scope=Scope?
-//	outcome=Outcome?
-//	steps+=Step+
-//;
-
-//LifecycleAfterElement:
-//	(scope=Scope EOL+)?
-//	(outcome=Outcome EOL+)?
-//	(filter=MetaFilter EOL+)?
-//	steps+=Step
-//	(EOL steps+=Step)*
-//;
 
 // The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),
 // Scope:= "Scope:" "STEP" | "SCENARIO" | "STORY"

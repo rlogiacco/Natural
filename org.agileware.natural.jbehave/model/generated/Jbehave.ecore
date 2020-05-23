@@ -89,8 +89,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="LifecycleAfterElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outcome" eType="#//Outcome"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
         eType="#//Step" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="filter" eType="#//MetaFilter"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scope">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ScopeType"/>

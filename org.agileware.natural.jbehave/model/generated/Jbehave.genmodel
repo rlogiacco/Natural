@@ -90,7 +90,9 @@
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//LifecycleAfterElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/scope"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/outcome"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/steps"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/filter"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Scope">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Scope/type"/>
