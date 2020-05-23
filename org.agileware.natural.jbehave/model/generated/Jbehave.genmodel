@@ -78,20 +78,18 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Lifecycle/before"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Lifecycle/after"/>
     </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//LifecycleElement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleElement/scope"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleElement/steps"/>
+    <genClasses ecoreClass="Jbehave.ecore#//LifecycleBefore">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleBefore/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="Jbehave.ecore#//LifecycleBeforeElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleBeforeElement/scope"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleBeforeElement/steps"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//LifecycleAfter">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfter/elements"/>
     </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//LifecycleBefore">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleBefore/elements"/>
-    </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//LifecycleAfterElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/scope"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/outcome"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/filter"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//LifecycleAfterElement/steps"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Scope">

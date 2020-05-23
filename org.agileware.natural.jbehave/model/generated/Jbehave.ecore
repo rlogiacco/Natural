@@ -72,7 +72,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="after" eType="#//LifecycleAfter"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LifecycleElement">
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleBefore">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//LifecycleBeforeElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleBeforeElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
@@ -80,18 +84,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LifecycleAfter">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//LifecycleElement" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LifecycleBefore">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//LifecycleElement" containment="true"/>
+        eType="#//LifecycleAfterElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LifecycleAfterElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outcome" eType="#//Outcome"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="filter" eType="#//MetaFilter"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
         eType="#//Step" containment="true"/>
