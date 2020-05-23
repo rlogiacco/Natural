@@ -176,6 +176,11 @@ class JbehaveParsingTest {
 			Given a step that is executed before each story
 			Scope: SCENARIO
 			Given a step that is executed before each scenario
+			After:
+			Scope: STEP
+			Given a step that is executed after each scenario step
+			Scope: SCENARIO
+			Outcome: ANY
 			
 			Scenario: A scenario is a collection of executable steps of different type
 			When step represents the occurrence of the event
