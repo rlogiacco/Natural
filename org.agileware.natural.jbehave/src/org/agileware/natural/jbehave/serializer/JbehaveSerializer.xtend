@@ -8,7 +8,9 @@ import org.agileware.natural.jbehave.jbehave.IWantTo
 import org.agileware.natural.jbehave.jbehave.InOrderTo
 import org.agileware.natural.jbehave.jbehave.Lifecycle
 import org.agileware.natural.jbehave.jbehave.LifecycleAfter
+import org.agileware.natural.jbehave.jbehave.LifecycleAfterElement
 import org.agileware.natural.jbehave.jbehave.LifecycleBefore
+import org.agileware.natural.jbehave.jbehave.LifecycleBeforeElement
 import org.agileware.natural.jbehave.jbehave.Meta
 import org.agileware.natural.jbehave.jbehave.MetaElement
 import org.agileware.natural.jbehave.jbehave.Narrative
@@ -145,10 +147,37 @@ class JbehaveSerializer {
 	
 	def String serialize(LifecycleBefore model) '''
 		Before:
+		«FOR e : model.elements»
+			«serialize(e)»
+		«ENDFOR»
+	'''
+	
+	def String serialize(LifecycleBeforeElement model) '''
+		«IF model.scope !== null»
+			Scope: «model.scope.type»
+		«ENDIF»
+		«FOR s : model.steps»
+			«serialize(s)»
+		«ENDFOR»
 	'''
 	
 	def String serialize(LifecycleAfter model) '''
 		After:
+		«FOR e : model.elements»
+			«serialize(e)»
+		«ENDFOR»
+	'''
+	
+	def String serialize(LifecycleAfterElement model) '''
+		«IF model.scope !== null»
+			Scope: «model.scope.type»
+		«ENDIF»
+		«IF model.outcome !== null»
+			Outcome: «model.outcome.type»
+		«ENDIF»
+		«FOR s : model.steps»
+			«serialize(s)»
+		«ENDFOR»
 	'''
 	
 	def String serialize(Step model) '''
