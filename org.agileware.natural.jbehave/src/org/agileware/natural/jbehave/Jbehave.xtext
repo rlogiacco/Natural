@@ -40,7 +40,7 @@ Meta: {Meta}
 MetaElement:
 	'@'
 	key=WORD
-	(value=MetaElementValue)?
+	(':'? value=MetaElementValue)?
 ;
 
 MetaElementValue: WORD+;
@@ -223,7 +223,7 @@ enum OutcomeType: ANY
 // MetaFilter:= "MetaFilter:" (Word Space?)*
 MetaFilter: {MetaFilter}
 	"MetaFilter:"
-	elements+=MetaElement*
+	elements+=MetaElement+
 ;
 
 
@@ -265,7 +265,7 @@ Examples:
 	'Examples:'
 	table=Table;
 
-	// The examples table comprises of a header row and data rows
+// The examples table comprises of a header row and data rows
 // ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
 Table:
 	header=TABLE_ROW
