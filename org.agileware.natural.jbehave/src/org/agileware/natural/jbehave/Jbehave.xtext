@@ -176,7 +176,7 @@ LifecycleAfterElement:
 	scope=Scope
 	(EOL outcome=Outcome)?
 	(EOL steps+=Step)+
-	(EOL+ filter=MetaFilter)?
+//	(EOL+ filter=MetaFilter)?
 ;
 
 // The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),
@@ -205,10 +205,10 @@ enum OutcomeType: ANY
 
 // The meta filter element identified by keyword "MetaFilter:" (or equivalent in I18n-ed locale),
 // MetaFilter:= "MetaFilter:" (Word Space?)*
-MetaFilter: {MetaFilter}
-	"MetaFilter:"
-	elements+=MetaElement+
-;
+//MetaFilter: {MetaFilter}
+//	"MetaFilter:"
+//	elements+=MetaElement+
+//;
 
 
 // Step

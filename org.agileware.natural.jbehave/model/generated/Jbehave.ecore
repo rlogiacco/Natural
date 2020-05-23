@@ -90,8 +90,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
         eType="#//Step" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="filter" eType="#//MetaFilter"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scope">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ScopeType"/>
@@ -108,10 +106,6 @@
     <eLiterals name="ANY" literal="ANY"/>
     <eLiterals name="SUCCESS" value="1" literal="SUCCESS"/>
     <eLiterals name="FAILURE" value="2" literal="FAILURE"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MetaFilter">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//MetaElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Step">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//StepStartingWord"/>
