@@ -218,7 +218,8 @@ class JbehaveParsingTest {
 			
 			Scenario: A scenario is a collection of executable steps of different type
 			
-			GivenStories: ./path/to/precondition1.story
+			GivenStories: ./path/to/precondition1.story,
+			              ./path/to/precondition2.story
 			              
 			When step represents the occurrence of the event
 			Then step represents the outcome of the event
@@ -247,6 +248,7 @@ class JbehaveParsingTest {
 		
 		// Check given stories
 		assertThat(s1.given, notNullValue())
+		assertThat(s1.given.resources, hasSize(2))
 	}
 	
 	@Test
