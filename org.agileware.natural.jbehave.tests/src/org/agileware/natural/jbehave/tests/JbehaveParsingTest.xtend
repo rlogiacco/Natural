@@ -227,10 +227,10 @@ class JbehaveParsingTest {
 			As a store owner
 			I want to add a new pet
 			
-			Scenario: A scenario is a collection of executable steps of different type
+			Scenario: With a title
 			
-			GivenStories: ./path/to/precondition1.story,
-			              ./path/to/precondition2.story
+			GivenStories: /path/to/precondition1.story,
+			              /path/to/precondition2.story
 			              
 			When step represents the occurrence of the event
 			Then step represents the outcome of the event
@@ -251,7 +251,7 @@ class JbehaveParsingTest {
 		
 		assertThat(model.scenarios, hasSize(1))
 		val s1 = model.scenarios.get(0)
-		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
+		assertThat(s1.title, equalTo("With a title"))
 		assertThat(s1.steps, hasItems(
 				withStep(WHEN, "step represents the occurrence of the event"),
 				withStep(THEN, "step represents the outcome of the event")

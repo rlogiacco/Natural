@@ -20,7 +20,6 @@ import org.agileware.natural.jbehave.jbehave.Scenario
 import org.agileware.natural.jbehave.jbehave.SoThat
 import org.agileware.natural.jbehave.jbehave.Step
 import org.agileware.natural.jbehave.jbehave.Story
-import org.agileware.natural.jbehave.jbehave.StoryPath
 import org.agileware.natural.jbehave.jbehave.Table
 
 class JbehaveSerializer {
@@ -126,13 +125,9 @@ class JbehaveSerializer {
 	
 	def String serialize(GivenStories model) '''
 		GivenStories:
-			«FOR r : model.resources SEPARATOR ','»
-				«serialize(r)»
-			«ENDFOR»
-	'''
-	
-	def String serialize(StoryPath model) '''
-		«model.path»
+		«FOR r : model.resources»
+			«r»
+		«ENDFOR»
 	'''
 	
 	def String serialize(Lifecycle model) '''

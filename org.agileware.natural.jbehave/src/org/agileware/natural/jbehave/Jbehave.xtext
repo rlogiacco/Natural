@@ -128,29 +128,13 @@ Scenario: {Scenario}
 
 // The free-text description
 // Title := (Word Space?)* ;
-Title:
-	WORD+
-;
+Title: WORD+;
 
 // The comma-separated list of story resources that specify the stories to be run before a story or a scenario
 // GivenStories:= "GivenStories:" (StoryPath ','?)+ ;
-GivenStories:
-	'GivenStories:'
-	resources+=StoryPath
-	(EOL resources+=StoryPath)*
-;
-
-	// The story resource path
-// StoryPath := PathCharacter+ ;
-StoryPath:
-	path=PATH
-	','?
-;
-
-// The characters allowed in a resource path
-// PathCharacter := "/" | "." | "_" | Letter | Digit ;
-terminal PATH:
-	'/' ('/' | '.' | '_' | LETTER | DIGIT)+
+GivenStories: {GivenStories}
+	'GivenStories:' resources+=FilePath
+	(',' EOL? resources+=FilePath)*
 ;
 
 
@@ -285,8 +269,12 @@ terminal TABLE_ROW:
 ;
 
 
-// Common Terminals
+// Common Elements
 ////
+
+FilePath returns ecore::EString:
+	(WORD | './' | '../' | '/') WORD ('/' WORD)*
+;
 
 terminal WORD: 
 	(LETTER | DIGIT) (LETTER | DIGIT | '_' | '-' | '.')*

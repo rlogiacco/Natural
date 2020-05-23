@@ -69,10 +69,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Scenario/examples"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//GivenStories">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//GivenStories/resources"/>
-    </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//StoryPath">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//StoryPath/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//GivenStories/resources"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Lifecycle">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Lifecycle/before"/>
