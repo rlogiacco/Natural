@@ -67,7 +67,7 @@ class JbehaveParsingTest {
 			Jumps over the lazy dog
 			
 			Meta:
-			@author Mauro
+			@author: Mauro
 			@themes UI Usability
 			
 			Narrative:
@@ -83,6 +83,15 @@ class JbehaveParsingTest {
 		assertThat(model.description, notNullValue())
 		assertThat(model.description.lines, hasSize(2))
 		assertThat(model.meta, notNullValue())
+		
+		// Check meta
+		assertThat(model.meta, notNullValue())
+		assertThat(model.meta.elements, hasItems(
+			allOf(hasProperty("key", equalTo("author")), 
+					hasProperty("value", equalTo("Mauro"))),
+			allOf(hasProperty("key", equalTo("themes")), 
+					hasProperty("value", equalTo("UI Usability")))
+		))
 
 		// Check narrative
 		assertThat(model, hasNarrative(
@@ -203,10 +212,14 @@ class JbehaveParsingTest {
 	@Test
 	def void givenStories() {
 		val model = _th.parse('''
+			Narrative:
+			In order to communicate effectively to the business some functionality
+			As a development team
+			I want to use Behaviour-Driven Development
+			
 			Scenario: A scenario is a collection of executable steps of different type
 			
-			GivenStories: path/to/precondition1.story,
-			              path/to/precondition2.story
+			GivenStories: ./path/to/precondition1.story
 			              
 			When step represents the occurrence of the event
 			Then step represents the outcome of the event
