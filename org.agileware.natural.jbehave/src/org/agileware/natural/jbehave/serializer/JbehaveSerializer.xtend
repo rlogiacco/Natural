@@ -133,13 +133,13 @@ class JbehaveSerializer {
 		«ENDIF»
 	'''
 	
-	def String serialize(LifecycleBefore model) {
-		return model.toString()
-	}
+	def String serialize(LifecycleBefore model) '''
+		Before:
+	'''
 	
-	def String serialize(LifecycleAfter model) {
-		return model.toString()
-	}
+	def String serialize(LifecycleAfter model) '''
+		After:
+	'''
 	
 	def String serialize(Step model) '''
 		«model.type» «model.content»

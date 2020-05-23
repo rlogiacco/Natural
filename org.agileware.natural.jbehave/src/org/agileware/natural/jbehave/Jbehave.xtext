@@ -162,8 +162,8 @@ terminal PATH:
 // Lifecycle:= "Lifecycle:" LifecycleBefore? LifecycleAfter?
 Lifecycle: {Lifecycle}
 	'Lifecycle:'
-	before=LifecycleBefore?
-	after=LifecycleAfter?
+	(EOL+ before=LifecycleBefore)?
+	(EOL+ after=LifecycleAfter)?
 ;
 
 LifecycleElement:
@@ -176,7 +176,7 @@ LifecycleElement:
 // LifecycleAfter:= "After:" (Scope? Outcome? MetaFilter? Step+)+
 LifecycleAfter:
 	"After:"
-	elements+=LifecycleElement
+	(EOL elements+=LifecycleElement)+
 ;
 
 // The before lifecyle element identified by keyword "Before:" (or equivalent in I18n-ed locale),
@@ -184,13 +184,15 @@ LifecycleAfter:
 // LifecycleBefore:= "Before:" (Scope? Step+)+
 LifecycleBefore:
 	"Before:"
-	elements+=LifecycleElement;
+	(EOL elements+=LifecycleElement)+
+;
 
 LifecycleAfterElement:
-	scope=Scope?
-	outcome=Outcome?
-	filter=MetaFilter?
-	steps+=Step+
+	(scope=Scope EOL+)?
+	(outcome=Outcome EOL+)?
+	(filter=MetaFilter EOL+)?
+	steps+=Step
+	(EOL steps+=Step)*
 ;
 
 // The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),

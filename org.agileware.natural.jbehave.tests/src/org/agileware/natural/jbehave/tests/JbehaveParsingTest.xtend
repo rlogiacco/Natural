@@ -176,7 +176,7 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("scenariosWithLifecycle", model)
+		_th.trace("scenarioWithLifecycle", model)
 		
 		// Check narrative
 		assertThat(model, hasNarrative(
@@ -184,6 +184,10 @@ class JbehaveParsingTest {
 			asA("development team"),
 			iWantTo("use Behaviour-Driven Development")
 		))
+		
+		// Check Lifecycle
+		assertThat(model.lifecycle, notNullValue())
+		assertThat(model.lifecycle.before, notNullValue())
 		
 		// Check Scenarios
 		////
