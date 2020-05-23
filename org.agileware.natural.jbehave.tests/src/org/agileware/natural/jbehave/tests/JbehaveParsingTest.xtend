@@ -82,7 +82,6 @@ class JbehaveParsingTest {
 		// Check description
 		assertThat(model.description, notNullValue())
 		assertThat(model.description.lines, hasSize(2))
-		assertThat(model.meta, notNullValue())
 		
 		// Check meta
 		assertThat(model.meta, notNullValue())
@@ -145,17 +144,17 @@ class JbehaveParsingTest {
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
 		assertThat(s1.steps, hasItems(
-				theStep(GIVEN, "step represents a precondition to an event"),
-				theStep(WHEN, "step represents the occurrence of the event"),
-				theStep(THEN, "step represents the outcome of the event")
+				withStep(GIVEN, "step represents a precondition to an event"),
+				withStep(WHEN, "step represents the occurrence of the event"),
+				withStep(THEN, "step represents the outcome of the event")
 		))
 		
 		val s2 = model.scenarios.get(1)
 		assertThat(s2.title, equalTo("Another scenario exploring different combination of events"))
 		assertThat(s2.steps, hasItems(
-				theStep(GIVEN, "a [precondition]"),
-				theStep(WHEN, "a negative event occurs"),
-				theStep(THEN, "the outcome should <be-captured>")
+				withStep(GIVEN, "a [precondition]"),
+				withStep(WHEN, "a negative event occurs"),
+				withStep(THEN, "the outcome should <be-captured>")
 		))
 		assertThat(s2.examples, notNullValue())
 		assertThat(s2.examples.table, notNullValue())
@@ -204,8 +203,8 @@ class JbehaveParsingTest {
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
 		assertThat(s1.steps, hasItems(
-				theStep(WHEN, "step represents the occurrence of the event"),
-				theStep(THEN, "step represents the outcome of the event")
+				withStep(WHEN, "step represents the occurrence of the event"),
+				withStep(THEN, "step represents the outcome of the event")
 		))
 	}
 	
@@ -213,9 +212,9 @@ class JbehaveParsingTest {
 	def void givenStories() {
 		val model = _th.parse('''
 			Narrative:
-			In order to communicate effectively to the business some functionality
-			As a development team
-			I want to use Behaviour-Driven Development
+			In order to sell a pet
+			As a store owner
+			I want to add a new pet to the catalog
 			
 			Scenario: A scenario is a collection of executable steps of different type
 			
@@ -228,6 +227,13 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("givenStories", model)
 		
+		// Check narrative
+		assertThat(model, hasNarrative(
+			inOrderTo("sell a pet"),
+			asA("store owner"),
+			iWantTo("add a new pet to the catalog")
+		))
+		
 		// Check Scenarios
 		////
 		
@@ -235,9 +241,12 @@ class JbehaveParsingTest {
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
 		assertThat(s1.steps, hasItems(
-				theStep(WHEN, "step represents the occurrence of the event"),
-				theStep(THEN, "step represents the outcome of the event")
+				withStep(WHEN, "step represents the occurrence of the event"),
+				withStep(THEN, "step represents the outcome of the event")
 		))
+		
+		// Check given stories
+		assertThat(s1.given, notNullValue())
 	}
 	
 	@Test

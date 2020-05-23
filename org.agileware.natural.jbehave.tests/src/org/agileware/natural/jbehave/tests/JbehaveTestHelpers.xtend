@@ -102,7 +102,7 @@ class JbehaveTestHelpers {
 				hasProperty("content", equalTo(content)))
 	}
 	
-	def static Matcher<Step> theStep(StepStartingWord type, String content) {
+	def static Matcher<Step> withStep(StepStartingWord type, String content) {
 		return allOf(
 				hasProperty("type", equalTo(type)),
 				hasProperty("content", equalTo(content))
