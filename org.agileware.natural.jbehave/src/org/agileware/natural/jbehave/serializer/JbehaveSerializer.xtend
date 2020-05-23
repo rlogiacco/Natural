@@ -10,6 +10,7 @@ import org.agileware.natural.jbehave.jbehave.Lifecycle
 import org.agileware.natural.jbehave.jbehave.LifecycleAfter
 import org.agileware.natural.jbehave.jbehave.LifecycleBefore
 import org.agileware.natural.jbehave.jbehave.Meta
+import org.agileware.natural.jbehave.jbehave.MetaElement
 import org.agileware.natural.jbehave.jbehave.Narrative
 import org.agileware.natural.jbehave.jbehave.NarrativeA
 import org.agileware.natural.jbehave.jbehave.NarrativeB
@@ -53,8 +54,12 @@ class JbehaveSerializer {
 	def String serialize(Meta model) '''
 		Meta:
 		«FOR e : model.elements»
-			«e»
+			«serialize(e)»
 		«ENDFOR»
+	'''
+	
+	def String serialize(MetaElement model) '''
+		@«model.key» «model.value»
 	'''
 	
 	def String serialize(Narrative model) {
