@@ -32,6 +32,7 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("narrativeTypeA", model)
 
+		// Check narrative
 		assertThat(model, hasNarrative(
 			inOrderTo("sell a pet"),
 			asA("store owner"),
@@ -51,6 +52,7 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("narrativeTypeB", model)
 		
+		// Check narrative
 		assertThat(model, hasNarrative(
 			asA("store owner"),
 			iWantTo("add a new pet to the catalog"),
@@ -77,10 +79,12 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("narrativeWithDescriptionAndMeta", model)
 		
+		// Check description
 		assertThat(model.description, notNullValue())
 		assertThat(model.description.lines, hasSize(2))
 		assertThat(model.meta, notNullValue())
 
+		// Check narrative
 		assertThat(model, hasNarrative(
 			inOrderTo("sell a pet"),
 			asA("store owner"),
@@ -117,11 +121,15 @@ class JbehaveParsingTest {
 		assertThat(model, notNullValue())
 		_th.trace("simpleScenarios", model)
 		
+		// Check narrative
 		assertThat(model, hasNarrative(
 			inOrderTo("communicate effectively to the business some functionality"),
 			asA("development team"),
 			iWantTo("use Behaviour-Driven Development")
 		))
+		
+		// Check Scenarios
+		////
 		
 		assertThat(model.scenarios, hasSize(2))
 		
