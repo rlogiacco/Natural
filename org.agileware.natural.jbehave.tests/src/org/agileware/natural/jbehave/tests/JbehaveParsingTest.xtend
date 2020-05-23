@@ -26,7 +26,7 @@ class JbehaveParsingTest {
 			Narrative:
 			In order to sell a pet
 			As a store owner
-			I want to add a new pet to the catalog
+			I want to add a new pet
 		''')
 		
 		assertThat(model, notNullValue())
@@ -36,7 +36,7 @@ class JbehaveParsingTest {
 		assertThat(model, hasNarrative(
 			inOrderTo("sell a pet"),
 			asA("store owner"),
-			iWantTo("add a new pet to the catalog")
+			iWantTo("add a new pet")
 		))
 	}
 	
@@ -45,7 +45,7 @@ class JbehaveParsingTest {
 		val model = _th.parse('''
 			Narrative:
 			As a store owner
-			I want to add a new pet to the catalog
+			I want to add a new pet
 			So that the pet gets sold
 		''')
 		
@@ -55,7 +55,7 @@ class JbehaveParsingTest {
 		// Check narrative
 		assertThat(model, hasNarrative(
 			asA("store owner"),
-			iWantTo("add a new pet to the catalog"),
+			iWantTo("add a new pet"),
 			soThat("the pet gets sold")
 		))
 	}
@@ -73,7 +73,7 @@ class JbehaveParsingTest {
 			Narrative:
 			In order to sell a pet
 			As a store owner
-			I want to add a new pet to the catalog
+			I want to add a new pet
 		''')
 		
 		assertThat(model, notNullValue())
@@ -96,7 +96,7 @@ class JbehaveParsingTest {
 		assertThat(model, hasNarrative(
 			inOrderTo("sell a pet"),
 			asA("store owner"),
-			iWantTo("add a new pet to the catalog")
+			iWantTo("add a new pet")
 		))
 	}
 	
@@ -166,9 +166,9 @@ class JbehaveParsingTest {
 	def void scenarioWithLifecycle() {
 		val model = _th.parse('''
 			Narrative:
-			In order to communicate effectively to the business some functionality
-			As a development team
-			I want to use Behaviour-Driven Development
+			In order to sell a pet
+			As a store owner
+			I want to add a new pet
 			
 			Lifecycle: 
 			Before:
@@ -179,6 +179,9 @@ class JbehaveParsingTest {
 			After:
 			Scope: STEP
 			Given a step that is executed after each scenario step
+			Scope: STORY
+			Outcome: ANY
+			Given a step that is executed after each story regardless of outcome
 			
 			Scenario: A scenario is a collection of executable steps of different type
 			When step represents the occurrence of the event
@@ -190,14 +193,17 @@ class JbehaveParsingTest {
 		
 		// Check narrative
 		assertThat(model, hasNarrative(
-			inOrderTo("communicate effectively to the business some functionality"),
-			asA("development team"),
-			iWantTo("use Behaviour-Driven Development")
+			inOrderTo("sell a pet"),
+			asA("store owner"),
+			iWantTo("add a new pet")
 		))
 		
 		// Check Lifecycle
 		assertThat(model.lifecycle, notNullValue())
-		assertThat(model.lifecycle.before, notNullValue())
+		assertThat(model.lifecycle.before, notNullValue())		
+		assertThat(model.lifecycle.before.elements, hasSize(2))
+		assertThat(model.lifecycle.after, notNullValue())
+		assertThat(model.lifecycle.after.elements, hasSize(2))
 		
 		// Check Scenarios
 		////
@@ -217,7 +223,7 @@ class JbehaveParsingTest {
 			Narrative:
 			In order to sell a pet
 			As a store owner
-			I want to add a new pet to the catalog
+			I want to add a new pet
 			
 			Scenario: A scenario is a collection of executable steps of different type
 			
@@ -235,7 +241,7 @@ class JbehaveParsingTest {
 		assertThat(model, hasNarrative(
 			inOrderTo("sell a pet"),
 			asA("store owner"),
-			iWantTo("add a new pet to the catalog")
+			iWantTo("add a new pet")
 		))
 		
 		// Check Scenarios
