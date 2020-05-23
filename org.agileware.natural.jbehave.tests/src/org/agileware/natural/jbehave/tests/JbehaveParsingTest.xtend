@@ -4,13 +4,12 @@
 package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
-import org.agileware.natural.jbehave.jbehave.NarrativeA
-import org.agileware.natural.jbehave.jbehave.NarrativeB
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.agileware.natural.jbehave.jbehave.StepStartingWord.*
 import static org.agileware.natural.jbehave.tests.JbehaveTestHelpers.*
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
@@ -46,7 +45,7 @@ class JbehaveParsingTest {
 			Narrative:
 			As a store owner
 			I want to add a new pet to the catalog
-			So that I can sell a pet
+			So that the pet gets sold
 		''')
 		
 		assertThat(model, notNullValue())
@@ -55,7 +54,7 @@ class JbehaveParsingTest {
 		assertThat(model, hasNarrative(
 			asA("store owner"),
 			iWantTo("add a new pet to the catalog"),
-			soThat("I can sell a pet")
+			soThat("the pet gets sold")
 		))
 	}
 	
@@ -107,7 +106,7 @@ class JbehaveParsingTest {
 			 
 			Given a [precondition]
 			When a negative event occurs
-			Then a the outcome should <be-captured>    
+			Then the outcome should <be-captured>
 			 
 			Examples: 
 			|precondition|be-captured|
@@ -128,9 +127,19 @@ class JbehaveParsingTest {
 		
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
+		assertThat(s1.steps, hasItems(
+				theStep(GIVEN, "step represents a precondition to an event"),
+				theStep(WHEN, "step represents the occurrence of the event"),
+				theStep(THEN, "step represents the outcome of the event")
+		))
 		
 		val s2 = model.scenarios.get(1)
 		assertThat(s2.title, equalTo("Another scenario exploring different combination of events"))
+		assertThat(s2.steps, hasItems(
+				theStep(GIVEN, "a [precondition]"),
+				theStep(WHEN, "a negative event occurs"),
+				theStep(THEN, "the outcome should <be-captured>")
+		))
 	}
 	
 	@Test

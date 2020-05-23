@@ -6,6 +6,8 @@ import org.agileware.natural.jbehave.jbehave.AsA
 import org.agileware.natural.jbehave.jbehave.IWantTo
 import org.agileware.natural.jbehave.jbehave.InOrderTo
 import org.agileware.natural.jbehave.jbehave.SoThat
+import org.agileware.natural.jbehave.jbehave.Step
+import org.agileware.natural.jbehave.jbehave.StepStartingWord
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.serializer.JbehaveSerializer
 import org.eclipse.xtext.testing.InjectWith
@@ -98,6 +100,13 @@ class JbehaveTestHelpers {
 	def static Matcher<SoThat> soThat(String content) {
 		return hasProperty("soThat", 
 				hasProperty("content", equalTo(content)))
+	}
+	
+	def static Matcher<Step> theStep(StepStartingWord type, String content) {
+		return allOf(
+				hasProperty("type", equalTo(type)),
+				hasProperty("content", equalTo(content))
+		)
 	}
 
 	def Story parse(CharSequence content) {
