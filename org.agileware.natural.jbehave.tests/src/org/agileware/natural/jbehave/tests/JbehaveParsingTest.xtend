@@ -154,7 +154,6 @@ class JbehaveParsingTest {
 		assertThat(s2.examples.table.rows, hasSize(2))
 	}
 	
-	
 	@Test
 	def void scenarioWithLifecycle() {
 		val model = _th.parse('''
@@ -188,6 +187,33 @@ class JbehaveParsingTest {
 		// Check Lifecycle
 		assertThat(model.lifecycle, notNullValue())
 		assertThat(model.lifecycle.before, notNullValue())
+		
+		// Check Scenarios
+		////
+		
+		assertThat(model.scenarios, hasSize(1))
+		val s1 = model.scenarios.get(0)
+		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
+		assertThat(s1.steps, hasItems(
+				theStep(WHEN, "step represents the occurrence of the event"),
+				theStep(THEN, "step represents the outcome of the event")
+		))
+	}
+	
+	@Test
+	def void givenStories() {
+		val model = _th.parse('''
+			Scenario: A scenario is a collection of executable steps of different type
+			
+			GivenStories: path/to/precondition1.story,
+			              path/to/precondition2.story
+			              
+			When step represents the occurrence of the event
+			Then step represents the outcome of the event
+		''')
+		
+		assertThat(model, notNullValue())
+		_th.trace("givenStories", model)
 		
 		// Check Scenarios
 		////
