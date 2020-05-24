@@ -4,8 +4,6 @@
 package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
-import org.agileware.natural.jbehave.jbehave.Scenario
-import org.agileware.natural.jbehave.jbehave.ScenarioOutline
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
@@ -69,8 +67,7 @@ class JbehaveParsingTest {
 		_th.trace("narrativeWithDescriptionAndMeta", model)
 		
 		// Check description
-		assertThat(model.description, notNullValue())
-		assertThat(model.description.lines, hasSize(2))
+		assertThat(model.description, not(emptyString()))
 		
 		// Check meta
 		assertThat(model.meta, notNullValue())
@@ -154,7 +151,7 @@ class JbehaveParsingTest {
 		
 		assertThat(model.scenarios, hasSize(2))
 		
-		val s1 = model.scenarios.get(0) as Scenario
+		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
 		assertThat(s1.steps, hasItems(
 				withStep(GIVEN, "step represents a precondition to an event"),
@@ -162,7 +159,7 @@ class JbehaveParsingTest {
 				withStep(THEN, "step represents the outcome of the event")
 		))
 		
-		val s2 = model.scenarios.get(1) as ScenarioOutline
+		val s2 = model.scenarios.get(1)
 		assertThat(s2.title, equalTo("Another scenario exploring different combination of events"))
 		assertThat(s2.steps, hasItems(
 				withStep(GIVEN, "a [precondition]"),
