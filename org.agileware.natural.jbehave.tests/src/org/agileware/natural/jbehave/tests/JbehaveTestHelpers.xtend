@@ -26,6 +26,13 @@ class JbehaveTestHelpers {
 	
 	@Inject JbehaveSerializer serializer
 	
+	public static final String SIMPLE_NARRATIVE = '''
+		Narrative:
+		In order to sell a pet
+		As a store owner
+		I want to add a new pet
+	'''
+	
 	public static final String EXAMPLE_STORY = '''
 		A story is a collection of scenarios
 		 
@@ -38,36 +45,25 @@ class JbehaveTestHelpers {
 		Before:
 		Scope: STORY
 		Given a step that is executed before each story
+		And another step that is executed before each story
 		Scope: SCENARIO
 		Given a step that is executed before each scenario
-		Scope: STEP
-		Given a step that is executed before each scenario step
 		After:
 		Scope: STEP
 		Given a step that is executed after each scenario step
-		Scope: SCENARIO
-		Outcome: ANY
-		Given a step that is executed after each scenario regardless of outcome
-		Outcome: SUCCESS 
-		Given a step that is executed after each successful scenario
-		Outcome: FAILURE 
-		Given a step that is executed after each failed scenario
+		And another step that is executed after each scenario step
 		Scope: STORY
 		Outcome: ANY
 		Given a step that is executed after each story regardless of outcome
-		Outcome: SUCCESS
-		Given a step that is executed after each successful story
-		Outcome: FAILURE
-		Given a step that is executed after each failed story
 		 
 		Scenario:  A scenario is a collection of executable steps of different type
-		 
+		
 		Given step represents a precondition to an event
 		When step represents the occurrence of the event
 		Then step represents the outcome of the event
 		 
 		Scenario:  Another scenario exploring different combination of events
-		 
+		
 		Given a [precondition]
 		When a negative event occurs
 		Then a the outcome should [be-captured]    
@@ -80,6 +76,14 @@ class JbehaveTestHelpers {
 	
 	def static Matcher<Story> hasNarrative(Matcher... matchers) {
 		return hasProperty("narrative", allOf(matchers))
+	}
+	
+	def static hasSimpleNarrative() {
+		return hasNarrative(
+			inOrderTo("sell a pet"),
+			asA("store owner"),
+			iWantTo("add a new pet")
+		)
 	}
 	
 	def static Matcher<InOrderTo> inOrderTo(String content) {
@@ -122,6 +126,9 @@ class JbehaveTestHelpers {
 	
 	def void trace(String group, Story model) {
 		println("------------------" + group + "------------------")
+		for(e : model.eResource.errors) {
+			println(e)
+		}
 		println(serializer.serialize(model))
 	}
 }

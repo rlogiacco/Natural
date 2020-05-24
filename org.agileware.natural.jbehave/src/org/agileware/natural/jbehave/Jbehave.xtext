@@ -13,7 +13,8 @@ Story:
 	(meta=Meta EOL+)?
 	(narrative=Narrative EOL+)?
 	(lifecycle=Lifecycle EOL+)?
-	scenarios+=Scenario*
+	scenarios+=AbstractScenario
+	(EOL+ scenarios+=AbstractScenario)*
 ;
 
 // The Description is expressed by any sequence of words that must not contain any keywords at start of lines.
@@ -110,6 +111,8 @@ terminal SO_THAT: 'So that';
 // Scenario
 ////
 
+AbstractScenario: Scenario | ScenarioOutline;
+
 // The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
 // which is optional in the case of a single scenario.
 // It can optionally be followed by a title, which is expressed by any sequence of words
@@ -118,13 +121,52 @@ terminal SO_THAT: 'So that';
 // Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
 // Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
 Scenario: {Scenario}
-	'Scenario:' (title=Title)? EOL+
+	'Scenario:'
+	(title=Title)? EOL+
 	(meta=Meta EOL+)?
 	(given=GivenStories EOL+)?
 	steps+=Step
 	(EOL steps+=Step)*
-	(EOL+ examples=Examples)?
 ;
+
+ScenarioOutline: {ScenarioOutline}
+	('Scenario:' | 'ScenarioOutline:')
+	(title=Title)? EOL+
+	(meta=Meta EOL+)?
+	(given=GivenStories EOL+)?
+	steps+=Step
+	(EOL steps+=Step)*
+	EOL+
+	examples=Examples
+;
+
+// The examples table
+// Examples := "Examples:" ExamplesTable ;
+Examples:
+	'Examples:' EOL
+	table=Table
+;
+
+// The examples table comprises of a header row and data rows
+// ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
+Table:
+	header=TABLE_ROW EOL
+	(rows+=TABLE_ROW EOL)+
+;
+
+// The examples table header contains the column names, separated by ExamplesTableColumnSeparator
+// ExamplesTableHeader := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
+
+// The examples table row contains the column values, separated by ExamplesTableColumnSeparator
+// ExamplesTableRow := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
+
+// The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
+// ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
+terminal TABLE_ROW: 
+	'|' (TABLE_CELL '|')+
+;
+
+terminal fragment TABLE_CELL: !('|' | '\n' | '\r')*;
 
 // The free-text description
 // Title := (Word Space?)* ;
@@ -149,7 +191,6 @@ Lifecycle: {Lifecycle}
 	(EOL+ before=LifecycleBefore)?
 	(EOL+ after=LifecycleAfter)?
 ;
-
 
 // The before lifecyle element identified by keyword "Before:" (or equivalent in I18n-ed locale),
 // followed by one or more steps
@@ -176,7 +217,6 @@ LifecycleAfterElement:
 	scope=Scope
 	(EOL outcome=Outcome)?
 	(EOL steps+=Step)+
-//	(EOL+ filter=MetaFilter)?
 ;
 
 // The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),
@@ -202,13 +242,6 @@ enum OutcomeType: ANY
 	| SUCCESS
 	| FAILURE
 ;
-
-// The meta filter element identified by keyword "MetaFilter:" (or equivalent in I18n-ed locale),
-// MetaFilter:= "MetaFilter:" (Word Space?)*
-//MetaFilter: {MetaFilter}
-//	"MetaFilter:"
-//	elements+=MetaElement+
-//;
 
 
 // Step
@@ -237,35 +270,6 @@ enum StepStartingWord:
 terminal EXAMPLE_WORD:
 	('<' WORD '>')
 	| ('[' WORD ']')
-;
-
-
-// Examples
-////
-
-// The examples table
-// Examples := "Examples:" ExamplesTable ;
-Examples:
-	'Examples:'
-	table=Table;
-
-// The examples table comprises of a header row and data rows
-// ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
-Table:
-	header=TABLE_ROW
-	rows+=TABLE_ROW+
-;
-
-// The examples table header contains the column names, separated by ExamplesTableColumnSeparator
-// ExamplesTableHeader := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
-
-// The examples table row contains the column values, separated by ExamplesTableColumnSeparator
-// ExamplesTableRow := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
-
-// The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
-// ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
-terminal TABLE_ROW: 
-	'|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL
 ;
 
 

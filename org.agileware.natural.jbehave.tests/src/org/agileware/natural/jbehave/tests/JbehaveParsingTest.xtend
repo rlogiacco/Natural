@@ -4,6 +4,8 @@
 package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
+import org.agileware.natural.jbehave.jbehave.Scenario
+import org.agileware.natural.jbehave.jbehave.ScenarioOutline
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
@@ -11,7 +13,7 @@ import org.junit.runner.RunWith
 
 import static org.agileware.natural.jbehave.jbehave.StepStartingWord.*
 import static org.agileware.natural.jbehave.tests.JbehaveTestHelpers.*
-import static org.hamcrest.MatcherAssert.*
+import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.*
 
 @RunWith(XtextRunner)
@@ -22,22 +24,12 @@ class JbehaveParsingTest {
 	
 	@Test
 	def void narrativeTypeA() {
-		val model = _th.parse('''
-			Narrative:
-			In order to sell a pet
-			As a store owner
-			I want to add a new pet
-		''')
+		val model = _th.parse(SIMPLE_NARRATIVE)
 		
 		assertThat(model, notNullValue())
 		_th.trace("narrativeTypeA", model)
 
-		// Check narrative
-		assertThat(model, hasNarrative(
-			inOrderTo("sell a pet"),
-			asA("store owner"),
-			iWantTo("add a new pet")
-		))
+		assertThat(model, hasSimpleNarrative())
 	}
 	
 	@Test
@@ -70,10 +62,7 @@ class JbehaveParsingTest {
 			@author: Mauro
 			@themes UI Usability
 			
-			Narrative:
-			In order to sell a pet
-			As a store owner
-			I want to add a new pet
+			«SIMPLE_NARRATIVE»
 		''')
 		
 		assertThat(model, notNullValue())
@@ -93,10 +82,34 @@ class JbehaveParsingTest {
 		))
 
 		// Check narrative
-		assertThat(model, hasNarrative(
-			inOrderTo("sell a pet"),
-			asA("store owner"),
-			iWantTo("add a new pet")
+		assertThat(model, hasSimpleNarrative())
+	}
+	
+	@Test
+	def void scenario_01() {
+		val model = _th.parse('''
+			«SIMPLE_NARRATIVE»
+			
+			Scenario: With a title
+			Given a step
+			And another step
+		''')
+		
+		assertThat(model, notNullValue())
+		_th.trace("scenario_01", model)
+		
+		// Check narrative
+		assertThat(model, hasSimpleNarrative())
+		
+		// Check scenario
+		assertThat(model.scenarios, hasSize(1))
+		
+		val s1 = model.scenarios.get(0)
+		assertThat(s1.title, equalTo("With a title"))
+		assertThat(s1.steps, hasSize(2))
+		assertThat(s1.steps, hasItems(
+				withStep(GIVEN, "a step"),
+				withStep(AND, "another step")
 		))
 	}
 	
@@ -141,7 +154,7 @@ class JbehaveParsingTest {
 		
 		assertThat(model.scenarios, hasSize(2))
 		
-		val s1 = model.scenarios.get(0)
+		val s1 = model.scenarios.get(0) as Scenario
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
 		assertThat(s1.steps, hasItems(
 				withStep(GIVEN, "step represents a precondition to an event"),
@@ -149,56 +162,45 @@ class JbehaveParsingTest {
 				withStep(THEN, "step represents the outcome of the event")
 		))
 		
-		val s2 = model.scenarios.get(1)
+		val s2 = model.scenarios.get(1) as ScenarioOutline
 		assertThat(s2.title, equalTo("Another scenario exploring different combination of events"))
 		assertThat(s2.steps, hasItems(
 				withStep(GIVEN, "a [precondition]"),
 				withStep(WHEN, "a negative event occurs"),
 				withStep(THEN, "the outcome should <be-captured>")
 		))
-//		assertThat(s2.examples, notNullValue())
-//		assertThat(s2.examples.table, notNullValue())
-//		assertThat(s2.examples.table.header, not(emptyString()))
-//		assertThat(s2.examples.table.rows, hasSize(2))
+		assertThat(s2.examples, notNullValue())
+		assertThat(s2.examples.table, notNullValue())
+		assertThat(s2.examples.table.header, not(emptyString()))
+		assertThat(s2.examples.table.rows, hasSize(2))
 	}
 	
 	@Test
 	def void scenarioWithLifecycle() {
 		val model = _th.parse('''
-			Narrative:
-			In order to sell a pet
-			As a store owner
-			I want to add a new pet
+			«SIMPLE_NARRATIVE»
 			
 			Lifecycle: 
 			Before:
 			Scope: STORY
 			Given a step that is executed before each story
-			And another step that is executed before each story
-			Scope: SCENARIO
-			Given a step that is executed before each scenario
 			After:
-			Scope: STEP
-			Given a step that is executed after each scenario step
-			And another step that is executed after each scenario step
 			Scope: STORY
 			Outcome: ANY
 			Given a step that is executed after each story regardless of outcome
+						
+			Scenario: With a title
 			
-			Scenario: A scenario is a collection of executable steps of different type
-			When step represents the occurrence of the event
-			Then step represents the outcome of the event
+			Given a step
+			And another step
+			
 		''')
 		
 		assertThat(model, notNullValue())
 		_th.trace("scenarioWithLifecycle", model)
 		
 		// Check narrative
-		assertThat(model, hasNarrative(
-			inOrderTo("sell a pet"),
-			asA("store owner"),
-			iWantTo("add a new pet")
-		))
+		assertThat(model, hasSimpleNarrative())
 		
 		// Check Lifecycle
 		assertThat(model.lifecycle, notNullValue())
@@ -222,10 +224,7 @@ class JbehaveParsingTest {
 	@Test
 	def void givenStories() {
 		val model = _th.parse('''
-			Narrative:
-			In order to sell a pet
-			As a store owner
-			I want to add a new pet
+			«SIMPLE_NARRATIVE»
 			
 			Scenario: With a title
 			
@@ -240,11 +239,7 @@ class JbehaveParsingTest {
 		_th.trace("givenStories", model)
 		
 		// Check narrative
-		assertThat(model, hasNarrative(
-			inOrderTo("sell a pet"),
-			asA("store owner"),
-			iWantTo("add a new pet")
-		))
+		assertThat(model, hasSimpleNarrative())
 		
 		// Check Scenarios
 		////
@@ -258,8 +253,8 @@ class JbehaveParsingTest {
 		))
 		
 		// Check given stories
-		assertThat(s1.given, notNullValue())
-		assertThat(s1.given.resources, hasSize(2))
+//		assertThat(s1.given, notNullValue())
+//		assertThat(s1.given.resources, hasSize(2))
 	}
 	
 	@Test
