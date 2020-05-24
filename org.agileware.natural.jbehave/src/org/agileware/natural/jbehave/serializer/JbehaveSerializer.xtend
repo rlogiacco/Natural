@@ -1,8 +1,6 @@
 package org.agileware.natural.jbehave.serializer
 
-import org.agileware.natural.jbehave.jbehave.AbstractScenario
 import org.agileware.natural.jbehave.jbehave.AsA
-import org.agileware.natural.jbehave.jbehave.Description
 import org.agileware.natural.jbehave.jbehave.Examples
 import org.agileware.natural.jbehave.jbehave.GivenStories
 import org.agileware.natural.jbehave.jbehave.IWantTo
@@ -18,7 +16,6 @@ import org.agileware.natural.jbehave.jbehave.Narrative
 import org.agileware.natural.jbehave.jbehave.NarrativeA
 import org.agileware.natural.jbehave.jbehave.NarrativeB
 import org.agileware.natural.jbehave.jbehave.Scenario
-import org.agileware.natural.jbehave.jbehave.ScenarioOutline
 import org.agileware.natural.jbehave.jbehave.SoThat
 import org.agileware.natural.jbehave.jbehave.Step
 import org.agileware.natural.jbehave.jbehave.Story
@@ -27,10 +24,7 @@ import org.agileware.natural.jbehave.jbehave.Table
 class JbehaveSerializer {
 	
 	def String serialize(Story model) '''
-		«IF model.description !== null»
-			«serialize(model.description)»
-			
-		«ENDIF»
+		«model.description»
 		«IF model.meta !== null»
 			«serialize(model.meta)»
 			
@@ -46,12 +40,6 @@ class JbehaveSerializer {
 		«FOR s : model.scenarios»
 			«serialize(s)»
 			
-		«ENDFOR»
-	'''
-	
-	def String serialize(Description model) '''
-		«FOR l : model.lines»
-			«l»
 		«ENDFOR»
 	'''
 	
@@ -105,15 +93,6 @@ class JbehaveSerializer {
 		So that «model.content»
 	'''
 	
-	def String serialize(AbstractScenario model) {
-		if(model instanceof ScenarioOutline) {
-			return serialize(model as ScenarioOutline)
-		}
-		else if(model instanceof Scenario) {
-			return serialize(model as Scenario)
-		}
-	}
-	
 	def String serialize(Scenario model) '''
 		Scenario: «model.title»
 		
@@ -128,25 +107,12 @@ class JbehaveSerializer {
 		«FOR s : model.steps»
 			«serialize(s)»
 		«ENDFOR»
+		
+		«IF model.examples !== null»
+			«serialize(model.examples)»
+		«ENDIF»
 	'''
 	
-	def String serialize(ScenarioOutline model) '''
-		Scenario: «model.title»
-		
-		«IF model.meta !== null»
-			«serialize(model.meta)»
-			
-		«ENDIF»
-		«IF model.given !== null»
-			«serialize(model.given)»
-			
-		«ENDIF»
-		«FOR s : model.steps»
-			«serialize(s)»
-		«ENDFOR»
-		
-		«serialize(model.examples)»
-	'''
 	
 	def String serialize(GivenStories model) '''
 		GivenStories:

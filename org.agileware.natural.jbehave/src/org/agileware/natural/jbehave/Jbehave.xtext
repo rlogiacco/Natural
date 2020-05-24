@@ -3,36 +3,43 @@ grammar org.agileware.natural.jbehave.Jbehave hidden(WS, SL_COMMENT)
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate jbehave "http://www.agileware.org/natural/jbehave"
 
+
+// ----------------------------------------------------------
+//
 // Story
-////
+//
+// ----------------------------------------------------------
 
 // The story describes a feature via description, narrative and a set of scenarios
 // Story := Description? Meta? Narrative? GivenStories? Lifecycle? Scenario+ ;
 Story:
-	(description=Description EOL+)?
-	(meta=Meta EOL+)?
-	(narrative=Narrative EOL+)?
-	(lifecycle=Lifecycle EOL+)?
-	scenarios+=AbstractScenario
-	(EOL+ scenarios+=AbstractScenario)*
+	description=Description?
+	meta=Meta?
+	narrative=Narrative?
+	lifecycle=Lifecycle?
+	scenarios+=Scenario*
 ;
 
 // The Description is expressed by any sequence of words that must not contain any keywords at start of lines.
 // Description := (Word Space?)* ;
 Description:
-	lines+=DescriptionLine
-	(EOL lines+=DescriptionLine)*
-;
+	(TextLiteral TextLiteral* EOL+)+;
 
-DescriptionLine: WORD+;
+
+// ----------------------------------------------------------
+//
+// Meta
+//
+// ----------------------------------------------------------
 
 // The meta is identified by keyword "Meta:" (or equivalent in I18n-ed locale),
 // It is followed by any number of meta elements
 // Meta:= "Meta:" (MetaElement)* ;
-Meta: {Meta}
-	'Meta:'
+Meta:
+	'Meta:' EOL+
 	elements+=MetaElement
-	(EOL elements+=MetaElement)*
+	(EOL? elements+=MetaElement)*
+	EOL+
 ;
 
 // The meta element is identified by keyword "@" (or equivalent in I18n-ed locale),
@@ -41,14 +48,15 @@ Meta: {Meta}
 MetaElement:
 	'@'
 	key=WORD
-	(':'? value=MetaElementValue)?
+	(':'? value=Text)?
 ;
 
-MetaElementValue: WORD+;
 
-
+// ----------------------------------------------------------
+//
 // Narrative
-////
+//
+// ----------------------------------------------------------
 
 // The narrative is identified by keyword "Narrative:" (or equivalent in I18n-ed locale),
 // It is followed by the narrative elements
@@ -58,46 +66,38 @@ Narrative:
 ;
 
 NarrativeA: {NarrativeA}
-	'Narrative:'
-	inOrderTo=InOrderTo asA=AsA wantTo=IWantTo
+	'Narrative:' EOL+
+	inOrderTo=InOrderTo
+	asA=AsA
+	wantTo=IWantTo
 ;
 
 NarrativeB: {NarrativeB}
-	'Narrative:'
-	asA=AsA wantTo=IWantTo soThat=SoThat
+	'Narrative:' EOL+
+	asA=AsA
+	wantTo=IWantTo
+	soThat=SoThat
 ;
 
 // InOrderTo:= "In order to" NarrativeElementContent ;
 InOrderTo:
-	EOL
-	IN_ORDER_TO
-	content=NarrativeElementContent
+	IN_ORDER_TO content=Text EOL+
 ;
 
 // AsA:= "As a" NarrativeElementContent ;
 AsA:
-	EOL
-	AS_A
-	content=NarrativeElementContent
+	AS_A content=Text EOL+
 ;
 
 // IWantTo:= "I want to" NarrativeElementContent ;
 IWantTo:
-	EOL
-	I_WANT_TO
-	content=NarrativeElementContent
+	I_WANT_TO content=Text EOL+
 ;
 
 // SoThat:= "So that" NarrativeElementContent ; 
 SoThat:
-	EOL
-	SO_THAT
-	content=NarrativeElementContent
+	SO_THAT content=Text EOL+
 ;
-
-// The narrative element content is any sequence of characters that do not match a narrative starting word
-// NarrativeElementContent := ? Any sequence of NarrativeCharacter that does not match NarrativeStartingWord ? ;
-NarrativeElementContent: WORD+;
 
 terminal IN_ORDER_TO: 'In order to';
 
@@ -108,115 +108,47 @@ terminal I_WANT_TO: 'I want to';
 terminal SO_THAT: 'So that';
 
 
-// Scenario
-////
 
-AbstractScenario: Scenario | ScenarioOutline;
-
-// The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
-// which is optional in the case of a single scenario.
-// It can optionally be followed by a title, which is expressed by any sequence of words
-// that must not contain any keywords at start of lines.
-// It is followed by one or more Steps.
-// Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
-// Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
-Scenario: {Scenario}
-	'Scenario:'
-	(title=Title)? EOL+
-	(meta=Meta EOL+)?
-	(given=GivenStories EOL+)?
-	steps+=Step
-	(EOL steps+=Step)*
-;
-
-ScenarioOutline: {ScenarioOutline}
-	('Scenario:' | 'ScenarioOutline:')
-	(title=Title)? EOL+
-	(meta=Meta EOL+)?
-	(given=GivenStories EOL+)?
-	steps+=Step
-	(EOL steps+=Step)*
-	EOL+
-	examples=Examples
-;
-
-// The examples table
-// Examples := "Examples:" ExamplesTable ;
-Examples:
-	'Examples:' EOL
-	table=Table
-;
-
-// The examples table comprises of a header row and data rows
-// ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
-Table:
-	header=TABLE_ROW EOL
-	(rows+=TABLE_ROW EOL)+
-;
-
-// The examples table header contains the column names, separated by ExamplesTableColumnSeparator
-// ExamplesTableHeader := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
-
-// The examples table row contains the column values, separated by ExamplesTableColumnSeparator
-// ExamplesTableRow := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
-
-// The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
-// ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
-terminal TABLE_ROW: 
-	'|' (TABLE_CELL '|')+
-;
-
-terminal fragment TABLE_CELL: !('|' | '\n' | '\r')*;
-
-// The free-text description
-// Title := (Word Space?)* ;
-Title: WORD+;
-
-// The comma-separated list of story resources that specify the stories to be run before a story or a scenario
-// GivenStories:= "GivenStories:" (StoryPath ','?)+ ;
-GivenStories: {GivenStories}
-	'GivenStories:' resources+=FilePath
-	(',' EOL? resources+=FilePath)*
-;
-
-
+// ----------------------------------------------------------
+//
 // Lifecycle
-////
+//
+// ----------------------------------------------------------
 
 // The lifecycle is identified by keyword "Lifecycle:" (or equivalent in I18n-ed locale),
 // It is followed by the lifecycle elements
 // Lifecycle:= "Lifecycle:" LifecycleBefore? LifecycleAfter?
-Lifecycle: {Lifecycle}
-	'Lifecycle:'
-	(EOL+ before=LifecycleBefore)?
-	(EOL+ after=LifecycleAfter)?
+Lifecycle: {Lifecycle} 
+	'Lifecycle:' EOL+
+	before=LifecycleBefore?
+	after=LifecycleAfter?
 ;
 
 // The before lifecyle element identified by keyword "Before:" (or equivalent in I18n-ed locale),
 // followed by one or more steps
 // LifecycleBefore:= "Before:" (Scope? Step+)+
 LifecycleBefore:
-	"Before:"
-	(EOL elements+=LifecycleBeforeElement)+
+	"Before:" EOL+
+	elements+=LifecycleBeforeElement+
 ;
 
 LifecycleBeforeElement:
-	scope=Scope
-	(EOL steps+=Step)+
+	scope=Scope EOL+
+	steps+=Step+
 ;
 
 // The after lifecyle element identified by keyword "After:" (or equivalent in I18n-ed locale),
 // followed by one or more sets of scope, outcome, meta filter and steps
 // LifecycleAfter:= "After:" (Scope? Outcome? MetaFilter? Step+)+
 LifecycleAfter:
-	"After:"
-	(EOL elements+=LifecycleAfterElement)+
+	"After:" EOL+
+	elements+=LifecycleAfterElement+
 ;
 
 LifecycleAfterElement:
-	scope=Scope
-	(EOL outcome=Outcome)?
-	(EOL steps+=Step)+
+	scope=Scope EOL+
+	(outcome=Outcome EOL+)?
+	steps+=Step+
 ;
 
 // The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),
@@ -244,18 +176,49 @@ enum OutcomeType: ANY
 ;
 
 
+// ----------------------------------------------------------
+//
+// Scenario
+//
+// ----------------------------------------------------------
+	
+// The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
+// which is optional in the case of a single scenario.
+// It can optionally be followed by a title, which is expressed by any sequence of words
+// that must not contain any keywords at start of lines.
+// It is followed by one or more Steps.
+// Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
+// Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
+Scenario:
+	'Scenario:' title=Text? EOL+
+	meta=Meta?
+	given=GivenStories?
+	steps+=Step+
+	examples=Examples?
+;
+
+// The comma-separated list of story resources that specify the stories to be run before a story or a scenario
+// GivenStories:= "GivenStories:" (StoryPath ','?)+ ;
+GivenStories: 
+	'GivenStories:'
+	resources+=FilePath
+	// TODO...
+	// (-> ',' EOL? resources+=FilePath)*
+	EOL+
+;
+
+
+// ----------------------------------------------------------
+//
 // Step
-////
+//
+// ----------------------------------------------------------
 
 // The scenario step is a step starting work followed by any number of characters
 // Step := StepStartingWord StepContent ;
 Step:
 	type=StepStartingWord
-	content=StepContent
-;
-
-StepContent:
-	(WORD | NUMBER | EXAMPLE_WORD)+
+	content=Text
 ;
 
 // The step starting words (or equivalent in I18n-ed locale)
@@ -266,44 +229,107 @@ enum StepStartingWord:
 	| THEN="Then"
 	| AND="And";
 
-// TODO: support multiple wrapping symbols / quotations
-terminal EXAMPLE_WORD:
-	('<' WORD '>')
-	| ('[' WORD ']')
+// The examples table
+// Examples := "Examples:" ExamplesTable ;
+Examples:
+	'Examples:' EOL+
+	table=Table
 ;
 
+// The examples table comprises of a header row and data rows
+// ExamplesTable := ExamplesTableHeader ExamplesTableRow+ ;
+Table:
+	header=TABLE_ROW EOL
+	(rows+=TABLE_ROW EOL)+
+;
 
+// The examples table header contains the column names, separated by ExamplesTableColumnSeparator
+// ExamplesTableHeader := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
+
+// The examples table row contains the column values, separated by ExamplesTableColumnSeparator
+// ExamplesTableRow := (ExamplesTableColumnSeparator ExamplesTableCharacter+)+ ExamplesTableColumnSeparator  Newline ;
+
+// The examples table character can be any character, expect for ExamplesTableColumnSeparator and Newline
+// ExamplesTableCharacter := ? Any Unicode character except ExamplesTableColumnSeparator and Newline ? ;
+terminal TABLE_ROW: 
+	'|' (TABLE_CELL '|')+
+;
+
+terminal fragment TABLE_CELL: !('|' | '\n' | '\r')*;
+
+
+// ----------------------------------------------------------
+//
 // Common Elements
-////
+//
+// ----------------------------------------------------------
 
 FilePath returns ecore::EString:
 	(WORD | './' | '../' | '/') WORD ('/' WORD)*
 ;
 
+Text returns ecore::EString:
+ 	TextLiteral+
+;
+
+TextLiteral: EXAMPLE_WORD
+	| WORD
+	| PUNCTUATION
+;
+
+terminal EXAMPLE_WORD:
+	('<' WORD '>')
+	| ('[' WORD ']')
+;
+
 terminal WORD: 
-	(LETTER | DIGIT) (LETTER | DIGIT | '_' | '-' | '.')*
+	(LETTER | DIGIT)
+	(LETTER | DIGIT | '_' | '-' | '.' )*
 ;
 
-terminal NUMBER returns ecore::EDouble:
-	'-'? (DIGIT)+ ('.' (DIGIT)+)?
+terminal SL_COMMENT:
+	'!--'
+	!('\n'|'\r')*
+	('\r'? '\n')?
 ;
 
-//terminal STRING:
-//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
-//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'"
-//;
-
-terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
-
-terminal fragment LETTER: ('a'..'z' | 'A'..'Z');
-
-terminal fragment DIGIT: ('0'..'9');
-
-terminal WS: (' ' | '\t')+;
+terminal PUNCTUATION: CHAR;
 
 terminal EOL: NL;
 
-terminal fragment NL: ('\r'? '\n');
+terminal WS: (SPACE | '\t')+;
 
-terminal ANY:
-	.;
+terminal fragment NL: ('\r'? | '\n');
+
+
+// ----------------------------------------------------------
+//
+// Unicode Character Ranges
+//
+// ----------------------------------------------------------
+
+terminal fragment CHAR: ASCII_CHAR;
+
+terminal fragment SPACE: ASCII_SPACE;
+
+terminal fragment DIGIT: ASCII_DIGIT;
+
+terminal fragment LETTER: LATIN_ALPHABET;
+
+// Basic Latin
+////
+
+terminal fragment ASCII_SPACE: '\u0020';
+
+terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
+
+// all ascii chars other than letters, digits, or space
+terminal fragment ASCII_CHAR: ('\u0021'..'\u002F')
+	| ('\u003A'..'\u0040')
+	| ('\u005B'..'\u0060')
+	| ('\u007B'..'\u007E')
+;
+
+terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+	| ('\u0061'..'\u007A')
+;

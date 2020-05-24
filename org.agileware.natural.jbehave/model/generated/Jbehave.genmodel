@@ -23,14 +23,11 @@
       <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//StepStartingWord/AND"/>
     </genEnums>
     <genClasses ecoreClass="Jbehave.ecore#//Story">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Story/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Story/description"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Story/meta"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Story/narrative"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Story/lifecycle"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Story/scenarios"/>
-    </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//Description">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Description/lines"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Meta">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Meta/elements"/>
@@ -61,26 +58,6 @@
     <genClasses ecoreClass="Jbehave.ecore#//SoThat">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//SoThat/content"/>
     </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//AbstractScenario">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//AbstractScenario/title"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//AbstractScenario/meta"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//AbstractScenario/given"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//AbstractScenario/steps"/>
-    </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//Scenario"/>
-    <genClasses ecoreClass="Jbehave.ecore#//ScenarioOutline">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//ScenarioOutline/examples"/>
-    </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//Examples">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Examples/table"/>
-    </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//Table">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Table/header"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Table/rows"/>
-    </genClasses>
-    <genClasses ecoreClass="Jbehave.ecore#//GivenStories">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//GivenStories/resources"/>
-    </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Lifecycle">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Lifecycle/before"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Lifecycle/after"/>
@@ -106,9 +83,26 @@
     <genClasses ecoreClass="Jbehave.ecore#//Outcome">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Outcome/type"/>
     </genClasses>
+    <genClasses ecoreClass="Jbehave.ecore#//Scenario">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Scenario/title"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Scenario/meta"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Scenario/given"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Scenario/steps"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Scenario/examples"/>
+    </genClasses>
+    <genClasses ecoreClass="Jbehave.ecore#//GivenStories">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//GivenStories/resources"/>
+    </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Step">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Step/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Step/content"/>
+    </genClasses>
+    <genClasses ecoreClass="Jbehave.ecore#//Examples">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Examples/table"/>
+    </genClasses>
+    <genClasses ecoreClass="Jbehave.ecore#//Table">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Table/header"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Table/rows"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
