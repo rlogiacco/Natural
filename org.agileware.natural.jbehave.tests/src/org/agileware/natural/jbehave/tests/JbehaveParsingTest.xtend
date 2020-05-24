@@ -156,46 +156,10 @@ class JbehaveParsingTest {
 				withStep(WHEN, "a negative event occurs"),
 				withStep(THEN, "the outcome should <be-captured>")
 		))
-		assertThat(s2.examples, notNullValue())
-		assertThat(s2.examples.table, notNullValue())
-		assertThat(s2.examples.table.header, not(emptyString()))
-		assertThat(s2.examples.table.rows, hasSize(2))
-	}
-	
-	@Test
-	def void singleScenario() {
-		val model = _th.parse('''
-			The quick brown fox
-			Jumps over the lazy dog
-			
-			Narrative:
-			In order to sell a pet
-			As a store owner
-			I want to add a new pet
-			
-			Given step represents a precondition to an event
-			When step represents the occurrence of the event
-			Then step represents the outcome of the event
-		''')
-		
-		assertThat(model, notNullValue())
-		_th.trace("simpleScenarios", model)
-		
-		// Check narrative
-		assertThat(model, hasNarrative(
-			inOrderTo("sell a pet"),
-			asA("store owner"),
-			iWantTo("add a new pet")
-		))
-		
-		// Check Scenario
-		assertThat(model.scenarios, hasSize(1))
-		val s1 = model.scenarios.get(0)
-		assertThat(s1.steps, hasItems(
-				withStep(GIVEN, "step represents a precondition to an event"),
-				withStep(WHEN, "step represents the occurrence of the event"),
-				withStep(THEN, "step represents the outcome of the event")
-		))
+//		assertThat(s2.examples, notNullValue())
+//		assertThat(s2.examples.table, notNullValue())
+//		assertThat(s2.examples.table.header, not(emptyString()))
+//		assertThat(s2.examples.table.rows, hasSize(2))
 	}
 	
 	@Test
