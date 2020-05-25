@@ -169,7 +169,7 @@ class JbehaveExamplesTest {
 		}
 
 		@Test
-		def void meta_04AndNarrative() {
+		def void meta_04() {
 			assertThatExampleParses('''
 				The quick brown fox
 				Jumps over the lazy dog
