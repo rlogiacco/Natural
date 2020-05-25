@@ -16,12 +16,6 @@
       <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//OutcomeType/SUCCESS"/>
       <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//OutcomeType/FAILURE"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Jbehave.ecore#//StepStartingWord">
-      <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//StepStartingWord/GIVEN"/>
-      <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//StepStartingWord/WHEN"/>
-      <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//StepStartingWord/THEN"/>
-      <genEnumLiterals ecoreEnumLiteral="Jbehave.ecore#//StepStartingWord/AND"/>
-    </genEnums>
     <genClasses ecoreClass="Jbehave.ecore#//Story">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Story/description"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Story/meta"/>
@@ -94,9 +88,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//GivenStories/resources"/>
     </genClasses>
     <genClasses ecoreClass="Jbehave.ecore#//Step">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Step/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Jbehave.ecore#//Step/content"/>
     </genClasses>
+    <genClasses ecoreClass="Jbehave.ecore#//GivenStep"/>
+    <genClasses ecoreClass="Jbehave.ecore#//WhenStep"/>
+    <genClasses ecoreClass="Jbehave.ecore#//ThenStep"/>
+    <genClasses ecoreClass="Jbehave.ecore#//AndStep"/>
     <genClasses ecoreClass="Jbehave.ecore#//Examples">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Jbehave.ecore#//Examples/table"/>
     </genClasses>

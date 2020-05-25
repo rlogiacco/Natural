@@ -217,17 +217,27 @@ GivenStories:
 // The scenario step is a step starting work followed by any number of characters
 // Step := StepStartingWord StepContent ;
 Step:
-	type=StepStartingWord
-	content=Text
+	GivenStep
+	| WhenStep
+	| ThenStep
+	| AndStep
 ;
 
-// The step starting words (or equivalent in I18n-ed locale)
-// StepStartingWord := ("Given" | "When" | "Then" | "And" | "!--" ) ;
-enum StepStartingWord:
-	GIVEN="Given"
-	| WHEN="When"
-	| THEN="Then"
-	| AND="And";
+GivenStep:
+	"Given" content=Text EOL+
+;
+
+WhenStep:
+	"When" content=Text EOL+
+;
+
+ThenStep:
+	"Then" content=Text EOL+
+;
+
+AndStep:
+	"And" content=Text EOL+
+;
 
 // The examples table
 // Examples := "Examples:" ExamplesTable ;

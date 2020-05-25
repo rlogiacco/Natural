@@ -103,15 +103,12 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Step">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//StepStartingWord"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="StepStartingWord">
-    <eLiterals name="GIVEN" literal="Given"/>
-    <eLiterals name="WHEN" value="1" literal="When"/>
-    <eLiterals name="THEN" value="2" literal="Then"/>
-    <eLiterals name="AND" value="3" literal="And"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GivenStep" eSuperTypes="#//Step"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WhenStep" eSuperTypes="#//Step"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ThenStep" eSuperTypes="#//Step"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AndStep" eSuperTypes="#//Step"/>
   <eClassifiers xsi:type="ecore:EClass" name="Examples">
     <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
         containment="true"/>

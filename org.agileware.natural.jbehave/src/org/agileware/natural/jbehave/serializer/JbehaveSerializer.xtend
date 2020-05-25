@@ -1,7 +1,9 @@
 package org.agileware.natural.jbehave.serializer
 
+import org.agileware.natural.jbehave.jbehave.AndStep
 import org.agileware.natural.jbehave.jbehave.AsA
 import org.agileware.natural.jbehave.jbehave.Examples
+import org.agileware.natural.jbehave.jbehave.GivenStep
 import org.agileware.natural.jbehave.jbehave.GivenStories
 import org.agileware.natural.jbehave.jbehave.IWantTo
 import org.agileware.natural.jbehave.jbehave.InOrderTo
@@ -20,6 +22,8 @@ import org.agileware.natural.jbehave.jbehave.SoThat
 import org.agileware.natural.jbehave.jbehave.Step
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.jbehave.Table
+import org.agileware.natural.jbehave.jbehave.ThenStep
+import org.agileware.natural.jbehave.jbehave.WhenStep
 
 class JbehaveSerializer {
 	
@@ -55,12 +59,14 @@ class JbehaveSerializer {
 	'''
 	
 	def String serialize(Narrative model) {
-		if(model instanceof NarrativeA) {
-			return serialize(model as NarrativeA)
-		}
-		else if(model instanceof NarrativeB) {
-			return serialize(model as NarrativeB)
-		}
+//		if(model instanceof NarrativeA) {
+//			return serialize(model as NarrativeA)
+//		}
+//		else if(model instanceof NarrativeB) {
+//			return serialize(model as NarrativeB)
+//		}
+		
+		return ""
 	}
 	
 	def String serialize(NarrativeA model) '''
@@ -166,8 +172,37 @@ class JbehaveSerializer {
 		«ENDFOR»
 	'''
 	
-	def String serialize(Step model) '''
-		«model.type» «model.content»
+	def String serialize(Step model) {
+//		if(model instanceof GivenStep) {
+//			return serialize(model as GivenStep)
+//		}
+//		else if(model instanceof WhenStep) {
+//			return serialize(model as WhenStep)
+//		}
+//		else if(model instanceof ThenStep) {
+//			return serialize(model as ThenStep)
+//		}
+//		else if(model instanceof AndStep) {
+//			return serialize(model as AndStep)
+//		}
+//		
+		return ""
+	}
+	
+	def String serialize(GivenStep model) '''
+		Given «model.content»
+	'''
+	
+	def String serialize(WhenStep model) '''
+		When «model.content»
+	'''
+	
+	def String serialize(ThenStep model) '''
+		Then «model.content»
+	'''
+	
+	def String serialize(AndStep model) '''
+		And «model.content»
 	'''
 	
 	def String serialize(Examples model) '''

@@ -2,13 +2,15 @@ package org.agileware.natural.jbehave.tests
 
 import com.google.inject.Inject
 import java.util.List
+import org.agileware.natural.jbehave.jbehave.AndStep
 import org.agileware.natural.jbehave.jbehave.AsA
+import org.agileware.natural.jbehave.jbehave.GivenStep
 import org.agileware.natural.jbehave.jbehave.IWantTo
 import org.agileware.natural.jbehave.jbehave.InOrderTo
 import org.agileware.natural.jbehave.jbehave.SoThat
-import org.agileware.natural.jbehave.jbehave.Step
-import org.agileware.natural.jbehave.jbehave.StepStartingWord
 import org.agileware.natural.jbehave.jbehave.Story
+import org.agileware.natural.jbehave.jbehave.ThenStep
+import org.agileware.natural.jbehave.jbehave.WhenStep
 import org.agileware.natural.jbehave.serializer.JbehaveSerializer
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.util.ParseHelper
@@ -16,14 +18,13 @@ import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.eclipse.xtext.validation.Issue
 import org.hamcrest.Matcher
 
-import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.*
 
 @InjectWith(JbehaveInjectorProvider)
 class JbehaveTestHelpers {
-	@Inject public ParseHelper<Story> parseHelper
-	@Inject public ValidationTestHelper validationTestHelper
 	
+	@Inject ParseHelper<Story> parseHelper
+	@Inject ValidationTestHelper validationTestHelper
 	@Inject JbehaveSerializer serializer
 	
 	public static final String SIMPLE_NARRATIVE = '''
@@ -106,9 +107,30 @@ class JbehaveTestHelpers {
 				hasProperty("content", equalTo(content)))
 	}
 	
-	def static Matcher<Step> withStep(StepStartingWord type, String content) {
+	def static givenStep(String content) {
 		return allOf(
-				hasProperty("type", equalTo(type)),
+				instanceOf(GivenStep),
+				hasProperty("content", equalTo(content))
+		)
+	}
+	
+	def static whenStep(String content) {
+		return allOf(
+				instanceOf(WhenStep),
+				hasProperty("content", equalTo(content))
+		)
+	}
+	
+	def static thenStep(String content) {
+		return allOf(
+				instanceOf(ThenStep),
+				hasProperty("content", equalTo(content))
+		)
+	}
+	
+	def static andStep(String content) {
+		return allOf(
+				instanceOf(AndStep),
 				hasProperty("content", equalTo(content))
 		)
 	}
@@ -117,10 +139,7 @@ class JbehaveTestHelpers {
 		return parseHelper.parse(content)
 	}
 
-	def List<Issue> validate(String contet) {
-		val model = parseHelper.parse(contet)
-		assertThat(model, notNullValue())
-
+	def List<Issue> validate(Story model) {
 		return validationTestHelper.validate(model)
 	}
 	
