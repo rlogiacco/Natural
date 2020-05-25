@@ -18,10 +18,10 @@
    <feature url="features/org.agileware.natural.cucumber.feature_0.7.6.201505100000.jar" id="org.agileware.natural.cucumber.feature" version="0.7.6.201505100000">
       <category name="Natural"/>
    </feature>
-   <feature url="features/org.agileware.natural.cucumber.feature_0.7.7.202005171550.jar" id="org.agileware.natural.cucumber.feature" version="0.7.7.202005171550">
+   <feature url="features/org.agileware.natural.cucumber.feature_0.7.7.202005221158.jar" id="org.agileware.natural.cucumber.feature" version="0.7.7.202005221158">
       <category name="Natural"/>
    </feature>
-   <feature url="features/org.agileware.natural.jbehave.feature_0.3.1.202005171550.jar" id="org.agileware.natural.jbehave.feature" version="0.3.1.202005171550">
+   <feature url="features/org.agileware.natural.jbehave.feature_0.3.1.202005221158.jar" id="org.agileware.natural.jbehave.feature" version="0.3.1.202005221158">
       <category name="Natural"/>
    </feature>
    <category-def name="Natural" label="Natural">
