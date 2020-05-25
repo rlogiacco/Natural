@@ -8,6 +8,7 @@ import org.agileware.natural.jbehave.jbehave.GivenStep
 import org.agileware.natural.jbehave.jbehave.IWantTo
 import org.agileware.natural.jbehave.jbehave.InOrderTo
 import org.agileware.natural.jbehave.jbehave.SoThat
+import org.agileware.natural.jbehave.jbehave.Step
 import org.agileware.natural.jbehave.jbehave.Story
 import org.agileware.natural.jbehave.jbehave.ThenStep
 import org.agileware.natural.jbehave.jbehave.WhenStep
@@ -107,28 +108,28 @@ class JbehaveTestHelpers {
 				hasProperty("content", equalTo(content)))
 	}
 	
-	def static givenStep(String content) {
+	def static Matcher<Step> givenStep(String content) {
 		return allOf(
 				instanceOf(GivenStep),
 				hasProperty("content", equalTo(content))
 		)
 	}
 	
-	def static whenStep(String content) {
+	def static Matcher<Step> whenStep(String content) {
 		return allOf(
 				instanceOf(WhenStep),
 				hasProperty("content", equalTo(content))
 		)
 	}
 	
-	def static thenStep(String content) {
+	def static Matcher<Step> thenStep(String content) {
 		return allOf(
 				instanceOf(ThenStep),
 				hasProperty("content", equalTo(content))
 		)
 	}
 	
-	def static andStep(String content) {
+	def static Matcher<Step> andStep(String content) {
 		return allOf(
 				instanceOf(AndStep),
 				hasProperty("content", equalTo(content))

@@ -103,10 +103,10 @@ class JbehaveParsingTest {
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("With a title"))
 		assertThat(s1.steps, hasSize(2))
-//		assertThat(s1.steps, hasItems(
-//				givenStep("a step"),
-//				andStep("another step")
-//		))
+		assertThat(s1.steps, hasItems(
+				givenStep("a step"),
+				andStep("another step")
+		))
 	}
 	
 	@Test
@@ -152,19 +152,19 @@ class JbehaveParsingTest {
 		
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
-//		assertThat(s1.steps, hasItems(
-//				givenStep("step represents a precondition to an event"),
-//				whenStep("step represents the occurrence of the event"),
-//				thenStep("step represents the outcome of the event")
-//		))
+		assertThat(s1.steps, hasItems(
+				givenStep("step represents a precondition to an event"),
+				whenStep("step represents the occurrence of the event"),
+				thenStep("step represents the outcome of the event")
+		))
 		
 		val s2 = model.scenarios.get(1)
 		assertThat(s2.title, equalTo("Another scenario exploring different combination of events"))
-//		assertThat(s2.steps, hasItems(
-//				givenStep("a [precondition]"),
-//				whenStep("a negative event occurs"),
-//				thenStep("the outcome should <be-captured>")
-//		))
+		assertThat(s2.steps, hasItems(
+				givenStep("a [precondition]"),
+				whenStep("a negative event occurs"),
+				thenStep("the outcome should <be-captured>")
+		))
 		assertThat(s2.examples, notNullValue())
 		assertThat(s2.examples.table, notNullValue())
 		assertThat(s2.examples.table.header, not(emptyString()))
@@ -201,20 +201,14 @@ class JbehaveParsingTest {
 		// Check Lifecycle
 		assertThat(model.lifecycle, notNullValue())
 		assertThat(model.lifecycle.before, notNullValue())		
-		assertThat(model.lifecycle.before.elements, hasSize(2))
 		assertThat(model.lifecycle.after, notNullValue())
-		assertThat(model.lifecycle.after.elements, hasSize(2))
 		
 		// Check Scenarios
 		////
 		
 		assertThat(model.scenarios, hasSize(1))
 		val s1 = model.scenarios.get(0)
-		assertThat(s1.title, equalTo("A scenario is a collection of executable steps of different type"))
-//		assertThat(s1.steps, hasItems(
-//				whenStep("step represents the occurrence of the event"),
-//				thenStep("step represents the outcome of the event")
-//		))
+		assertThat(s1.title, equalTo("With a title"))
 	}
 	
 	@Test
@@ -243,23 +237,13 @@ class JbehaveParsingTest {
 		assertThat(model.scenarios, hasSize(1))
 		val s1 = model.scenarios.get(0)
 		assertThat(s1.title, equalTo("With a title"))
-//		assertThat(s1.steps, hasItems(
-//				whenStep("step represents the occurrence of the event"),
-//				thenStep("step represents the outcome of the event")
-//		))
+		assertThat(s1.steps, hasItems(
+				whenStep("step represents the occurrence of the event"),
+				thenStep("step represents the outcome of the event")
+		))
 		
 		// Check given stories
 		assertThat(s1.given, notNullValue())
 		assertThat(s1.given.resources, hasSize(2))
-	}
-	
-	@Test
-	def void allSupportedSyntax() {
-		val model = _th.parse(EXAMPLE_STORY)
-		
-		assertThat(model, notNullValue())
-		_th.trace("allSupportedSyntax", model)
-		
-		assertThat(model.eResource.errors, empty())
 	}
 }
