@@ -24,7 +24,6 @@ class JbehaveParsingTest {
 		val model = _th.parse(SIMPLE_NARRATIVE)
 		
 		assertThat(model, notNullValue())
-		_th.trace("narrativeTypeA", model)
 
 		assertThat(model, hasSimpleNarrative())
 	}
@@ -39,7 +38,6 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("narrativeTypeB", model)
 		
 		// Check narrative
 		assertThat(model, hasNarrative(
@@ -63,7 +61,6 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("narrativeWithDescriptionAndMeta", model)
 		
 		// Check description
 		assertThat(model.description, not(emptyString()))
@@ -92,7 +89,6 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("scenario_01", model)
 		
 		// Check narrative
 		assertThat(model, hasSimpleNarrative())
@@ -136,7 +132,6 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("simpleScenarios", model)
 		
 		// Check narrative
 		assertThat(model, hasNarrative(
@@ -193,7 +188,6 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("scenarioWithLifecycle", model)
 		
 		// Check narrative
 		assertThat(model, hasSimpleNarrative())
@@ -226,7 +220,6 @@ class JbehaveParsingTest {
 		''')
 		
 		assertThat(model, notNullValue())
-		_th.trace("givenStories", model)
 		
 		// Check narrative
 		assertThat(model, hasSimpleNarrative())
