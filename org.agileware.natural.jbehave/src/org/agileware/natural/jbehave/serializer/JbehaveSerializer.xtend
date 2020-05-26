@@ -59,12 +59,12 @@ class JbehaveSerializer {
 	'''
 	
 	def String serialize(Narrative model) {
-//		if(model instanceof NarrativeA) {
-//			return serialize(model as NarrativeA)
-//		}
-//		else if(model instanceof NarrativeB) {
-//			return serialize(model as NarrativeB)
-//		}
+		if(model instanceof NarrativeA) {
+			return serialize(model as NarrativeA)
+		}
+		else if(model instanceof NarrativeB) {
+			return serialize(model as NarrativeB)
+		}
 		
 		return ""
 	}
@@ -173,19 +173,19 @@ class JbehaveSerializer {
 	'''
 	
 	def String serialize(Step model) {
-//		if(model instanceof GivenStep) {
-//			return serialize(model as GivenStep)
-//		}
-//		else if(model instanceof WhenStep) {
-//			return serialize(model as WhenStep)
-//		}
-//		else if(model instanceof ThenStep) {
-//			return serialize(model as ThenStep)
-//		}
-//		else if(model instanceof AndStep) {
-//			return serialize(model as AndStep)
-//		}
-//		
+		if(model instanceof GivenStep) {
+			return serialize(model as GivenStep)
+		}
+		else if(model instanceof WhenStep) {
+			return serialize(model as WhenStep)
+		}
+		else if(model instanceof ThenStep) {
+			return serialize(model as ThenStep)
+		}
+		else if(model instanceof AndStep) {
+			return serialize(model as AndStep)
+		}
+		
 		return ""
 	}
 	
