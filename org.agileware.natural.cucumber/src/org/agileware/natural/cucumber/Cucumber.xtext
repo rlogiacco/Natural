@@ -3,115 +3,201 @@ grammar org.agileware.natural.cucumber.Cucumber hidden(WS, SL_COMMENT)
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate cucumber "http://www.agileware.org/natural/cucumber"
 
-Feature:
+
+// ----------------------------------------------------------
+//
+// Feature
+//
+// ----------------------------------------------------------
+
+Feature: {Feature}
 	tags+=Tag*
 	'Feature:'
-	title=Title EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	background=Background?
-	scenarios+=(AbstractScenario)*
+	scenarios+=AbstractScenario*
 ;
 
-Background: {Background} 
+Background: {Background}
 	'Background:'
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 ;
 	
 AbstractScenario: (Scenario | ScenarioOutline);
 
-Scenario: {Scenario} 
+Scenario: {Scenario}
 	tags+=Tag*
 	'Scenario:'
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 ;
 
-ScenarioOutline: {ScenarioOutline}
+ScenarioOutline:
 	tags+=Tag*
 	'Scenario' 'Outline:'
-	title=Title? EOL+
+	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 	examples+=Example+
 ;
-	
-Step:
-	keyword=STEP_KEYWORD
-	description=StepDescription EOL*
-	(table=Table | text=DocString)?
-;
 
 Example:
 	tags+=Tag*
-	'Examples:' 
-	title=Title? EOL+
+	'Examples:'
+	title=Text? EOL+
 	narrative=Narrative?
 	table=Table
 ;
+
+
+// ----------------------------------------------------------
+//
+// Step
+//
+// ----------------------------------------------------------
 	
+Step: AnyStep
+	| GivenStep
+	| WhenStep
+	| ThenStep
+	| AndStep
+;
+
+AnyStep:
+	keyword=ANY_KEYWORD
+	description=Text EOL+
+	(table=Table | text=DocString)?
+;
+
+
+GivenStep:
+	keyword=GIVEN_KEYWORD
+	description=Text EOL+
+	(table=Table | text=DocString)?
+;
+
+
+WhenStep:
+	keyword=WHEN_KEYWORD
+	description=Text EOL+
+	(table=Table | text=DocString)?
+;
+
+ThenStep:
+	keyword=THEN_KEYWORD
+	description=Text EOL+
+	(table=Table | text=DocString)?
+;
+
+AndStep:
+	keyword=AND_KEYWORD
+	description=Text EOL+
+	(table=Table | text=DocString)?
+;
+
+terminal ANY_KEYWORD: '*';
+terminal GIVEN_KEYWORD: 'Given';
+terminal WHEN_KEYWORD: 'When';
+terminal THEN_KEYWORD: 'Then';
+terminal AND_KEYWORD: 'And';
+	
+
+// ----------------------------------------------------------
+//
+// Common Elements
+//
+// ----------------------------------------------------------
+
+Tag:
+	'@' key=WORD
+	(':'? value=Text)?
+;
+
 Table:
-	rows+=TableRow+
-	EOL?
+	(rows+=TABLE_ROW EOL)+
 ;
 
-TableRow:
-	cols+=TableCol+
-	TABLE_ROW_END
+terminal TABLE_ROW: 
+	'|' (TABLE_CELL '|')+
 ;
 
-TableCol: '|'
-	cell=TableCell
-;
-
-TableCell: (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
+terminal fragment TABLE_CELL: !('|' | '\n' | '\r')*;
 	
 DocString:
 	value=DOC_STRING
-	EOL*
+	EOL+
 ;
 
-Title:
-	(WORD | INT | STRING | PLACEHOLDER)
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+Narrative returns ecore::EString:
+	(TextLiteral TextLiteral* EOL+)+
 ;
 
-Narrative:
-	(
-		(WORD | INT | STRING | PLACEHOLDER)
-		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+
-	)+
+Text returns ecore::EString:
+ 	TextLiteral+
 ;
 
-StepDescription:
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
+TextLiteral: PLACEHOLDER
+	| WORD
+	| PUNCTUATION
+;
 	
-Tag: id=TAGNAME EOL?;
+terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''");
 
-terminal INT: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
+terminal TABLE_SEPERATOR: '|';
 
-terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But');
+terminal PLACEHOLDER:
+	('<' WORD '>')
+	| ('[' WORD ']')
+;
 
-terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
-	
-terminal TABLE_ROW_END: '|' (NL | EOF);
-
-terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") NL;
-
-terminal STRING:
-	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
-	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'";
+terminal WORD: 
+	(LETTER | DIGIT)
+	(LETTER | DIGIT | '_' | '-' | '.' )*
+;
 
 terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
 
-terminal TAGNAME: '@' !(' ' | '\t' | '\n' | '\r')+ ;
-
-terminal WORD: !('@' | '|' | ' ' | '\t' | '\n' | '\r') !(' ' | '\t' | '\n' | '\r')*;
-
-terminal WS: (' ' | '\t');
+terminal PUNCTUATION: CHAR;
 
 terminal EOL: NL;
 
+terminal WS: (SPACE | '\t');
+
 terminal fragment NL: ('\r'? '\n');
+
+
+// ----------------------------------------------------------
+//
+// Unicode Character Ranges
+//
+// ----------------------------------------------------------
+
+terminal fragment CHAR: ASCII_CHAR;
+
+terminal fragment SPACE: ASCII_SPACE;
+
+terminal fragment DIGIT: ASCII_DIGIT;
+
+terminal fragment LETTER: LATIN_ALPHABET;
+
+// Basic Latin
+////
+
+terminal fragment ASCII_SPACE: '\u0020';
+
+terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
+
+// all ascii chars other than letters, digits, or space
+terminal fragment ASCII_CHAR: ('\u0021'..'\u002F')
+	| ('\u003A'..'\u0040')
+	| ('\u005B'..'\u0060')
+	| ('\u007B'..'\u007E')
+;
+
+terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+	| ('\u0061'..'\u007A')
+;
