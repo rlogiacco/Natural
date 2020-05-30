@@ -10,10 +10,8 @@ package org.agileware.natural.cucumber.generator
 
 import com.google.inject.Inject
 import org.agileware.natural.cucumber.cucumber.Feature
-import org.agileware.natural.cucumber.cucumber.Scenario
-import org.agileware.natural.cucumber.cucumber.ScenarioOutline
+import org.agileware.natural.cucumber.serializer.CucumberSerializer
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.IGrammarAccess
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
@@ -25,43 +23,10 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class CucumberGenerator extends AbstractGenerator {
 
-	@Inject extension IGrammarAccess
+	@Inject CucumberSerializer serializer
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		fsa.generateFile(resource.getURI().toString(), toCucumberCode(resource.contents.head as Feature))
+		fsa.generateFile(resource.getURI().toString(), serializer.serialize(resource.contents.head as Feature))
 	}
 
-	protected def toCucumberCode(Feature feature) '''
-		«FOR tag : feature.tags»
-			«tag.id»
-		«ENDFOR»
-		Feature: «feature.title»
-		«feature.narrative»
-		
-		«IF feature.background !== null»
-			Background: «feature.background.title»
-				«feature.background.narrative»
-			
-				«FOR step : feature.background.steps»
-					«step.keyword» «step.description»
-				«ENDFOR»
-		«ENDIF»
-		«FOR scenario : feature.scenarios»
-			
-					«FOR tag : scenario.tags»
-						«tag.id»
-					«ENDFOR»
-					«IF scenario instanceof Scenario»
-						Scenario: «scenario.title»
-					«ELSEIF scenario instanceof ScenarioOutline»
-						Scenario Outline: «scenario.title»
-					«ENDIF»
-					«scenario.narrative»
-			
-				«FOR step : scenario.steps»
-					«step.keyword» «step.description»
-				«ENDFOR»
-		«ENDFOR»
-		
-	'''
 }

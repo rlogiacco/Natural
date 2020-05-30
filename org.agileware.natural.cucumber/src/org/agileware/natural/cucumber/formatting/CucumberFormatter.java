@@ -22,7 +22,11 @@ public class CucumberFormatter extends AbstractDeclarativeFormatter {
 	protected void configureFormatting(FormattingConfig c) {
 		CucumberGrammarAccess g = (CucumberGrammarAccess) super.getGrammarAccess();
 
-		c.setNoSpace().after(g.getSTEP_KEYWORDRule());
+		c.setNoSpace().after(g.getANY_KEYWORDRule());
+		c.setNoSpace().after(g.getGIVEN_KEYWORDRule());
+		c.setNoSpace().after(g.getTHEN_KEYWORDRule());
+		c.setNoSpace().after(g.getWHEN_KEYWORDRule());
+		c.setNoSpace().after(g.getAND_KEYWORDRule());
 
 		c.setIndentationIncrement().before(g.getNarrativeRule());
 		c.setIndentationDecrement().after(g.getNarrativeRule());
@@ -35,6 +39,7 @@ public class CucumberFormatter extends AbstractDeclarativeFormatter {
 		c.setIndentationIncrement().before(g.getDocStringRule());
 		c.setIndentationDecrement().after(g.getDocStringRule());
 
-		c.setNoLinewrap().around(g.getStepDescriptionRule());
+		// TODO...
+		// c.setNoLinewrap().around(g.getStepDescriptionRule());
 	}
 }
