@@ -73,7 +73,6 @@ class CucumberTestHelpers {
 				| start | eat | left |
 				|    12 |   2 |   10 |
 				|    20 |   5 |   15 |
-				
 	'''
 	
 

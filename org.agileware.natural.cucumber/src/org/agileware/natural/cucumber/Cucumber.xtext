@@ -11,7 +11,7 @@ generate cucumber "http://www.agileware.org/natural/cucumber"
 // ----------------------------------------------------------
 
 Feature: {Feature}
-	tags+=Tag*
+	meta=Meta?
 	'Feature:'
 	title=Text? EOL+
 	narrative=Narrative?
@@ -29,7 +29,7 @@ Background: {Background}
 AbstractScenario: (Scenario | ScenarioOutline);
 
 Scenario: {Scenario}
-	tags+=Tag*
+	meta=Meta?
 	'Scenario:'
 	title=Text? EOL+
 	narrative=Narrative?
@@ -37,16 +37,17 @@ Scenario: {Scenario}
 ;
 
 ScenarioOutline:
-	tags+=Tag*
+	meta=Meta?
 	'Scenario' 'Outline:'
 	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
-	examples+=Example+
+	examples+=Example
+	(EOL+ examples+=Example)*
 ;
 
 Example:
-	tags+=Tag*
+	meta=Meta?
 	'Examples:'
 	title=Text? EOL+
 	narrative=Narrative?
@@ -60,43 +61,17 @@ Example:
 //
 // ----------------------------------------------------------
 	
-Step: AnyStep
-	| GivenStep
-	| WhenStep
-	| ThenStep
-	| AndStep
-;
-
-AnyStep:
-	keyword=ANY_KEYWORD
+Step:
+	keyword=STEP_KEYWORD
 	description=Text EOL+
 	(table=Table | text=DocString)?
 ;
 
-
-GivenStep:
-	keyword=GIVEN_KEYWORD
-	description=Text EOL+
-	(table=Table | text=DocString)?
-;
-
-
-WhenStep:
-	keyword=WHEN_KEYWORD
-	description=Text EOL+
-	(table=Table | text=DocString)?
-;
-
-ThenStep:
-	keyword=THEN_KEYWORD
-	description=Text EOL+
-	(table=Table | text=DocString)?
-;
-
-AndStep:
-	keyword=AND_KEYWORD
-	description=Text EOL+
-	(table=Table | text=DocString)?
+STEP_KEYWORD: ANY_KEYWORD
+	| GIVEN_KEYWORD
+	| WHEN_KEYWORD
+	| THEN_KEYWORD
+	| AND_KEYWORD
 ;
 
 terminal ANY_KEYWORD: '*';
@@ -111,6 +86,12 @@ terminal AND_KEYWORD: 'And';
 // Common Elements
 //
 // ----------------------------------------------------------
+
+Meta:
+	tags+=Tag
+	(EOL? tags+=Tag)*
+	EOL+
+;
 
 Tag:
 	'@' key=WORD
