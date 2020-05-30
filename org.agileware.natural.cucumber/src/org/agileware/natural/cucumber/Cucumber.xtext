@@ -6,9 +6,13 @@ generate cucumber "http://www.agileware.org/natural/cucumber"
 
 // ----------------------------------------------------------
 //
-// Feature
+// AST Elements
 //
 // ----------------------------------------------------------
+
+// --------------------------------------
+// Feature
+// --------------------------------------
 
 Feature: {Feature}
 	meta=Meta?
@@ -19,12 +23,20 @@ Feature: {Feature}
 	scenarios+=AbstractScenario*
 ;
 
+// --------------------------------------
+// Background
+// --------------------------------------
+
 Background: {Background}
 	'Background:'
 	title=Text? EOL+
 	narrative=Narrative?
 	steps+=Step*
 ;
+
+// --------------------------------------
+// AbstractScenario
+// --------------------------------------
 	
 AbstractScenario: (Scenario | ScenarioOutline);
 
@@ -46,6 +58,10 @@ ScenarioOutline:
 	(EOL+ examples+=Example)*
 ;
 
+// --------------------------------------
+// Example
+// --------------------------------------
+
 Example:
 	meta=Meta?
 	'Examples:'
@@ -54,13 +70,10 @@ Example:
 	table=Table
 ;
 
-
-// ----------------------------------------------------------
-//
+// --------------------------------------
 // Step
-//
-// ----------------------------------------------------------
-	
+// --------------------------------------
+
 Step:
 	keyword=STEP_KEYWORD
 	description=Text EOL+
@@ -79,13 +92,10 @@ terminal GIVEN_KEYWORD: 'Given';
 terminal WHEN_KEYWORD: 'When';
 terminal THEN_KEYWORD: 'Then';
 terminal AND_KEYWORD: 'And';
-	
 
-// ----------------------------------------------------------
-//
-// Common Elements
-//
-// ----------------------------------------------------------
+// --------------------------------------
+// Meta
+// --------------------------------------
 
 Meta:
 	tags+=Tag
@@ -98,6 +108,10 @@ Tag:
 	(':'? value=Text)?
 ;
 
+// --------------------------------------
+// Table
+// --------------------------------------
+
 Table:
 	(rows+=TABLE_ROW EOL)+
 ;
@@ -107,11 +121,22 @@ terminal TABLE_ROW:
 ;
 
 terminal fragment TABLE_CELL: !('|' | '\n' | '\r')*;
+
+// --------------------------------------
+// DocString
+// --------------------------------------
 	
 DocString:
 	value=DOC_STRING
 	EOL+
 ;
+
+
+// ----------------------------------------------------------
+//
+// Common Elements
+//
+// ----------------------------------------------------------
 
 Narrative returns ecore::EString:
 	(TextLiteral TextLiteral* EOL+)+
@@ -127,8 +152,6 @@ TextLiteral: PLACEHOLDER
 ;
 	
 terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''");
-
-terminal TABLE_SEPERATOR: '|';
 
 terminal PLACEHOLDER:
 	('<' WORD '>')
