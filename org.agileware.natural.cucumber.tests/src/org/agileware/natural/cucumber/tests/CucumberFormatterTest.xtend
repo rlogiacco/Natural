@@ -18,32 +18,7 @@ class CucumberFormatterTest {
 	@Inject CucumberTestHelpers _th
 
 	@Test
-	def void simpleFormatting() {
-		val toBeFormatted = '''
-			@alpha  @beta  
-			Feature: The quick brown fox  
-				Jumps over  
-				The lazy dog
-			Scenario: Jack and Jill  
-				When Jack falls down  
-				Then Jill comes tumbling after  
-		'''
-		val expectation = '''
-			@alpha
-			@beta
-			Feature: The quick brown fox
-				Jumps over  
-				The lazy dog
-			
-			Scenario: Jack and Jill
-				When Jack falls down
-				Then Jill comes tumbling after
-		'''
-		_th.assertFormatted(toBeFormatted, expectation)
-	}
-
-	@Test
-	def void indentSteps() {
+	def void indentScenarioSteps() {
 		val toBeFormatted = '''
 			Feature: Jack and Jill
 			
@@ -57,6 +32,31 @@ class CucumberFormatterTest {
 			Scenario: Jack falls down
 				When Jack falls down
 				Then Jill comes tumbling after
+		'''
+		_th.assertFormatted(toBeFormatted, expectation)
+	}
+
+	@Test
+	def void indentBackgroundSteps() {
+		val toBeFormatted = '''
+			Feature: Hello, Cucumber!
+			
+			Background: Stock Symbols
+			* a stock of symbol STK1 and a threshold of 10.0
+			Given the stock is traded at 5.0
+			And the alert status should be OFF
+			When the stock is traded at 11.0
+			Then the alert status should be ON
+		'''
+		val expectation = '''
+			Feature: Hello, Cucumber!
+			
+			Background: Stock Symbols
+				* a stock of symbol STK1 and a threshold of 10.0
+				Given the stock is traded at 5.0
+				And the alert status should be OFF
+				When the stock is traded at 11.0
+				Then the alert status should be ON
 		'''
 		_th.assertFormatted(toBeFormatted, expectation)
 	}
