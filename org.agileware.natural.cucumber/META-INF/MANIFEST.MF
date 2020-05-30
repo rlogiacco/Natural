@@ -42,7 +42,6 @@ Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.ecli
    org.eclipse.emf.common.notify.impl,
    org.eclipse.emf.ecore.util,
    org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.formatting;uses:="org.eclipse.xtext.formatting.impl",
  org.agileware.natural.cucumber.generator;uses:="org.eclipse.xtext.generator,org.eclipse.emf.ecore.resource,org.agileware.natural.cucumber.cucumber",
  org.agileware.natural.cucumber.parser.antlr;uses:="org.eclipse.xtext.parser.antlr,org.agileware.natural.cucumber.parser.antlr.internal,org.agileware.natural.cucumber.services",
  org.agileware.natural.cucumber.parser.antlr.internal;
@@ -61,6 +60,7 @@ Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.ecli
    org.eclipse.xtext.serializer,
    org.agileware.natural.cucumber.cucumber",
  org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext.service,org.eclipse.xtext",
- org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation"
+ org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation",
+ org.agileware.natural.cucumber.formatting2
 Bundle-ClassPath: .
 Automatic-Module-Name: org.agileware.natural.cucumber

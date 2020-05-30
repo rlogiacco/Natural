@@ -32,36 +32,6 @@ class CucumberGenerator extends AbstractGenerator {
 	}
 
 	protected def toCucumberCode(Feature feature) '''
-		«FOR tag : feature.tags»
-			«tag.id»
-		«ENDFOR»
-		Feature: «feature.title»
-		«feature.narrative»
-		
-		«IF feature.background !== null»
-			Background: «feature.background.title»
-				«feature.background.narrative»
-			
-				«FOR step : feature.background.steps»
-					«step.keyword» «step.description»
-				«ENDFOR»
-		«ENDIF»
-		«FOR scenario : feature.scenarios»
-			
-					«FOR tag : scenario.tags»
-						«tag.id»
-					«ENDFOR»
-					«IF scenario instanceof Scenario»
-						Scenario: «scenario.title»
-					«ELSEIF scenario instanceof ScenarioOutline»
-						Scenario Outline: «scenario.title»
-					«ENDIF»
-					«scenario.narrative»
-			
-				«FOR step : scenario.steps»
-					«step.keyword» «step.description»
-				«ENDFOR»
-		«ENDFOR»
-		
+		# TODO...
 	'''
 }
