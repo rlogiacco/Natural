@@ -17,6 +17,7 @@
 		<project>org.agileware.natural.jbehave.ui</project>
 		<project>org.agileware.natural.jbehave.ui.tests</project>
 		<project>org.agileware.natural.stepmatcher</project>
+		<project>org.agileware.natural.update</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>
