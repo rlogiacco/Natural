@@ -7,6 +7,7 @@ import org.agileware.natural.cucumber.cucumber.Background;
 import org.agileware.natural.cucumber.cucumber.DocString;
 import org.agileware.natural.cucumber.cucumber.Example;
 import org.agileware.natural.cucumber.cucumber.Feature;
+import org.agileware.natural.cucumber.cucumber.Meta;
 import org.agileware.natural.cucumber.cucumber.Scenario;
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
 import org.agileware.natural.cucumber.cucumber.Step;
@@ -64,7 +65,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(Step ele) {
-		return ele.getDescription().trim();
+		return ele.getKeyword() + " " + ele.getDescription().trim();
 	}
 
 	String image(Step ele) {
@@ -93,6 +94,10 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(Example ele) {
 		return "example.gif";
+	}
+	
+	String text(Meta ele) {
+		return "Metadata";
 	}
 
 	String text(Tag ele) {
