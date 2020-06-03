@@ -5,30 +5,147 @@ package org.agileware.natural.cucumber.formatting2
 
 import com.google.inject.Inject
 import org.agileware.natural.cucumber.cucumber.Background
+import org.agileware.natural.cucumber.cucumber.DocString
+import org.agileware.natural.cucumber.cucumber.Example
 import org.agileware.natural.cucumber.cucumber.Feature
+import org.agileware.natural.cucumber.cucumber.Meta
+import org.agileware.natural.cucumber.cucumber.Scenario
+import org.agileware.natural.cucumber.cucumber.ScenarioOutline
+import org.agileware.natural.cucumber.cucumber.Step
+import org.agileware.natural.cucumber.cucumber.Table
+import org.agileware.natural.cucumber.cucumber.Tag
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class CucumberFormatter extends AbstractFormatter2 {
-	
+
 	@Inject extension CucumberGrammarAccess
 
-	def dispatch void format(Feature feature, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		feature.meta.format
-		feature.background.format
-		for (abstractScenario : feature.scenarios) {
-			abstractScenario.format
+	def dispatch void format(Feature model, extension IFormattableDocument document) {
+
+		// Format tags
+		model.meta.format()
+
+		// Format title
+		// TODO...
+		
+		// Format narrative
+		// TODO...
+		
+		// Format background
+		model.background.format()
+
+		// Format scenarios
+		for (s : model.scenarios) {
+			s.format()
 		}
 	}
 
-	def dispatch void format(Background background, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (step : background.steps) {
-			step.format
+	def dispatch void format(Background model, extension IFormattableDocument document) {
+
+		// Format title
+		// TODO...
+		
+		// Format narrative
+		// TODO..
+		
+		// Format steps
+		for (s : model.steps) {
+			s.format()
 		}
 	}
-	
-	// TODO: implement for Scenario, ScenarioOutline, Example, Step, Meta
+
+	def dispatch void format(Scenario model, extension IFormattableDocument document) {
+
+		// Format tags
+		model.meta.format()
+
+		// Format title
+		// TODO...
+		
+		// Format narrative
+		// TODO..
+		
+		// Format steps
+		for (s : model.steps) {
+			s.format()
+		}
+	}
+
+	def dispatch void format(ScenarioOutline model, extension IFormattableDocument document) {
+
+		// Format tags
+		model.meta.format()
+
+		// Format title
+		// TODO...
+		
+		// Format narrative
+		// TODO..
+		
+		// Format steps
+		for (s : model.steps) {
+			s.format()
+		}
+
+		// Format examples
+		for (e : model.examples) {
+			e.format()
+		}
+	}
+
+	def dispatch void format(Example model, extension IFormattableDocument document) {
+
+		// Format tags
+		model.meta.format()
+
+		// Format title
+		// TODO...
+		
+		// Format narrative
+		// TODO..
+		
+		// Format table
+		model.table.format()
+	}
+
+	def dispatch void format(Step model, extension IFormattableDocument document) {
+
+		// Format keyword
+		// TODO...
+		
+		// Format description
+		// TODO..
+		
+		// Format table
+		if (model.table !== null) {
+			model.table.format()
+		}
+		
+		// Format text
+		if (model.text !== null) {
+			model.text.format()
+		}
+	}
+
+	def dispatch void format(Meta model, extension IFormattableDocument document) {
+		// Format tags
+		for (t : model.tags) {
+			t.format()
+		}
+	}
+
+	def dispatch void format(Tag model, extension IFormattableDocument document) {
+		// TODO...
+	}
+
+	def dispatch void format(Table model, extension IFormattableDocument document) {
+		// TODO...
+	}
+
+	def dispatch void format(DocString model, extension IFormattableDocument document) {
+		// TODO...
+	}
+
 }
