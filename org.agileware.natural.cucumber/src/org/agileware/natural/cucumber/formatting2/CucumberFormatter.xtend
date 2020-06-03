@@ -51,8 +51,15 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO..
 		
 		// Format steps
+		////
+		
+		val begin = model.regionFor.ruleCallTo(EOLRule)
+		val end = model.steps.last.regionFor.ruleCallTo(EOLRule)
+		interior(begin, end)[indent]
+		
 		for (s : model.steps) {
 			s.format()
+			s.prepend[indent]
 		}
 	}
 
@@ -68,8 +75,13 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO..
 		
 		// Format steps
+		val begin = model.regionFor.ruleCallTo(EOLRule)
+		val end = model.steps.last.regionFor.ruleCallTo(EOLRule)
+		interior(begin, end)[indent]
+		
 		for (s : model.steps) {
 			s.format()
+			s.prepend[indent]
 		}
 	}
 
@@ -85,8 +97,13 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO..
 		
 		// Format steps
+		val begin = model.regionFor.ruleCallTo(EOLRule)
+		val end = model.steps.last.regionFor.ruleCallTo(EOLRule)
+		interior(begin, end)[indent]
+		
 		for (s : model.steps) {
 			s.format()
+			s.prepend[indent]
 		}
 
 		// Format examples
