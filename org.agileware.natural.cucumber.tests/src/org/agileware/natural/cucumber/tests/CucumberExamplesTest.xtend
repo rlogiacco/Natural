@@ -43,6 +43,15 @@ class CucumberExamplesTest {
 				Feature: Hello, Cucumber!
 			''')
 		}
+		
+		@Test
+		def void feature_06() {
+			assertThatExampleParses('''
+				# language: sv
+				
+				Feature: Hello, Cucumber!
+			''')
+		}
 
 	}
 
