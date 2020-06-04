@@ -87,6 +87,33 @@ class CucumberFormatterTest {
 	}
 	
 	@Test
+	def void indentStepText() {
+		val toBeFormatted = '''
+			Feature: Jack and Jill
+			
+			Scenario: Jack falls down
+			When Jack falls down
+			"""
+			The quick brown fox
+			Jumps over the lazy dog
+			"""
+			Then Jill comes tumbling after
+		'''
+		val expectation = '''
+			Feature: Jack and Jill
+			
+			Scenario: Jack falls down
+				When Jack falls down
+				"""
+				The quick brown fox
+				Jumps over the lazy dog
+				"""
+				Then Jill comes tumbling after
+		'''
+		_th.assertFormatted(toBeFormatted, expectation)
+	}
+	
+	@Test
 	def void preserveValidFormatting() {
 		_th.assertFormatted(EXAMPLE_FEATURE)
 	}
