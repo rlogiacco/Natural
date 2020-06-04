@@ -6,11 +6,13 @@ import org.agileware.natural.cucumber.cucumber.DocString
 import org.agileware.natural.cucumber.cucumber.Example
 import org.agileware.natural.cucumber.cucumber.Feature
 import org.agileware.natural.cucumber.cucumber.Meta
+import org.agileware.natural.cucumber.cucumber.Narrative
 import org.agileware.natural.cucumber.cucumber.Scenario
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline
 import org.agileware.natural.cucumber.cucumber.Step
 import org.agileware.natural.cucumber.cucumber.Table
 import org.agileware.natural.cucumber.cucumber.Tag
+import org.agileware.natural.cucumber.cucumber.TextLine
 
 class CucumberSerializer {
 	
@@ -19,7 +21,7 @@ class CucumberSerializer {
 			«serialize(model.meta)»
 		«ENDIF»
 		Feature: «model.title»
-		«model.narrative»
+		«serialize(model.narrative)»
 		«IF model.background !== null»
 			«serialize(model.background)»
 		«ENDIF»
@@ -30,7 +32,7 @@ class CucumberSerializer {
 	
 	def String serialize(Background model) '''
 		Background: «model.title»
-		«model.narrative»
+		«serialize(model.narrative)»
 		«FOR s : model.steps»
 			«serialize(s)»
 		«ENDFOR»
@@ -52,7 +54,7 @@ class CucumberSerializer {
 			«serialize(model.meta)»
 		«ENDIF»
 		Scenario: «model.title»
-		«model.narrative»
+		«serialize(model.narrative)»
 		«FOR s : model.steps»
 			«serialize(s)»
 		«ENDFOR»
@@ -63,7 +65,7 @@ class CucumberSerializer {
 			«serialize(model.meta)»
 		«ENDIF»
 		Scenario Outline: «model.title»
-		«model.narrative»
+		«serialize(model.narrative)»
 		«FOR s : model.steps»
 			«serialize(s)»
 		«ENDFOR»
@@ -77,7 +79,7 @@ class CucumberSerializer {
 			«serialize(model.meta)»
 		«ENDIF»
 		Example: «model.title»
-		«model.narrative»
+		«serialize(model.narrative)»
 		«serialize(model.table)»
 	'''
 	
@@ -108,6 +110,20 @@ class CucumberSerializer {
 	
 	
 	def String serialize(DocString model) '''
+		"""
+		«FOR l : model.lines»
+			«serialize(l)»
+		«ENDFOR»
+		"""
+	'''
+	
+	def String serialize(Narrative model) '''
+		«FOR l : model.lines»
+			«serialize(l)»
+		«ENDFOR»
+	'''
+	
+	def String serialize(TextLine model) '''
 		«model.value»
 	'''
 }

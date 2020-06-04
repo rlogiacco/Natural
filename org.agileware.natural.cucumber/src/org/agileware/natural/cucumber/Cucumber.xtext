@@ -23,6 +23,11 @@ Feature: {Feature}
 	scenarios+=AbstractScenario*
 ;
 
+Narrative:
+	lines+=TextLine+
+;
+
+
 // --------------------------------------
 // Background
 // --------------------------------------
@@ -130,8 +135,9 @@ terminal TABLE_CELL: '|' !('|' | '\n' | '\r')*;
 // DocString
 // --------------------------------------
 	
-DocString:
-	value=DOC_STRING
+DocString: {DocString}
+	(('"""' EOL lines+=TextLine* '"""')
+		| ("'''" EOL lines+=TextLine* "'''"))
 	EOL+
 ;
 
@@ -142,8 +148,8 @@ DocString:
 //
 // ----------------------------------------------------------
 
-Narrative returns ecore::EString:
-	(TextLiteral TextLiteral* EOL+)+
+TextLine: {TextLine}
+ 	value=Text EOL+
 ;
 
 Text returns ecore::EString:
@@ -155,8 +161,6 @@ TextLiteral: PLACEHOLDER
 	| PUNCTUATION
 ;
 	
-terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''");
-
 terminal PLACEHOLDER:
 	('<' WORD '>')
 	| ('[' WORD ']')
@@ -169,6 +173,10 @@ terminal WORD:
 
 terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
 
+// TODO - it is not clear what the rammifications of creating a terminal from all
+//        valid punction symbols, when the ANY_OTHER terminal should suffice for the
+//        end result a lot more efficiently (EG. potentially unbounded n where n is
+//        terminal count in grammar)
 terminal PUNCTUATION: CHAR;
 
 terminal EOL: NL;

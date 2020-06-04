@@ -27,7 +27,7 @@ class CucumberParsingTest {
 			  Jumps over the lazy dog
 			
 			Scenario: Jack and Jill
-			  Given Jack and Jill went up a hill
+			Given Jack and Jill went up a hill
 		''')
 
 		// Should parse without issues
@@ -109,11 +109,7 @@ class CucumberParsingTest {
 		))
 		
 		assertThat(steps.get(0).table, notNullValue())
-		assertThat(steps.get(1).text.value, equalToCompressingWhiteSpace('''
-		  """
-		  Is sad to see him go
-		  """
-		'''))
+		assertThat(steps.get(1).text, notNullValue())
 	}
 
 	@Test

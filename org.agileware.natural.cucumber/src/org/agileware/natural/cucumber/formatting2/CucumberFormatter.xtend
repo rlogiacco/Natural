@@ -150,7 +150,6 @@ class CucumberFormatter extends AbstractFormatter2 {
 		if (model.table !== null) {
 			val begin = model.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
 			val end = model.table.rows.last.regionFor.ruleCall(tableRowAccess.EOLTerminalRuleCall_3)
-			
 			interior(begin, end)[indent]
 		
 			model.table.format()
@@ -159,7 +158,12 @@ class CucumberFormatter extends AbstractFormatter2 {
 		
 		// Format text
 		if (model.text !== null) {
+			val begin = model.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
+			val end = model.text.regionFor.ruleCall(docStringAccess.EOLTerminalRuleCall_2)
+			interior(begin, end)[indent]
+			
 			model.text.format()
+			model.text.prepend[indent]
 		}
 	}
 
