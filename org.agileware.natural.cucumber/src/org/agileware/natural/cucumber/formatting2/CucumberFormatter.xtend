@@ -21,8 +21,10 @@ import org.eclipse.xtext.formatting2.IFormattableDocument
 class CucumberFormatter extends AbstractFormatter2 {
 
 	@Inject extension CucumberGrammarAccess
-
+	
 	def dispatch void format(Feature model, extension IFormattableDocument document) {
+		
+		println(textRegionAccess)
 
 		// Format tags
 		model.meta.format()
@@ -40,6 +42,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 		for (s : model.scenarios) {
 			s.format()
 		}
+		
+		println(document)
 	}
 
 	def dispatch void format(Background model, extension IFormattableDocument document) {
@@ -137,7 +141,12 @@ class CucumberFormatter extends AbstractFormatter2 {
 		
 		// Format table
 		if (model.table !== null) {
+			val begin = model.regionFor.ruleCallTo(EOLRule)
+			val end = model.table.rows.last.regionFor.ruleCallTo(EOLRule)
+			interior(begin, end)[indent]
+		
 			model.table.format()
+			model.table.prepend[indent]
 		}
 		
 		// Format text
@@ -157,12 +166,11 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO...
 	}
 
-	def dispatch void format(Table model, extension IFormattableDocument document) {
-		// TODO...
-	}
-
 	def dispatch void format(DocString model, extension IFormattableDocument document) {
 		// TODO...
 	}
-
+	
+	def dispatch void format(Table model, extension IFormattableDocument document) {
+		
+	}
 }
