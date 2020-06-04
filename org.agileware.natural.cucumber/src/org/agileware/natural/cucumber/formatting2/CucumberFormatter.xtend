@@ -13,6 +13,8 @@ import org.agileware.natural.cucumber.cucumber.Scenario
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline
 import org.agileware.natural.cucumber.cucumber.Step
 import org.agileware.natural.cucumber.cucumber.Table
+import org.agileware.natural.cucumber.cucumber.TableCol
+import org.agileware.natural.cucumber.cucumber.TableRow
 import org.agileware.natural.cucumber.cucumber.Tag
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
@@ -57,8 +59,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// Format steps
 		////
 		
-		val begin = model.regionFor.ruleCallTo(EOLRule)
-		val end = model.steps.last.regionFor.ruleCallTo(EOLRule)
+		val begin = model.regionFor.ruleCall(backgroundAccess.EOLTerminalRuleCall_3)
+		val end = model.steps.last.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
 		interior(begin, end)[indent]
 		
 		for (s : model.steps) {
@@ -79,8 +81,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO..
 		
 		// Format steps
-		val begin = model.regionFor.ruleCallTo(EOLRule)
-		val end = model.steps.last.regionFor.ruleCallTo(EOLRule)
+		val begin = model.regionFor.ruleCall(scenarioAccess.EOLTerminalRuleCall_4)
+		val end = model.steps.last.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
 		interior(begin, end)[indent]
 		
 		for (s : model.steps) {
@@ -101,8 +103,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO..
 		
 		// Format steps
-		val begin = model.regionFor.ruleCallTo(EOLRule)
-		val end = model.steps.last.regionFor.ruleCallTo(EOLRule)
+		val begin = model.regionFor.ruleCall(scenarioOutlineAccess.EOLTerminalRuleCall_4)
+		val end = model.steps.last.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
 		interior(begin, end)[indent]
 		
 		for (s : model.steps) {
@@ -128,7 +130,12 @@ class CucumberFormatter extends AbstractFormatter2 {
 		// TODO..
 		
 		// Format table
+		val begin = model.regionFor.ruleCall(exampleAccess.EOLTerminalRuleCall_3)
+		val end = model.table.rows.last.regionFor.ruleCall(tableRowAccess.EOLTerminalRuleCall_3)
+		interior(begin, end)[indent]
+	
 		model.table.format()
+		model.table.prepend[indent]
 	}
 
 	def dispatch void format(Step model, extension IFormattableDocument document) {
@@ -141,8 +148,9 @@ class CucumberFormatter extends AbstractFormatter2 {
 		
 		// Format table
 		if (model.table !== null) {
-			val begin = model.regionFor.ruleCallTo(EOLRule)
-			val end = model.table.rows.last.regionFor.ruleCallTo(EOLRule)
+			val begin = model.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
+			val end = model.table.rows.last.regionFor.ruleCall(tableRowAccess.EOLTerminalRuleCall_3)
+			
 			interior(begin, end)[indent]
 		
 			model.table.format()
@@ -171,6 +179,21 @@ class CucumberFormatter extends AbstractFormatter2 {
 	}
 	
 	def dispatch void format(Table model, extension IFormattableDocument document) {
-		
+		// Format rows
+		for (r : model.rows) {
+			r.format()
+			r.prepend[indent]
+		}
+	}
+
+	def dispatch void format(TableRow model, extension IFormattableDocument document) {
+		// Format cols
+		for (c : model.cols) {
+			c.format()
+		}
+	}
+
+	def dispatch void format(TableCol model, extension IFormattableDocument document) {
+		// TODO...
 	}
 }

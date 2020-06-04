@@ -64,15 +64,15 @@ class CucumberTestHelpers {
 		
 			@hungry
 			Examples:
-				| start | eat | left |
-				|    12 |  10 |    2 |
-				|    20 |  15 |    5 |
+			| start | eat | left |
+			|    12 |  10 |    2 |
+			|    20 |  15 |    5 |
 		
 			@full
 			Examples:
-				| start | eat | left |
-				|    12 |   2 |   10 |
-				|    20 |   5 |   15 |
+			| start | eat | left |
+			|    12 |   2 |   10 |
+			|    20 |   5 |   15 |
 	'''
 	
 
