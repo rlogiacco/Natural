@@ -194,6 +194,33 @@ class CucumberExamplesTest {
 			''')
 		}
 
+		@Test
+		def void scenario_08() {
+			assertThatExampleParses('''
+				Feature: Jack and Jill
+				Scenario: Jack falls down
+					Given Jack falls down
+					"""
+					The quick brown fox
+					Jumps over the lazy dog
+					"""
+			''')
+		}
+
+		@Test
+		def void scenario_09() {
+			assertThatExampleParses('''
+				Feature: Jack and Jill
+				Scenario: Jack falls down
+					Given Jack falls down
+					"""
+					The quick brown fox
+					Jumps over the lazy dog
+					"""
+					Then Jill comes tumbling after
+			''')
+		}
+
 	}
 
 }

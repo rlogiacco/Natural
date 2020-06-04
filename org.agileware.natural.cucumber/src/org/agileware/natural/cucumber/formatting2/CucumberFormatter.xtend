@@ -9,6 +9,7 @@ import org.agileware.natural.cucumber.cucumber.DocString
 import org.agileware.natural.cucumber.cucumber.Example
 import org.agileware.natural.cucumber.cucumber.Feature
 import org.agileware.natural.cucumber.cucumber.Meta
+import org.agileware.natural.cucumber.cucumber.Narrative
 import org.agileware.natural.cucumber.cucumber.Scenario
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline
 import org.agileware.natural.cucumber.cucumber.Step
@@ -16,6 +17,7 @@ import org.agileware.natural.cucumber.cucumber.Table
 import org.agileware.natural.cucumber.cucumber.TableCol
 import org.agileware.natural.cucumber.cucumber.TableRow
 import org.agileware.natural.cucumber.cucumber.Tag
+import org.agileware.natural.cucumber.cucumber.TextLine
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -158,12 +160,12 @@ class CucumberFormatter extends AbstractFormatter2 {
 		
 		// Format text
 		if (model.text !== null) {
-			val begin = model.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
-			val end = model.text.regionFor.ruleCall(docStringAccess.EOLTerminalRuleCall_2)
-			interior(begin, end)[indent]
+//			val begin = model.regionFor.ruleCall(stepAccess.EOLTerminalRuleCall_2)
+//			val end = model.text.regionFor.ruleCall(docStringAccess.EOLTerminalRuleCall_2)
+//			interior(begin, end)[indent]
 			
 			model.text.format()
-			model.text.prepend[indent]
+			//model.text.prepend[indent]
 		}
 	}
 
@@ -177,9 +179,33 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def dispatch void format(Tag model, extension IFormattableDocument document) {
 		// TODO...
 	}
+	
+	def dispatch void format(Narrative model, extension IFormattableDocument document) {
+		// Format lines
+		for (l : model.lines) {
+			l.format()
+			l.prepend[indent]
+		}
+	}
+	
+	def dispatch void format(TextLine model, extension IFormattableDocument document) {
+		// TODO...
+	}
 
 	def dispatch void format(DocString model, extension IFormattableDocument document) {
-		// TODO...
+		// indent string starting keyword
+		model.regionFor.keyword(docStringAccess.quotationMarkQuotationMarkQuotationMarkKeyword_1_0_0)
+				.prepend[indent]
+		
+		// Format lines
+		for (l : model.lines) {
+			l.format()
+			l.prepend[indent]
+		}
+		
+		// indent string ending keyword
+		model.regionFor.keyword(docStringAccess.quotationMarkQuotationMarkQuotationMarkKeyword_1_0_3)
+				.prepend[indent]
 	}
 	
 	def dispatch void format(Table model, extension IFormattableDocument document) {
