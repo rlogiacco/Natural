@@ -48,8 +48,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Tag/value"/>
     </genClasses>
     <genClasses ecoreClass="Cucumber.ecore#//Table">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//Table/rows"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Table/rows"/>
     </genClasses>
+    <genClasses ecoreClass="Cucumber.ecore#//TableRow">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//TableRow/cols"/>
+    </genClasses>
+    <genClasses ecoreClass="Cucumber.ecore#//TableCol"/>
     <genClasses ecoreClass="Cucumber.ecore#//DocString">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Cucumber.ecore#//DocString/value"/>
     </genClasses>
