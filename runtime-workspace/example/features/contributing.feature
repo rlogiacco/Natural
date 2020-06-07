@@ -17,10 +17,10 @@ Scenario: adding features and fixing non-critical issues
 	And I can fix issues, each one in a distinct PR
 
 @release
-Scenario: releasing a new version
+Scenario Outline: releasing a new version
 	When the dev team decides we have collected enough value for a new release
 	Then a member of the dev team bumps the versions ups
-	And publishes a new release of the plugins
+	And publishes a new <release> of the plugins
 	And a new release announcement is sent to the medias
 	
 	@versions
@@ -29,3 +29,4 @@ Scenario: releasing a new version
 		| 1.0.1   | something has been fixed 																	|
 		| 1.1.0   | something has been added, something might have also been fixed 								|
 		| 2.0.0   | breaking changes introduced so stuff that was working before will probably not work anymore |
+		
