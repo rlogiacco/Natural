@@ -43,6 +43,7 @@ class CucumberTestHelpers {
 				| name | status    |
 				| Fido | available |
 			And I add the pet to the store
+			But the pet is not yet mine
 		
 		@add @fido
 		Scenario: Add a dog 
