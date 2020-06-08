@@ -5,7 +5,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(Suite)
-@Suite.SuiteClasses(FeatureExamples, BackgroundExamples, ScenarioExamples)
+@Suite.SuiteClasses(FeatureExamples, BackgroundExamples, ScenarioExamples, PathologicalExamples)
 class CucumberExamplesTest {
 
 	static class FeatureExamples extends AbstractCucumberExampleTest {
@@ -231,5 +231,47 @@ class CucumberExamplesTest {
 		}
 
 	}
+	
+	static class PathologicalExamples extends AbstractCucumberExampleTest {
+		
+		@Test
+		def void pathological_01() {
+			assertThatExampleParses('''
+				Feature: ASCII punctuation
+				,./;'[]\-=
+				<>?:"{}|_+
+				!@#$%^&*()`~
+			''')
+		}
 
+		@Test
+		def void pathological_02() {
+			assertThatExampleParses('''
+				Feature: Quotation Marks
+				'
+				"
+				''
+				""
+				'"'
+				"\'\'\'\'"\'"
+				"\'"\'"\'\'\'\'"𝅳𝅴𝅵𝅶𝅷𝅸𝅹𝅺󠀁󠀠󠀡󠀢󠀣󠀤󠀥󠀦󠀧󠀨󠀩󠀪󠀫󠀬󠀭󠀮󠀯󠀰󠀱󠀲󠀳󠀴󠀵󠀶󠀷󠀸󠀹󠀺󠀻󠀼󠀽󠀾󠀿󠁀󠁁󠁂󠁃󠁄󠁅󠁆󠁇󠁈󠁉󠁊󠁋󠁌󠁍󠁎󠁏󠁐󠁑󠁒󠁓󠁔󠁕󠁖󠁗󠁘󠁙󠁚󠁛󠁜󠁝󠁞󠁟󠁠󠁡󠁢󠁣󠁤󠁥󠁦󠁧󠁨󠁩󠁪󠁫󠁬󠁭󠁮󠁯󠁰󠁱󠁲󠁳󠁴󠁵󠁶󠁷󠁸󠁹󠁺󠁻󠁼󠁽󠁾󠁿
+			''')
+		}
+
+		@Test
+		def void pathological_03() {
+			assertThatExampleParses('''
+				Feature: Two-Byte Characters
+				田中さんにあげて下さい
+				パーティーへ行かないか
+				和製漢語
+				部落格
+				사회과학원 어학연구소
+				찦차를 타고 온 펲시맨과 쑛다리 똠방각하
+				社會科學院語學研究所
+				울란바토르
+				𠜎𠜱𠝹𠱓𠱸𠲖𠳏𝅳𝅴𝅵𝅶𝅷𝅸𝅹𝅺󠀁󠀠󠀡󠀢󠀣󠀤󠀥󠀦󠀧󠀨󠀩󠀪󠀫󠀬󠀭󠀮󠀯󠀰󠀱󠀲󠀳󠀴󠀵󠀶󠀷󠀸󠀹󠀺󠀻󠀼󠀽󠀾󠀿󠁀󠁁󠁂󠁃󠁄󠁅󠁆󠁇󠁈󠁉󠁊󠁋󠁌󠁍󠁎󠁏󠁐󠁑󠁒󠁓󠁔󠁕󠁖󠁗󠁘󠁙󠁚󠁛󠁜󠁝󠁞󠁟󠁠󠁡󠁢󠁣󠁤󠁥󠁦󠁧󠁨󠁩󠁪󠁫󠁬󠁭󠁮󠁯󠁰󠁱󠁲󠁳󠁴󠁵󠁶󠁷󠁸󠁹󠁺󠁻󠁼󠁽󠁾󠁿
+			''')
+		}
+	}
 }
