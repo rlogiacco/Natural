@@ -2,3 +2,7 @@
 	path = update-site
 	url = https://github.com/rlogiacco/Natural.git
 	branch = gh-pages
+[submodule "wiki"]
+	path = wiki
+	url = https://github.com/rlogiacco/Natural.git
+	branch = wiki
