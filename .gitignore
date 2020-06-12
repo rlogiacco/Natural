@@ -1,4 +1,7 @@
 */bin
+*/build
+*/target
+*/test-bin
 */xtend-gen
 */src-gen
 *.xml_gen

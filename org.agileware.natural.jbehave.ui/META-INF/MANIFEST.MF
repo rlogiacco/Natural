@@ -19,9 +19,19 @@ Require-Bundle: org.agileware.natural.jbehave;visibility:=reexport,
 Import-Package: org.apache.log4j,
  org.apache.commons.logging
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.jbehave.ui.contentassist.antlr,
- org.agileware.natural.jbehave.ui.internal,
- org.agileware.natural.jbehave.ui.contentassist,
- org.agileware.natural.jbehave.ui.quickfix,
- org.agileware.natural.jbehave.ui.contentassist.antlr.internal
+Export-Package: org.agileware.natural.jbehave.ui.contentassist;uses:="org.eclipse.emf.ecore,org.eclipse.xtext.ui.editor.contentassist,org.eclipse.xtext",
+ org.agileware.natural.jbehave.ui.contentassist.antlr;
+  uses:="org.agileware.natural.jbehave.services,
+   org.eclipse.xtext.ui.codetemplates.ui.partialEditing,
+   org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
+   org.agileware.natural.jbehave.ui.contentassist.antlr.internal,
+   org.eclipse.xtext,
+   org.eclipse.xtext.ui.editor.contentassist.antlr",
+ org.agileware.natural.jbehave.ui.contentassist.antlr.internal;
+  uses:="org.agileware.natural.jbehave.services,
+   org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
+   org.antlr.runtime,
+   org.eclipse.xtext",
+ org.agileware.natural.jbehave.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
+ org.agileware.natural.jbehave.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
 Bundle-Activator: org.agileware.natural.jbehave.ui.internal.JBehaveActivator
