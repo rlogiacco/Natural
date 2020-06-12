@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.rlogiacco.eclipse.cucumber.tests
-Bundle-Vendor: My Company
+Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.3.7.qualifier
 Bundle-SymbolicName: org.agileware.natural.cucumber.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
