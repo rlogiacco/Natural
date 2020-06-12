@@ -1,0 +1,9 @@
+*/bin
+*/build
+*/target
+*/xtend-gen
+*/src-gen
+*.xml_gen
+.metadata
+eclipse-*
+.antlr-generator-*.jar
