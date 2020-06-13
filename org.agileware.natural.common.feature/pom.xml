@@ -8,9 +8,8 @@
 	</parent>
 	<artifactId>org.agileware.natural.common.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
-
+	<version>1.2.2-SNAPSHOT</version>
 
 	<dependencies>
 	</dependencies>
-	<version>1.2.2-SNAPSHOT</version>
 </project>

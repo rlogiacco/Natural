@@ -6,7 +6,7 @@
 		<artifactId>Natural</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.agileware.natural.cucumber.repository</artifactId>
+	<artifactId>org.agileware.natural.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
 
 	<build>
@@ -21,15 +21,9 @@
 							<pluginExecutions>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-clean-plugin
-										</artifactId>
-										<versionRange>
-											[2.5,)
-										</versionRange>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-clean-plugin</artifactId>
+										<versionRange>[2.5,)</versionRange>
 										<goals>
 											<goal>clean</goal>
 										</goals>

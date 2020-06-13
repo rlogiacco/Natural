@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>org.agileware.natural.cucumber.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<build>
 		<plugins>
@@ -25,5 +26,4 @@
 			<version>2.2</version>
 		</dependency>
 	</dependencies>
-	<version>1.3.7-SNAPSHOT</version>
 </project>

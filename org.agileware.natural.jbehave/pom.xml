@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>org.agileware.natural.jbehave</artifactId>
 	<packaging>eclipse-plugin</packaging>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<build>
 		<plugins>
@@ -39,22 +40,22 @@
 					<dependency>
 						<groupId>org.eclipse.emf</groupId>
 						<artifactId>org.eclipse.emf.mwe2.launch</artifactId>
-						<version>${mwe2Version}</version>
+						<version>${mwe2.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.eclipse.xtext</groupId>
 						<artifactId>org.eclipse.xtext.common.types</artifactId>
-						<version>${xtextVersion}</version>
+						<version>${xtext.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.eclipse.xtext</groupId>
 						<artifactId>org.eclipse.xtext.xtext.generator</artifactId>
-						<version>${xtextVersion}</version>
+						<version>${xtext.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.eclipse.xtext</groupId>
 						<artifactId>org.eclipse.xtext.xbase</artifactId>
-						<version>${xtextVersion}</version>
+						<version>${xtext.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.eclipse.xtext</groupId>
@@ -151,6 +152,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<version>1.0.2-SNAPSHOT</version>
 </project>

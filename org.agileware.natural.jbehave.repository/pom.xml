@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>org.agileware.natural.jbehave.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<build>
 		<pluginManagement>
@@ -48,5 +49,4 @@
 
 	<dependencies>
 	</dependencies>
-	<version>1.0.2-SNAPSHOT</version>
 </project>

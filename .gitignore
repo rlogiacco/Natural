@@ -8,3 +8,6 @@
 .metadata
 eclipse-*
 .antlr-generator-*.jar
+.project
+.vscode
+.settings

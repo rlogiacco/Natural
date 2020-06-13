@@ -8,16 +8,14 @@
 	</parent>
 	<artifactId>org.agileware.natural.common</artifactId>
 	<packaging>eclipse-plugin</packaging>
+	<version>1.2.2-SNAPSHOT</version>
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
-	<version>1.2.2-SNAPSHOT</version>
 </project>
