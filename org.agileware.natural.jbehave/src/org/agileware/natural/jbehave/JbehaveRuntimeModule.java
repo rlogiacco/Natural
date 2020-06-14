@@ -6,6 +6,6 @@ package org.agileware.natural.jbehave;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class JBehaveRuntimeModule extends org.agileware.natural.jbehave.AbstractJBehaveRuntimeModule {
+public class JbehaveRuntimeModule extends org.agileware.natural.jbehave.AbstractJbehaveRuntimeModule {
 
 }

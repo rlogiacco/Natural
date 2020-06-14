@@ -5,10 +5,10 @@ package org.agileware.natural.jbehave;
  * Initialization support for running Xtext languages 
  * without equinox extension registry
  */
-public class JBehaveStandaloneSetup extends JBehaveStandaloneSetupGenerated{
+public class JbehaveStandaloneSetup extends JbehaveStandaloneSetupGenerated{
 
 	public static void doSetup() {
-		new JBehaveStandaloneSetup().createInjectorAndDoEMFRegistration();
+		new JbehaveStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 }
 

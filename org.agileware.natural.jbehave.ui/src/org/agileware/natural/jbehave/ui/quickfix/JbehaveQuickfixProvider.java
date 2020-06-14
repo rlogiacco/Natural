@@ -3,7 +3,7 @@ package org.agileware.natural.jbehave.ui.quickfix;
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
 
-public class JBehaveQuickfixProvider extends DefaultQuickfixProvider {
+public class JbehaveQuickfixProvider extends DefaultQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_NAME)
 //	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {

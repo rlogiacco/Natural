@@ -14,7 +14,7 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class JBehaveFormatter extends AbstractDeclarativeFormatter {
+public class JbehaveFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {

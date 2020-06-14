@@ -1,10 +1,10 @@
-module org.agileware.natural.jbehave.GenerateJBehave
+module org.agileware.natural.jbehave.GenerateJbehave
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/agileware/natural/jbehave/JBehave.xtext"
+var grammarURI = "classpath:/org/agileware/natural/jbehave/Jbehave.xtext"
 var file.extensions = "story"
 var projectName = "org.agileware.natural.jbehave"
 var runtimeProject = "../${projectName}"

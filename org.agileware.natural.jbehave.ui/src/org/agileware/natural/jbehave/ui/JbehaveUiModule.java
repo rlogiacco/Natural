@@ -8,8 +8,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class JBehaveUiModule extends org.agileware.natural.jbehave.ui.AbstractJBehaveUiModule {
-	public JBehaveUiModule(AbstractUIPlugin plugin) {
+public class JbehaveUiModule extends org.agileware.natural.jbehave.ui.AbstractJbehaveUiModule {
+	public JbehaveUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
 }
