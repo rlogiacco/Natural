@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.agileware.natural.jbehave.tests
-Bundle-Vendor: My Company
+Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.0.2.qualifier
 Bundle-SymbolicName: org.agileware.natural.jbehave.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -22,4 +22,4 @@ Import-Package: org.apache.log4j,
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.jbehave
+Export-Package: org.agileware.natural.jbehave;uses:="org.eclipse.xtext.junit4,com.google.inject"

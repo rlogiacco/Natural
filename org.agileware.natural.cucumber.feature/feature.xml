@@ -2,7 +2,7 @@
 <feature
       id="org.agileware.natural.cucumber.feature"
       label="Cucumber Editor"
-      version="0.7.8.qualifier"
+      version="1.3.7.qualifier"
       provider-name="Roberto Lo Giacco">
 
    <description url="https://github.com/rlogiacco/bdd-eclipse/wiki">
