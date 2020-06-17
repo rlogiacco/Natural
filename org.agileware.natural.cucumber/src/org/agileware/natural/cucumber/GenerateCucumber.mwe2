@@ -6,13 +6,15 @@ import org.eclipse.xtext.ui.generator.*
 
 var file.extensions = "feature"
 var projectName = "org.agileware.natural.cucumber"
-var runtimeProject = "platform:/resource/${projectName}"
-var grammarURI = "${runtimeProject}/src/org/agileware/natural/cucumber/Cucumber.xtext"
+//var runtimeProject = "platform:/resource/${projectName}"
+//var grammarURI = "${runtimeProject}/src/org/agileware/natural/cucumber/Cucumber.xtext"
+var runtimeProject = "../${projectName}"
+var grammarURI = "classpath:/org/agileware/natural/cucumber/Cucumber.xtext"
 
 Workflow {
     bean = StandaloneSetup {
     	    scanClassPath = true
-    		platformUri = "${runtimeProject}"
+    		platformUri = "${runtimeProject}/.."
     		// registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
             // registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
             // registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
