@@ -5,7 +5,7 @@ package org.agileware.natural.cucumber.ui.labeling;
 
 import org.agileware.natural.cucumber.cucumber.Background;
 import org.agileware.natural.cucumber.cucumber.DocString;
-import org.agileware.natural.cucumber.cucumber.Examples;
+import org.agileware.natural.cucumber.cucumber.Example;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
@@ -87,11 +87,11 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 		return "code.gif";
 	}
 
-	String text(Examples ele) {
+	String text(Example ele) {
 		return ele.getTitle().isEmpty() ? "Examples" : ele.getTitle();
 	}
 
-	String image(Examples ele) {
+	String image(Example ele) {
 		return "example.gif";
 	}
 
