@@ -30,7 +30,7 @@ ScenarioOutline:
 	title=Title? EOL+
 	narrative=Narrative?
 	steps+=Step+
-	examples=Examples;
+	examples+=Example+;
 	
 Step:
 	STEP_KEYWORD
@@ -39,7 +39,8 @@ Step:
 	code=DocString?
 	tables+=Table*;
 
-Examples:
+Example:
+	tags+=Tag*
 	'Examples:' 
 	title=Title? EOL+
 	narrative=Narrative?
