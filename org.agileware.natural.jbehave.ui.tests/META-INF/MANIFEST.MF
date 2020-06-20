@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.agileware.natural.jbehave.ui.tests
+Bundle-ManifestVersion: 2
+Bundle-Name: org.agileware.natural.jbehave.ui.tests
+Bundle-Vendor: Roberto Lo Giacco
+Bundle-Version: 1.1.0.qualifier
+Bundle-SymbolicName: org.agileware.natural.jbehave.ui.tests; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.agileware.natural.testing,
+ org.agileware.natural.jbehave.ui,
+ org.eclipse.xtext.testing,
+ org.eclipse.xtext.xbase.testing,
+ org.eclipse.xtext.xbase.junit,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.ui.testing,
+ org.eclipse.ui.workbench;resolution:=optional
+Import-Package: org.apache.commons.logging,
+ org.apache.log4j,
+ org.apache.lucene,
+ org.junit,
+ org.junit.runner,
+ org.junit.runner.manipulation,
+ org.junit.runner.notification,
+ org.junit.runners,
+ org.junit.runners.model
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.agileware.natural.jbehave.ui.tests;x-internal=true;uses:="org.eclipse.xtext.ui.testing"

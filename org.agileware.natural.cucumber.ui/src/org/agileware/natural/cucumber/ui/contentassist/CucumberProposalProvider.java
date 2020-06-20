@@ -8,7 +8,6 @@ import java.util.Collection;
 import org.agileware.natural.common.AbstractAnnotationDescriptor;
 import org.agileware.natural.common.JavaAnnotationMatcher;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.impl.RuleCallImpl;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;

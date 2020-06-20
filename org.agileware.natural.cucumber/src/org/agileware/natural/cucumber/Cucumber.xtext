@@ -9,68 +9,148 @@ Feature:
 	title=Title EOL+
 	narrative=Narrative?
 	background=Background?
-	scenarios+=(Scenario | ScenarioOutline)+;
+	scenarios+=AbstractScenario+
+;
+
+/**
+ * Base class for Scenario implementations. 
+ * A Scenario is any type with the following structure:
+ * 
+ * tags+=Tag*
+ * 'Scenario:'
+ * title=Title? EOL+
+ * narrative=Narrative?
+ * steps+=Step+;
+ */
+AbstractScenario: Scenario
+	| ScenarioOutline
+	| Background
+;
+
+
+/**
+ * A Section is a generic element with the structure:
+ * 
+ * tags+=Tag*
+ * 'Keyword:'
+ * title=Title? EOL+
+ * narrative=Narrative?
+ */
+Section: Feature
+	| Background
+	| AbstractScenario
+	| Example
+;
 
 Background:
+	tags+=Tag*
 	'Background:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+;
-	
+	steps+=Step+
+;
+
 Scenario:
 	tags+=Tag*
 	'Scenario:'
 	title=Title? EOL+
 	narrative=Narrative?
-	steps+=Step+;
+	steps+=Step+
+;
 
 ScenarioOutline:
 	tags+=Tag*
-	'Scenario Outline:'
+	'Scenario' 'Outline:'
 	title=Title? EOL+
 	narrative=Narrative?
 	steps+=Step+
-	examples=Examples;
-	
-Step:
-	STEP_KEYWORD
-	description=StepDescription EOL*
-	tables+=Table*
-	code=DocString?
-	tables+=Table*;
+	examples+=Example+
+;
 
-Examples:
+Step:
+	keyword=STEP_KEYWORD
+	description=StepDescription EOL*
+	(table=Table | code=DocString)?
+;
+
+Example:
+	tags+=Tag*
 	'Examples:' 
 	title=Title? EOL+
 	narrative=Narrative?
-	table=Table;
-	
-Table:
-	rows+=TABLE_ROW+ EOL*;
-	
-DocString:
-	content=DOC_STRING EOL*;
+	table=Table
+;
+
+
+Table: {Table}
+	rows+=TableRow+
+	EOL*
+;
+
+TableRow: {TableRow}
+	cols+=TableCol+ '|' EOL
+;
+
+TableCol: {TableCol}
+	cell=TABLE_CELL
+;
+
+DocString: {DocString}
+	('"""' EOL -> text=Text '"""')
+	// TODO alternate quote support in formatter
+	// | ("'''" EOL -> text=Text? "'''")
+	EOL*
+;
 
 Title:
-	(WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*;
+	(WORD | INT | STRING | PLACEHOLDER)
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+;
 
 Narrative:
-	((WORD | INT | STRING | PLACEHOLDER) (WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)* EOL+)+;
+	(
+		(WORD | INT | STRING | PLACEHOLDER)
+		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+		EOL+
+	)+
+;
 
 StepDescription:
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+;
+	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+
+;
 	
 Tag: id=TAGNAME EOL?;
 
-terminal INT: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
+
+Text: {Text}
+	lines+=TextLine*
+;
+
+TextLine: {TextLine}
+	value=TEXT_VALUE EOL+
+;
+
+TEXT_VALUE returns ecore::EString:
+	TEXT_LITERAL TEXT_LITERAL*
+;
+
+TEXT_LITERAL: WORD
+	| INT
+	| STRING
+	| ANY_OTHER
+;
+
+terminal INT: 
+	'-'?
+	('0'..'9')+
+	('.' ('0'..'9')+)?
+;
 
 terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But') (' ' | '\t')+;
 
 terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
 	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ (' ' | '\t')* NL;
-
-terminal DOC_STRING: ('"""' -> '"""' | "'''" -> "'''") NL;
+terminal TABLE_CELL: '|' !('|' | '\n' | '\r')*;
 
 terminal STRING:
 	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
@@ -80,10 +160,42 @@ terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
 
 terminal TAGNAME: '@' !(' ' | '\t' | '\n' | '\r')+ ;
 
-terminal WORD: !('@' | '|' | ' ' | '\t' | '\n' | '\r') !(' ' | '\t' | '\n' | '\r')*;
+terminal WORD: 
+	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
+	!(' ' | '\t' | '\n' | '\r')*
+;
 
 terminal WS: (' ' | '\t');
 
 terminal EOL: NL;
-
 terminal fragment NL: ('\r'? '\n'?);
+
+terminal ANY_OTHER: .;
+
+// ----------------------------------------------------------
+//
+// Unicode Ranges
+//
+// ----------------------------------------------------------
+
+terminal fragment DIGIT: ASCII_DIGIT;
+
+terminal fragment LETTER: LATIN_ALPHABET;
+
+// Basic Latin
+////
+
+terminal fragment ASCII_SPACE: '\u0020';
+
+terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
+
+// all ascii chars other than letters, digits, space, or control codes
+terminal fragment ASCII_SYMBOLS: ('\u0021'..'\u002F')
+	| ('\u003A'..'\u0040')
+	| ('\u005B'..'\u0060')
+	| ('\u007B'..'\u007E')
+;
+
+terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+	| ('\u0061'..'\u007A')
+;

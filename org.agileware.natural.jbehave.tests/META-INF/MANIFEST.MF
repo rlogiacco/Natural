@@ -1,25 +1,23 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: org.agileware.natural.jbehave.tests
 Bundle-ManifestVersion: 2
 Bundle-Name: org.agileware.natural.jbehave.tests
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.1.qualifier
+Bundle-Vendor: Roberto Lo Giacco
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.jbehave.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.agileware.natural.jbehave,
- org.agileware.natural.jbehave.ui,
- org.eclipse.core.runtime;bundle-version="3.11.1",
- org.eclipse.xtext;bundle-version="2.9.1",
- org.eclipse.xtext.junit4;bundle-version="2.9.1",
- org.eclipse.ui.workbench;bundle-version="3.107.1";resolution:=optional,
- org.eclipse.xtext.xbase.lib;bundle-version="2.9.1",
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
-Import-Package: org.apache.log4j,
- org.apache.commons.logging,
- org.junit.runner;version="4.5.0",
- org.junit.runner.manipulation;version="4.5.0",
- org.junit.runner.notification;version="4.5.0",
- org.junit.runners;version="4.5.0",
- org.junit.runners.model;version="4.5.0",
- org.hamcrest.core
+Require-Bundle: org.agileware.natural.testing,
+ org.agileware.natural.jbehave,
+ org.eclipse.xtext.testing,
+ org.eclipse.xtext.xbase.testing,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0"
+Import-Package: org.apache.commons.logging,
+ org.apache.log4j,
+ org.junit,
+ org.junit.runner,
+ org.junit.runner.manipulation,
+ org.junit.runner.notification,
+ org.junit.runners,
+ org.junit.runners.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.jbehave
+Export-Package: org.agileware.natural.jbehave.tests;x-internal=true;uses:="org.agileware.natural.testing"

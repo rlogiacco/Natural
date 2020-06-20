@@ -1,41 +1,46 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: org.agileware.natural.cucumber
 Bundle-ManifestVersion: 2
 Bundle-Name: org.agileware.natural.cucumber
 Bundle-Vendor: Roberto Lo Giacco
-Bundle-Version: 1.3.6.qualifier
-Bundle-SymbolicName: org.agileware.natural.cucumber;singleton:=true
+Bundle-Version: 1.4.0.qualifier
+Bundle-SymbolicName: org.agileware.natural.cucumber; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.9.1";visibility:=reexport,
- org.eclipse.xtext.xbase;bundle-version="2.9.1";resolution:=optional;visibility:=reexport,
- org.apache.log4j;visibility:=reexport,
- org.apache.commons.logging;resolution:=optional;visibility:=reexport,
- org.eclipse.xtext.generator;bundle-version="2.9.1";resolution:=optional,
- org.eclipse.emf.codegen.ecore;bundle-version="2.11.1";resolution:=optional,
- org.eclipse.emf.mwe.utils;bundle-version="1.3.13";resolution:=optional,
- org.eclipse.emf.mwe2.launch;bundle-version="2.8.3";resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.9.1",
- org.eclipse.emf.ecore;bundle-version="2.11.2",
- org.eclipse.emf.common;bundle-version="2.11.1",
- org.antlr.runtime;bundle-version="3.2.0",
- org.eclipse.xtext.common.types;bundle-version="2.9.1",
- org.eclipse.jdt.core;bundle-version="3.11.2",
- org.agileware.natural.common;visibility:=reexport,
- org.eclipse.xtext.xbase.lib;bundle-version="2.9.1",
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
-Import-Package: org.apache.commons.logging,
- org.apache.log4j,
- org.eclipse.xtext.xbase.lib
+Require-Bundle: org.agileware.natural.common;visibility:=reexport,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.jdt.core,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.cucumber; uses:="org.eclipse.xtext,  org.eclipse.xtext.service,  org.eclipse.xtext.common.types,  com.google.inject",
+Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.eclipse.xtext.service,org.eclipse.xtext",
  org.agileware.natural.cucumber.cucumber;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
- org.agileware.natural.cucumber.cucumber.impl; uses:="org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.emf.ecore.impl,  org.eclipse.emf.common.notify,  org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.cucumber.util; uses:="org.eclipse.emf.ecore.util,  org.eclipse.emf.ecore,  org.eclipse.emf.common.notify.impl,  org.eclipse.emf.common.notify,  org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.formatting;uses:="org.eclipse.xtext.formatting.impl",
- org.agileware.natural.cucumber.generator;uses:="org.eclipse.emf.ecore.resource,org.eclipse.xtext.generator",
- org.agileware.natural.cucumber.parseTreeConstruction,
- org.agileware.natural.cucumber.parser.antlr;uses:="org.agileware.natural.cucumber.services,org.eclipse.xtext.parser.antlr,org.agileware.natural.cucumber.parser.antlr.internal",
- org.agileware.natural.cucumber.parser.antlr.internal; uses:="org.agileware.natural.cucumber.services,  org.eclipse.emf.ecore,  org.antlr.runtime,  org.eclipse.xtext.parser.antlr",
+ org.agileware.natural.cucumber.cucumber.impl;
+  uses:="org.eclipse.emf.ecore,
+   org.eclipse.emf.ecore.impl,
+   org.eclipse.emf.common.util,
+   org.eclipse.emf.common.notify,
+   org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.cucumber.util;
+  uses:="org.eclipse.emf.ecore,
+   org.eclipse.emf.common.notify,
+   org.eclipse.emf.common.notify.impl,
+   org.eclipse.emf.ecore.util,
+   org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.formatting2;uses:="org.eclipse.xtext.formatting2,org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.generator;uses:="org.eclipse.xtext.generator,org.eclipse.emf.ecore.resource",
+ org.agileware.natural.cucumber.parser.antlr;uses:="org.eclipse.xtext.parser.antlr,org.agileware.natural.cucumber.parser.antlr.internal,org.agileware.natural.cucumber.services",
+ org.agileware.natural.cucumber.parser.antlr.internal;
+  uses:="org.eclipse.emf.ecore,
+   org.eclipse.xtext.parser.antlr,
+   org.antlr.runtime,
+   org.agileware.natural.cucumber.services",
  org.agileware.natural.cucumber.scoping;uses:="org.eclipse.xtext.scoping.impl",
- org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext,org.eclipse.xtext.service",
- org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.validation"
-Bundle-ClassPath: .
+ org.agileware.natural.cucumber.serializer;uses:="org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext.service,org.eclipse.xtext",
+ org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation"
+Import-Package: org.apache.log4j
