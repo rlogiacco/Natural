@@ -27,8 +27,8 @@ public class CucumberFormatter extends AbstractDeclarativeFormatter {
 		c.setIndentationDecrement().after(g.getNarrativeRule());
 		c.setIndentationIncrement().before(g.getStepRule());
 		c.setIndentationDecrement().after(g.getStepRule());
-		c.setIndentationIncrement().before(g.getExamplesRule());
-		c.setIndentationDecrement().after(g.getExamplesRule());
+		c.setIndentationIncrement().before(g.getExampleRule());
+		c.setIndentationDecrement().after(g.getExampleRule());
 		c.setIndentationIncrement().before(g.getTableRule());
 		c.setIndentationDecrement().after(g.getTableRule());
 		c.setIndentationIncrement().before(g.getDocStringRule());
