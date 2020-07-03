@@ -1,47 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                
+                    
     
     
-    <wb-module deploy-name="org.agileware.natural.jbehave.web-1.1.0-SNAPSHOT">
-                                
+    
+    <wb-module deploy-name="org.agileware.natural.jbehave.web-1.0.0-SNAPSHOT">
+                                        
+        
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-gen"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/xtend-gen"/>
-        <dependent-module archiveName="org.agileware.natural.jbehave-1.1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/org.agileware.natural.jbehave/org.agileware.natural.jbehave">
+        <dependent-module archiveName="org.agileware.natural.jbehave-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/org.agileware.natural.jbehave/org.agileware.natural.jbehave">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="org.agileware.natural.jbehave.ide-1.1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/org.agileware.natural.jbehave.ide/org.agileware.natural.jbehave.ide">
+        <dependent-module archiveName="org.agileware.natural.jbehave.ide-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/org.agileware.natural.jbehave.ide/org.agileware.natural.jbehave.ide">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                
+                                        
+        
         
         
         <property name="context-root" value="org.agileware.natural.jbehave.web"/>
-                                
+                                        
+        
         
         
         <property name="java-output-path" value="/org.agileware.natural.jbehave.web/target/classes"/>
-                            
+                                    
+    
     
     
     </wb-module>
-            
+                
+
 
 
 </project-modules>

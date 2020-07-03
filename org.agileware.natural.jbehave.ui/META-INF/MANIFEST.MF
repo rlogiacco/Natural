@@ -3,7 +3,7 @@ Automatic-Module-Name: org.agileware.natural.jbehave.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: org.agileware.natural.jbehave.ui
 Bundle-Vendor: Roberto Lo Giacco
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.jbehave.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.agileware.natural.jbehave,
