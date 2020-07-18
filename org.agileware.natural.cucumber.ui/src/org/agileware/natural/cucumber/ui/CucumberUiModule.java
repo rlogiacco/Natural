@@ -3,7 +3,6 @@
  */
 package org.agileware.natural.cucumber.ui;
 
-import org.agileware.natural.common.AbstractAnnotationDescriptor;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.HighlightingConfiguration;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.LexicalHighlightingCalculator;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.SemanticHighlightingCalculator;
@@ -19,14 +18,12 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculato
  */
 public class CucumberUiModule extends AbstractCucumberUiModule {
 	
-	public final static String[] STEPS = { "Given", "When", "Then", "And", "But" };
-	private static final String CUCUMBER_PACKAGE = "cucumber.api.java.en";
-
 	public CucumberUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
-
-	@Override
+	
+	// TODO requires Xbase
+	//	@Override
 	public Class<? extends IHyperlinkHelper> bindIHyperlinkHelper() {
 		return CucumberHyperlinkHelper.class;
 	}
@@ -46,26 +43,5 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 	@Override
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
 		return BuilderParticipant.class;
-	}
-	
-//	public Class<? extends ISyntaxErrorMessageProvider> bindISyntaxErrorMessageProvider() {
-//		return SyntaxErrorMessageProvider.class;
-//	}
-	
-	public Class<? extends AbstractAnnotationDescriptor> bindAnnotationDescriptor() {
-		return CucumberAnnotationDescriptor.class;
-	}
-	
-	public static class CucumberAnnotationDescriptor extends AbstractAnnotationDescriptor {
-
-		@Override
-		public String[] getNames() {
-			return STEPS;
-		}
-
-		@Override
-		public String getPackage() {
-			return CUCUMBER_PACKAGE;
-		}
 	}
 }

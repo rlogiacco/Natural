@@ -1,133 +1,75 @@
-module org.agileware.natural.cucumber.GenerateCucumberDSL
+module org.agileware.natural.cucumber.GenerateCucumber
 
-import org.eclipse.emf.mwe.utils.*
-import org.eclipse.xtext.generator.*
-import org.eclipse.xtext.ui.generator.*
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+import org.eclipse.xtext.xtext.generator.ui.codemining.CodeMiningFragment
 
-var grammarURI = "classpath:/org/agileware/natural/cucumber/Cucumber.xtext"
-var file.extensions = "feature"
-var projectName = "org.agileware.natural.cucumber"
-var runtimeProject = "../${projectName}"
+var rootPath = ".."
 
 Workflow {
-    bean = StandaloneSetup {
-    	    scanClassPath = true
-    		platformUri = "${runtimeProject}/.."
-    		// registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
-            // registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
-            // registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
-            // registerGeneratedEPackage = "org.eclipse.xtext.common.types.TypesPackage"
-            
-    	}
-    
-    	component = DirectoryCleaner {
-    		directory = "${runtimeProject}/src-gen"
-    	}
-    
-    	component = DirectoryCleaner {
-    		directory = "${runtimeProject}.ui/src-gen"
-    	}
-    
-    	component = Generator {
-    		pathRtProject = runtimeProject
-    		pathUiProject = "${runtimeProject}.ui"
-    		pathTestProject = "${runtimeProject}.tests"
-    		projectNameRt = projectName
-    		projectNameUi = "${projectName}.ui"
-    		language = {
-    			uri = grammarURI
-    			fileExtensions = file.extensions
-    
-    			// Java API to access grammar elements (required by several other fragments)
-    			fragment = grammarAccess.GrammarAccessFragment {}
-    
-    			// generates Java API for the generated EPackages 
-    			fragment = ecore.EcoreGeneratorFragment {
-    			}
-    
-    			// the serialization component
-    			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-    
-    			// a custom ResourceFactory for use with EMF 
-    			fragment = resourceFactory.ResourceFactoryFragment {
-    				fileExtensions = file.extensions
-    			}
-    
-    			// The antlr parser generator fragment.
-    			fragment = parser.antlr.XtextAntlrGeneratorFragment {
-    			    options = {
-    				}
-    			}
-    			
-    			// java-based API for validation 
-    			fragment = validation.JavaValidatorFragment {
-    				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-    				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-    			}
-    
-    			// scoping and exporting API
-    			// fragment = scoping.ImportURIScopingFragment {}
-    			// fragment = exporting.SimpleNamesFragment {}
-    
-    			// scoping and exporting API 
-    			//ROB fragment = scoping.ImportNamespacesScopingFragment {}
-    			//ROB fragment = exporting.QualifiedNamesFragment {}
-    			//ROB fragment = builder.BuilderIntegrationFragment {}
-    
-    			// generator API
-    			fragment = generator.GeneratorFragment {
-    				generateMwe = true
-    				generateJavaMain = true
-    			}
-    			
-    			// formatter API 
-    			fragment = formatting.FormatterFragment {}
-    
-    			// labeling API 
-    			fragment = labeling.LabelProviderFragment {}
-    
-    			// outline API 
-    			fragment = outline.OutlineTreeProviderFragment {}
-    			fragment = outline.QuickOutlineFragment {}
-    
-    			// quickfix API 
-    			fragment = quickfix.QuickfixProviderFragment {}
-    
-    			// content assist API  
-    			fragment = contentAssist.JavaBasedContentAssistFragment {}
-    			
-    			// generates a more lightweight Antlr parser and lexer tailored for content assist  
-    			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
-    
-    			// generates junit test support classes into Generator#pathTestProject
-    			fragment = junit.Junit4Fragment {}
-    
-    			// project wizard (optional) 
-    			// fragment = projectWizard.SimpleProjectWizardFragment {
-    			// 		generatorProjectName = "${projectName}"
-    			//		modelFileExtension = file.extensions
-    			// }
-    
-    			// provides the necessary bindings for java types integration
-    			fragment = types.TypesGeneratorFragment {}
-    
-    			// generates the required bindings only if the grammar inherits from Xbase
-    			fragment = xbase.XbaseGeneratorFragment {}
-    			
-    			// provides a preference page for template proposals 
-    			fragment = templates.CodetemplatesGeneratorFragment {}
-    
-    			// rename refactoring
-                // fragment = refactoring.RefactorElementNameFragment {}
-    
-                // provides a compare view
-                fragment = compare.CompareFragment {
-                    fileExtensions = file.extensions
-                }
-    
-                // Serializer 2.0
-                // fragment = serializer.SerializerFragment {}
-    		}
-    	}
-}
+	
+	component = XtextGenerator {
+		configuration = {
+			project = StandardProjectConfig {
+				baseName = "org.agileware.natural.cucumber"
+				rootPath = rootPath
+				runtimeTest = {
+					enabled = true
+				}
+				eclipsePlugin = {
+					enabled = true
+				}
+				eclipsePluginTest = {
+					enabled = true
+				}
+				web = {
+					enabled = true
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				encoding = "UTF-8"
+				lineDelimiter = "\n"
+				fileHeader = "/*\n * generated by Xtext \${version}\n */"
+				preferXtendStubs = false
+			}
+		}
+		language = StandardLanguage {
+			name = "org.agileware.natural.cucumber.Cucumber"
+			fileExtensions = "feature"
 
+			serializer = {
+				generateStub = true
+			}
+			validator = {
+				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
+				generateDeprecationValidation = true
+			}
+			formatter = {
+				generateStub = true
+				generateXtendStub = true
+			}
+			generator = {
+				generateStub = true
+				generateXtendStub = true
+			}
+			parserGenerator = {
+				debugGrammar = true
+			}
+			projectWizard = {
+				generate = false
+				generateToolbarButton = false
+				pluginProject = false
+			}
+			fileWizard = {
+				generate = false
+				generateToolbarButton = false
+			}
+	 		fragment = CodeMiningFragment {
+				generateStub = true
+				generateXtendStub = false
+			}
+		}
+	}
+}
