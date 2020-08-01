@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.agileware.natural.jbehave.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: org.agileware.natural.jbehave.ide
+Bundle-Vendor: Roberto Lo Giacco
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.agileware.natural.jbehave.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.agileware.natural.jbehave,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.agileware.natural.jbehave.ide.contentassist.antlr;
+  uses:="org.agileware.natural.jbehave.ide.contentassist.antlr.internal,
+   org.eclipse.xtext.ide.editor.contentassist.antlr,
+   org.eclipse.xtext.ide.editor.contentassist.antlr.internal,
+   org.eclipse.xtext.ide.editor.partialEditing,
+   org.agileware.natural.jbehave.services,
+   org.eclipse.xtext",
+ org.agileware.natural.jbehave.ide.contentassist.antlr.internal;
+  uses:="org.eclipse.xtext.ide.editor.contentassist.antlr.internal,
+   org.agileware.natural.jbehave.services,
+   org.antlr.runtime,
+   org.eclipse.xtext"

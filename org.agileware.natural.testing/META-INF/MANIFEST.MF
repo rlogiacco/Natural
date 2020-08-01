@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Natural Test Helpers
+Bundle-SymbolicName: org.agileware.natural.testing
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.agileware.natural.testing
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.agileware.natural.testing;
+  uses:="org.eclipse.xtext.testing.util,
+   com.google.inject,
+   org.eclipse.xtext.testing.formatter,
+   org.eclipse.xtext.testing.validation,
+   org.hamcrest",
+ org.hamcrest;
+  uses:="org.hamcrest.internal,
+   new org.hamcrest,
+   javax.xml.namespace,
+   org.hamcrest.core,
+   org.hamcrest.collection",
+ org.hamcrest.beans;uses:="org.hamcrest",
+ org.hamcrest.collection;uses:="org.hamcrest",
+ org.hamcrest.comparator;uses:="org.hamcrest",
+ org.hamcrest.core;uses:="org.hamcrest",
+ org.hamcrest.internal;uses:="org.hamcrest",
+ org.hamcrest.io;uses:="org.hamcrest",
+ org.hamcrest.number;uses:="org.hamcrest",
+ org.hamcrest.object;uses:="org.hamcrest",
+ org.hamcrest.text;uses:="org.hamcrest",
+ org.hamcrest.xml;uses:="org.w3c.dom,javax.xml.namespace,org.hamcrest"
+Require-Bundle: org.eclipse.xtext.testing

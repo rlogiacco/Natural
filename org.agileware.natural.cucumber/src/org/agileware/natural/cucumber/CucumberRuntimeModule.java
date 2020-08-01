@@ -3,9 +3,30 @@
  */
 package org.agileware.natural.cucumber;
 
+import org.agileware.natural.common.AbstractAnnotationDescriptor;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class CucumberRuntimeModule extends org.agileware.natural.cucumber.AbstractCucumberRuntimeModule {
+	public final static String[] STEPS = { "Given", "When", "Then", "And", "But" };
+	private static final String CUCUMBER_PACKAGE = "io.cucumber.java.en";
+	
+	
+	public Class<? extends AbstractAnnotationDescriptor> bindAnnotationDescriptor() {
+		return CucumberAnnotationDescriptor.class;
+	}
+	
+	public static class CucumberAnnotationDescriptor extends AbstractAnnotationDescriptor {
 
+		@Override
+		public String[] getNames() {
+			return STEPS;
+		}
+
+		@Override
+		public String getPackage() {
+			return CUCUMBER_PACKAGE;
+		}
+	}
 }

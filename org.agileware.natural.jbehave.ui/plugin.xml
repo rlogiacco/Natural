@@ -6,42 +6,42 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="story"
-            id="org.agileware.natural.jbehave.JBehave"
-            name="JBehave Editor">
+            id="org.agileware.natural.jbehave.Jbehave"
+            name="Jbehave Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+                    definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="org.agileware.natural.jbehave.JBehave.validate">
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.agileware.natural.jbehave.Jbehave.validate">
          <activeWhen>
             <reference
-                    definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+                    definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
             </reference>
          </activeWhen>
       </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="org.agileware.natural.jbehave.JBehave.Editor.opened">
+        <definition id="org.agileware.natural.jbehave.Jbehave.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.agileware.natural.jbehave.JBehave" 
+                        value="org.agileware.natural.jbehave.Jbehave" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -50,33 +50,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.agileware.natural.jbehave.JBehave"
-            name="JBehave">
-            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.agileware.natural.jbehave.Jbehave"
+            name="Jbehave">
+            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
         </page>
         <page
-            category="org.agileware.natural.jbehave.JBehave"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="org.agileware.natural.jbehave.JBehave.coloring"
+            category="org.agileware.natural.jbehave.Jbehave"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.agileware.natural.jbehave.Jbehave.coloring"
             name="Syntax Coloring">
-            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
         </page>
         <page
-            category="org.agileware.natural.jbehave.JBehave"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="org.agileware.natural.jbehave.JBehave.templates"
+            category="org.agileware.natural.jbehave.Jbehave"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.agileware.natural.jbehave.Jbehave.templates"
             name="Templates">
-            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.agileware.natural.jbehave.JBehave"
-            name="JBehave">
-            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.agileware.natural.jbehave.Jbehave"
+            name="Jbehave">
+            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -86,14 +86,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="org.agileware.natural.jbehave.ui.keyword_JBehave"
-            label="JBehave"/>
+            id="org.agileware.natural.jbehave.ui.keyword_Jbehave"
+            label="Jbehave"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="org.agileware.natural.jbehave.JBehave.validate"
+            id="org.agileware.natural.jbehave.Jbehave.validate"
             name="Validate">
       </command>
     </extension>
@@ -101,12 +101,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="org.agileware.natural.jbehave.JBehave.validate"
+                 commandId="org.agileware.natural.jbehave.Jbehave.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+                    definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -116,7 +116,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+                	<reference definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -124,11 +124,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+                    definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -139,13 +139,13 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="story">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="story">
         </resourceServiceProvider>
     </extension>
@@ -155,27 +155,27 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
    <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            category="org.agileware.natural.jbehave.JBehave"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.agileware.natural.jbehave.JBehave.compiler.preferencePage"
+            category="org.agileware.natural.jbehave.Jbehave"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.agileware.natural.jbehave.Jbehave.compiler.preferencePage"
             name="Compiler">
-            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            category="org.agileware.natural.jbehave.JBehave"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="org.agileware.natural.jbehave.JBehave.compiler.propertyPage"
+            category="org.agileware.natural.jbehave.Jbehave"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="org.agileware.natural.jbehave.Jbehave.compiler.propertyPage"
             name="Compiler">
-            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+            <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -187,11 +187,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+					definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -211,7 +211,7 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened"/>
+					<reference definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -220,18 +220,18 @@
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
 
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
+			class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+					definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -243,7 +243,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="org.agileware.natural.jbehave.JBehave.Editor.opened">
+                     definitionId="org.agileware.natural.jbehave.Jbehave.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -251,29 +251,29 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="org.agileware.natural.jbehave.JBehave"
-	        class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="org.agileware.natural.jbehave.JBehave.refactoring"
+	        category="org.agileware.natural.jbehave.Jbehave"
+	        class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.agileware.natural.jbehave.Jbehave.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="org.agileware.natural.jbehave.ui.keyword_JBehave"/>
+	        <keywordReference id="org.agileware.natural.jbehave.ui.keyword_Jbehave"/>
 	    </page>
 	</extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.agileware.natural.jbehave.JBehave.compare.contentViewers"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="org.agileware.natural.jbehave.Jbehave.compare.contentViewers"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="story">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.agileware.natural.jbehave.JBehave.compare.contentMergeViewers"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="story" label="JBehave Compare">
+    <viewer id="org.agileware.natural.jbehave.Jbehave.compare.contentMergeViewers"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="story" label="Jbehave Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.agileware.natural.jbehave.JBehave.editors.documentProviders"
-            class="org.agileware.natural.jbehave.ui.JBehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+    <provider id="org.agileware.natural.jbehave.Jbehave.editors.documentProviders"
+            class="org.agileware.natural.jbehave.ui.JbehaveExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
             extensions="story">
     </provider>
   </extension>

@@ -35,51 +35,51 @@ public class HighlightingConfiguration implements IHighlightingConfiguration {
 		acceptor.acceptDefaultHighlighting(DOC_STRING, "Doc String", numberTextStyle());
 	}
 
-	public TextStyle defaultTextStyle() {
+	public static TextStyle defaultTextStyle() {
 		TextStyle textStyle = new TextStyle();
 		// textStyle.setBackgroundColor(new RGB(255, 255, 255));
 		textStyle.setColor(new RGB(0, 0, 0));
 		return textStyle;
 	}
 
-	public TextStyle errorTextStyle() {
+	public static TextStyle errorTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		// textStyle.setColor(new RGB(255, 0, 0));
 		return textStyle;
 	}
 
-	public TextStyle numberTextStyle() {
+	public static TextStyle numberTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(125, 125, 125));
 		return textStyle;
 	}
 
-	public TextStyle stringTextStyle() {
+	public static TextStyle stringTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(42, 0, 255));
 		return textStyle;
 	}
 
-	public TextStyle commentTextStyle() {
+	public static TextStyle commentTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(63, 127, 95));
 		return textStyle;
 	}
 
-	public TextStyle keywordTextStyle() {
+	public static TextStyle keywordTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(127, 0, 85));
 		textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
 
-	public TextStyle stepKeywordTextStyle() {
+	public static TextStyle stepKeywordTextStyle() {
 		TextStyle textStyle = keywordTextStyle();
 		textStyle.setStyle(SWT.ITALIC);
 		return textStyle;
 	}
 
-	public TextStyle tagTextStyle() {
+	public static TextStyle tagTextStyle() {
 		TextStyle textStyle = numberTextStyle();
 		textStyle.setStyle(SWT.ITALIC);
 		return textStyle;
