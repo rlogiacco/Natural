@@ -1,6 +1,6 @@
 package org.agileware.natural.cucumber.ui;
 
-import org.agileware.natural.common.JavaAnnotationMatcher;
+import org.agileware.natural.stepmatcher.JavaAnnotationMatcher;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 

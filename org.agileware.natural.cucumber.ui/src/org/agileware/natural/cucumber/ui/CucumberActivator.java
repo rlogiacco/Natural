@@ -1,7 +1,7 @@
 package org.agileware.natural.cucumber.ui;
 
-import org.agileware.natural.common.AbstractAnnotationDescriptor;
-import org.agileware.natural.common.JavaElementChangeReporter;
+import org.agileware.natural.stepmatcher.AbstractAnnotationDescriptor;
+import org.agileware.natural.stepmatcher.JavaElementChangeReporter;
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.JavaCore;
 

@@ -1,4 +1,4 @@
-package org.agileware.natural.common;
+package org.agileware.natural.stepmatcher;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jdt.core.IJavaElement;
