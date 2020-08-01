@@ -6,3 +6,6 @@
 	path = wiki
 	url = https://github.com/rlogiacco/Natural.git
 	branch = wiki
+[submodule "runtime-workspace/serenity-cucumber-bdd-screenplay"]
+	path = runtime-workspace/serenity-cucumber-bdd-screenplay
+	url = https://github.com/drkstr101/serenity-cucumber-bdd-screenplay.git
