@@ -1,25 +1,18 @@
 package org.agileware.natural.cucumber.validation;
 
-import org.agileware.natural.common.IssueCode;
+public interface CucumberIssueCodes {
 
-public class CucumberIssueCodes {
-
-	public static IssueCode MISSING_SCENARIOS = new IssueCode("MISSING_SCENARIOS", 
-			"Feature has no scenarios");
-
-	public static IssueCode MISSING_FEATURE_TITLE = new IssueCode("MISSING_FEATURE_TITLE", 
-			"Feature title is missing");
-
-	public static IssueCode MISSING_SCENARIO_STEPS = new IssueCode("MISSING_SCENARIO_STEPS",
-			"Scenario is missing steps");
+	String PREFIX = "org.agileware.natural.cucumber.";
 	
-	public static IssueCode INVALID_BACKGROUND = new IssueCode("INVALID_BACKGROUND",
-			"Invalid background definition");
-
-	public static IssueCode MISSING_STEPDEFS = new IssueCode("MISSING_STEPDEFS", 
-			"No step definition found for `%s`");
-
-	public static IssueCode MULTIPLE_STEPDEFS = new IssueCode("MULTIPLE_STEPDEFS",
-			"Multiple step definitions found for `%s`");
-
+	String MISSING_SCENARIOS = PREFIX + "MISSING_SCENARIOS";
+	
+	String MISSING_FEATURE_TITLE = PREFIX + "MISSING_FEATURE_TITLE";
+	
+	String MISSING_SCENARIO_STEPS = PREFIX + "MISSING_SCENARIO_STEPS";
+	
+	String INVALID_BACKGROUND = PREFIX + "INVALID_BACKGROUND";
+	
+	String MISSING_STEPDEFS = PREFIX + "MISSING_STEPDEFS";
+	
+	String MULTIPLE_STEPDEFS = PREFIX + "MULTIPLE_STEPDEFS";
 }

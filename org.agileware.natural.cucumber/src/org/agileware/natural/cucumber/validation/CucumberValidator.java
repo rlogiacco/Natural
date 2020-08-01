@@ -48,7 +48,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	@Check(CheckType.FAST)
 	public void featureTitle(Feature model) {
 		if (model.getTitle() == null || model.getTitle().isBlank()) {
-			warning(MISSING_FEATURE_TITLE.message(), model, SECTION__TITLE, MISSING_FEATURE_TITLE.id());
+			warning("Feature title is missing", model, SECTION__TITLE, MISSING_FEATURE_TITLE);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	public void invalidBackground(Feature model) {
 		for (AbstractScenario s : model.getScenarios()) {
 			if (s instanceof Background) {
-				error(INVALID_BACKGROUND.message(), s, FEATURE__BACKGROUND, INVALID_BACKGROUND.id());
+				error("Invalid background definition", s, FEATURE__BACKGROUND, INVALID_BACKGROUND);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	@Check(CheckType.FAST)
 	public void missingScenarios(Feature model) {
 		if (model.getScenarios().isEmpty()) {
-			warning(MISSING_SCENARIOS.message(), model, FEATURE__SCENARIOS, MISSING_SCENARIOS.id());
+			warning("Feature has no scenarios", model, FEATURE__SCENARIOS, MISSING_SCENARIOS);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	@Check(CheckType.FAST)
 	public void missingScenarioSteps(AbstractScenario model) {
 		if (model.getSteps().isEmpty()) {
-			warning(MISSING_SCENARIO_STEPS.message(), model, ABSTRACT_SCENARIO__STEPS, MISSING_SCENARIO_STEPS.id());
+			warning("Scenario has no steps", model, ABSTRACT_SCENARIO__STEPS, MISSING_SCENARIO_STEPS);
 		}
 	}
 
@@ -101,9 +101,11 @@ public class CucumberValidator extends AbstractCucumberValidator {
 		String description = model.getDescription().trim();
 		matcher.findMatches(description, counter);
 		if (counter.get() == 0) {
-			warning(MISSING_STEPDEFS.message(description), model, STEP__DESCRIPTION, MISSING_STEPDEFS.id());
+			warning(String.format("No step definition found for `%s`", description), model, STEP__DESCRIPTION,
+					MISSING_STEPDEFS);
 		} else if (counter.get() > 1) {
-			warning(MULTIPLE_STEPDEFS.message(description), model, STEP__DESCRIPTION, MULTIPLE_STEPDEFS.id());
+			warning(String.format("Multiple step definitions found for `%s`", description), model, STEP__DESCRIPTION,
+					MULTIPLE_STEPDEFS);
 		}
 	}
 }
