@@ -23,7 +23,6 @@
 	</properties>
 	<modules>
 		<module>org.agileware.natural.common</module>
-		<module>org.agileware.natural.common.feature</module>
 		<module>org.agileware.natural.cucumber</module>
 		<module>org.agileware.natural.cucumber.feature</module>
 		<module>org.agileware.natural.cucumber.ide</module>
@@ -40,7 +39,6 @@
 		<module>org.agileware.natural.jbehave.ui.tests</module>
 		<module>org.agileware.natural.repository</module>
 		<module>org.agileware.natural.stepmatcher</module>
-		<module>org.agileware.natural.stepmatcher.feature</module>
 		<module>org.agileware.natural.testing</module>
 		<module>org.agileware.natural.target</module>
 	</modules>
