@@ -97,7 +97,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 
 	@Check(CheckType.EXPENSIVE)
 	public void invalidStepDefs(Step model) {
-		System.out.println("Validating: " + model);
+		// System.out.println("Validating: " + model);
 		final Counter counter = new Counter();
 		String description = model.getDescription().trim();
 		matcher.findMatches(description, counter);

@@ -12,7 +12,6 @@ import org.agileware.natural.cucumber.model.ScenarioOutline;
 import org.agileware.natural.cucumber.model.Step;
 import org.agileware.natural.cucumber.model.Table;
 import org.agileware.natural.cucumber.model.Tag;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 
@@ -30,7 +29,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	public CucumberLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
-	
+
 	String text(Feature ele) {
 		return ele.getTitle();
 	}
@@ -62,7 +61,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	String image(ScenarioOutline ele) {
 		return "scenario_outline.png";
 	}
-	
+
 	String text(Step ele) {
 		return ele.getDescription().trim();
 	}
@@ -72,13 +71,15 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Table ele) {
-		return "Table of " + ele.getRows().size() + " rows";
+		return merge("Table with ", 
+				String.valueOf(ele.getRows().size()),
+				ele.getRows().size() > 1 ? " rows" : "row");
 	}
 
 	String image(Table ele) {
 		return "table.gif";
 	}
-	
+
 	String text(DocString ele) {
 		return "DocString";
 	}
@@ -102,8 +103,8 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	String image(Tag ele) {
 		return "annotation.gif";
 	}
-	
-	private static String merge(EList<String> strings) {
+
+	private static String merge(String... strings) {
 		StringBuilder builder = new StringBuilder();
 		for (String string : strings) {
 			builder.append(string);

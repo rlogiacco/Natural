@@ -3,13 +3,9 @@ grammar org.agileware.natural.cucumber.Cucumber hidden(WS, SL_COMMENT)
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate model "http://www.agileware.org/natural/cucumber"
 
-Feature:
-	tags+=Tag*
-	'Feature:'
-	title=Title EOL+
-	narrative=Narrative?
-	background=Background?
-	scenarios+=AbstractScenario+
+CucumberModel:
+	('#' 'language:' locale=LOCALE EOL+)?
+	feature=Feature?
 ;
 
 /**
@@ -42,6 +38,21 @@ Section: Feature
 	| Example
 ;
 
+/**
+ * 
+ */
+Feature: {Feature}
+	tags+=Tag*
+	'Feature:'
+	title=Title EOL+
+	narrative=Narrative?
+	background=Background?
+	scenarios+=AbstractScenario+
+;
+
+/**
+ * 
+ */
 Background:
 	tags+=Tag*
 	'Background:'
@@ -50,6 +61,9 @@ Background:
 	steps+=Step+
 ;
 
+/**
+ * 
+ */
 Scenario:
 	tags+=Tag*
 	'Scenario:'
@@ -58,6 +72,9 @@ Scenario:
 	steps+=Step+
 ;
 
+/**
+ * 
+ */
 ScenarioOutline:
 	tags+=Tag*
 	'Scenario' 'Outline:'
@@ -67,12 +84,18 @@ ScenarioOutline:
 	examples+=Example+
 ;
 
+/**
+ * 
+ */
 Step:
 	keyword=STEP_KEYWORD
 	description=StepDescription EOL*
 	(table=Table | code=DocString)?
 ;
 
+/**
+ * 
+ */
 Example:
 	tags+=Tag*
 	'Examples:' 
@@ -82,19 +105,31 @@ Example:
 ;
 
 
+/**
+ * 
+ */
 Table: {Table}
 	rows+=TableRow+
 	EOL*
 ;
 
+/**
+ * 
+ */
 TableRow: {TableRow}
 	cols+=TableCol+ '|' EOL
 ;
 
+/**
+ * 
+ */
 TableCol: {TableCol}
 	cell=TABLE_CELL
 ;
 
+/**
+ * 
+ */
 DocString: {DocString}
 	('"""' EOL -> text=Text '"""')
 	// TODO alternate quote support in formatter
@@ -144,6 +179,12 @@ terminal INT:
 	'-'?
 	('0'..'9')+
 	('.' ('0'..'9')+)?
+;
+
+terminal LOCALE: 'en' 
+	| 'fr' 
+	| 'sp'
+	| 'it'
 ;
 
 terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But') (' ' | '\t')+;

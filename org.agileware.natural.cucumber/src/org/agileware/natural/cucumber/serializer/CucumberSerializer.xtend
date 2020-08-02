@@ -1,6 +1,7 @@
 package org.agileware.natural.cucumber.serializer
 
 import org.agileware.natural.cucumber.model.Background
+import org.agileware.natural.cucumber.model.CucumberModel
 import org.agileware.natural.cucumber.model.DocString
 import org.agileware.natural.cucumber.model.Example
 import org.agileware.natural.cucumber.model.Feature
@@ -11,10 +12,18 @@ import org.agileware.natural.cucumber.model.Table
 import org.agileware.natural.cucumber.model.TableCol
 import org.agileware.natural.cucumber.model.TableRow
 import org.agileware.natural.cucumber.model.Tag
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.agileware.natural.cucumber.model.Text
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import org.eclipse.xtext.util.Strings
 
 class CucumberSerializer {
+
+	def String serialize(CucumberModel model) '''
+		# language «Strings.isEmpty(model.locale)? model.locale : 'en'»
+		«IF model.feature !== null»
+			«serialize(model.feature)»
+		«ENDIF»
+	'''
 
 	def String serialize(Feature model) '''
 		«FOR t : model.tags»
@@ -27,7 +36,7 @@ class CucumberSerializer {
 			«serialize(model.background)»
 		«ENDIF»
 		«FOR s : model.scenarios»
-		
+			
 			«IF s instanceof Scenario»
 				«serialize(s)»
 			«ELSEIF s instanceof ScenarioOutline»
@@ -65,8 +74,8 @@ class CucumberSerializer {
 			«serialize(s)»
 		«ENDFOR»
 		«FOR e : model.examples»
-		
-			«serialize(e)»
+			
+				«serialize(e)»
 		«ENDFOR»
 	'''
 
@@ -95,11 +104,10 @@ class CucumberSerializer {
 		«ENDFOR»
 	'''
 
-
 	def String serialize(TableRow model) '''
 		«model.cols.map[serialize].join()» |
 	'''
-	
+
 	def String serialize(TableCol model) {
 		return model.cell
 	}
@@ -109,7 +117,7 @@ class CucumberSerializer {
 		«serialize(model.text)»
 		"""
 	'''
-	
+
 	/**
 	 * TODO this will most certainly break two-way serialization,
 	 *      as trailing line breaks are not assigned within the TEXT_VALUE.

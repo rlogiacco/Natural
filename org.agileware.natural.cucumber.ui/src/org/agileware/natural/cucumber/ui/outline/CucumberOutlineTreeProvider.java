@@ -3,31 +3,38 @@
  */
 package org.agileware.natural.cucumber.ui.outline;
 
+import org.agileware.natural.cucumber.model.CucumberModel;
 import org.agileware.natural.cucumber.model.DocString;
 import org.agileware.natural.cucumber.model.Step;
 import org.agileware.natural.cucumber.model.Table;
 import org.agileware.natural.cucumber.model.Text;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 
 /**
  * customization of the default outline structure
  * 
  */
 public class CucumberOutlineTreeProvider extends DefaultOutlineTreeProvider {
-	
+
+	protected void _createChildren(DocumentRootNode parentNode, CucumberModel model) {
+		// do not create node for root model
+		createNode(parentNode, model.getFeature());
+	}
+
 	protected boolean _isLeaf(DocString modelElement) {
 		return true;
 	}
-	
+
 	protected boolean _isLeaf(Text modelElement) {
 		return true;
 	}
-	
+
 	protected boolean _isLeaf(Table modelElement) {
 		// do not allow expansion of table nodes
 		return true;
 	}
-	
+
 	protected boolean _isLeaf(Step modelElement) {
 		// only allow expansion of step nodes with tables
 		return modelElement.getTable() == null && modelElement.getCode() == null;

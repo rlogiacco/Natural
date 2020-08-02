@@ -1,9 +1,7 @@
 package org.agileware.natural.cucumber.tests
 
-import com.google.inject.Inject
-import org.agileware.natural.cucumber.model.Feature
+import org.agileware.natural.cucumber.model.CucumberModel
 import org.agileware.natural.cucumber.model.ScenarioOutline
-import org.agileware.natural.cucumber.serializer.CucumberSerializer
 import org.agileware.natural.testing.AbstractParserTest
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
@@ -16,9 +14,7 @@ import static org.hamcrest.Matchers.*
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
-class CucumberParsingTest extends AbstractParserTest<Feature> {
-
-	@Inject CucumberSerializer serializer
+class CucumberParsingTest extends AbstractParserTest<CucumberModel> {
 
 	@Test
 	def void parseSimpleFeature() {
@@ -34,8 +30,6 @@ class CucumberParsingTest extends AbstractParserTest<Feature> {
 
 		assertThat(model, notNullValue())
 		assertThat(validate(model), empty())
-
-		println(serializer.serialize(model))
 	}
 	
 	
@@ -60,13 +54,15 @@ class CucumberParsingTest extends AbstractParserTest<Feature> {
 		''')
 
 		assertThat(model, notNullValue())
+		assertThat(model.feature, notNullValue())
 		assertThat(validate(model), empty())
 		
-		val t1 = model.scenarios.get(0).steps.get(0).table
+		val feature = model.feature
+		val t1 = feature.scenarios.get(0).steps.get(0).table
 		assertThat(t1, notNullValue())
 		assertThat(t1.rows, hasSize(1))
 		
-		val t2 = (model.scenarios.get(1) as ScenarioOutline).examples.get(0).table
+		val t2 = (feature.scenarios.get(1) as ScenarioOutline).examples.get(0).table
 		assertThat(t2, notNullValue())
 		assertThat(t2.rows, hasSize(3))
 	}

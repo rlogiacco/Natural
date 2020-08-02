@@ -24,7 +24,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 	@Inject extension CucumberGrammarAccess cucumberGrammarAccess
 
 	def dispatch void format(Feature model, extension IFormattableDocument doc) {
-		println(textRegionAccess)
+		// println(textRegionAccess)
 
 		// format tags
 		for (t : model.tags) {
@@ -39,7 +39,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 			s.format()
 		}
 
-		println(doc)
+		// println(doc)
 	}
 
 	def dispatch void format(Background model, extension IFormattableDocument doc) {
