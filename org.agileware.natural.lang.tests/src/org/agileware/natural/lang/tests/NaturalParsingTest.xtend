@@ -4,7 +4,7 @@
 package org.agileware.natural.lang.tests
 
 import org.agileware.natural.lang.model.DocumentModel
-import org.agileware.natural.testing.AbstractParserTest
+import org.agileware.natural.testing.AbstractExamplesTest
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*
 
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
-class NaturalParsingTest  extends AbstractParserTest<DocumentModel> {
+class NaturalParsingTest  extends AbstractExamplesTest<DocumentModel> {
 	
 	@Test
 	def void helloDocumntModel() {
