@@ -1,0 +1,9 @@
+grammar org.agileware.natural.lang.Natural with org.eclipse.xtext.common.Terminals
+
+generate natural "http://www.agileware.org/natural/lang/Natural"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

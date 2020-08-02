@@ -23,6 +23,9 @@
 	</properties>
 	<modules>
 		<module>org.agileware.natural.common</module>
+		<module>org.agileware.natural.lang</module>
+		<module>org.agileware.natural.lang.ide</module>
+		<module>org.agileware.natural.lang.tests</module>
 		<module>org.agileware.natural.cucumber</module>
 		<module>org.agileware.natural.cucumber.feature</module>
 		<module>org.agileware.natural.cucumber.ide</module>
