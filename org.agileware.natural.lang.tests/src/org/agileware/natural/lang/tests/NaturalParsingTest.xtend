@@ -22,9 +22,32 @@ class NaturalParsingTest  extends AbstractExamplesTest<DocumentModel> {
 		
 		val model = parse('''
 			Section: Hello, Document Model!
+				The quick brown fox
+				Jumps over the lazt dog
 		''')
 
 		assertThat(model, notNullValue())
 		assertThat(validate(model), empty())
+		
+		assertThat(model.sections, hasSize(1))
+		assertThat(model.sections.get(0).title, 
+				equalTo("Hello, Document Model!"))
+		
+		assertThat(model.sections.get(0).narrative, 
+				equalTo('''
+					The quick brown fox
+					Jumps over the lazt dog
+				'''))
 	}
+	
+//	@Test
+//	def void testSectionsWithBlankLines() {
+//		
+//		val model = parse('''
+//			Section: Hello, Document Model!
+//		''')
+//
+//		assertThat(model, notNullValue())
+//		assertThat(validate(model), empty())
+//	}
 }
