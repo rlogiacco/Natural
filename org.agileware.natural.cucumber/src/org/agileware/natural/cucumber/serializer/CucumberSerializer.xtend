@@ -19,7 +19,7 @@ import org.eclipse.xtext.util.Strings
 class CucumberSerializer {
 
 	def String serialize(CucumberModel model) '''
-		# language «Strings.isEmpty(model.locale)? model.locale : 'en'»
+		# language «Strings.isEmpty(model.locale)? 'en' : model.locale»
 		«IF model.feature !== null»
 			«serialize(model.feature)»
 		«ENDIF»

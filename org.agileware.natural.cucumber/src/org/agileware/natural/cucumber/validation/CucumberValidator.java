@@ -60,7 +60,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	 * 
 	 * @param model
 	 */
-	@Check(CheckType.NORMAL)
+	@Check(CheckType.FAST)
 	public void invalidBackground(Feature model) {
 		for (AbstractScenario s : model.getScenarios()) {
 			if (s instanceof Background) {
@@ -95,9 +95,9 @@ public class CucumberValidator extends AbstractCucumberValidator {
 		}
 	}
 
-	@Check(CheckType.EXPENSIVE)
+	@Check(CheckType.NORMAL)
 	public void invalidStepDefs(Step model) {
-		// System.out.println("Validating: " + model);
+		System.out.println("Validating: " + model);
 		final Counter counter = new Counter();
 		String description = model.getDescription().trim();
 		matcher.findMatches(description, counter);
