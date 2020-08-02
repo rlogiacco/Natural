@@ -18,6 +18,7 @@ import org.agileware.natural.cucumber.model.Feature;
 import org.agileware.natural.cucumber.model.Step;
 import org.agileware.natural.stepmatcher.JavaAnnotationMatcher;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 
@@ -47,7 +48,7 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	 */
 	@Check(CheckType.FAST)
 	public void featureTitle(Feature model) {
-		if (model.getTitle() == null || model.getTitle().isBlank()) {
+		if (Strings.isEmpty(model.getTitle())) {
 			warning("Feature title is missing", model, SECTION__TITLE, MISSING_FEATURE_TITLE);
 		}
 	}
