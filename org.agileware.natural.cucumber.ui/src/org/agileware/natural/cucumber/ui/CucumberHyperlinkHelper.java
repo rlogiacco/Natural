@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.agileware.natural.cucumber.cucumber.Step;
+import org.agileware.natural.cucumber.model.Step;
 import org.agileware.natural.stepmatcher.JavaAnnotationMatcher;
 import org.agileware.natural.stepmatcher.JavaHyperlink;
 import org.eclipse.emf.ecore.EObject;

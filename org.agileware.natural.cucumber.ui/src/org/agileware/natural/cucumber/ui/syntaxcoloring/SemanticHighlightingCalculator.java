@@ -1,9 +1,9 @@
 package org.agileware.natural.cucumber.ui.syntaxcoloring;
 
-import org.agileware.natural.cucumber.cucumber.Feature;
-import org.agileware.natural.cucumber.cucumber.Scenario;
-import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
-import org.agileware.natural.cucumber.cucumber.Step;
+import org.agileware.natural.cucumber.model.Feature;
+import org.agileware.natural.cucumber.model.Scenario;
+import org.agileware.natural.cucumber.model.ScenarioOutline;
+import org.agileware.natural.cucumber.model.Step;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;

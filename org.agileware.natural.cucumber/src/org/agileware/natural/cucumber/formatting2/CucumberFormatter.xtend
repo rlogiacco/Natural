@@ -4,16 +4,16 @@
 package org.agileware.natural.cucumber.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.cucumber.cucumber.AbstractScenario
-import org.agileware.natural.cucumber.cucumber.Background
-import org.agileware.natural.cucumber.cucumber.DocString
-import org.agileware.natural.cucumber.cucumber.Example
-import org.agileware.natural.cucumber.cucumber.Feature
-import org.agileware.natural.cucumber.cucumber.Scenario
-import org.agileware.natural.cucumber.cucumber.ScenarioOutline
-import org.agileware.natural.cucumber.cucumber.Step
-import org.agileware.natural.cucumber.cucumber.Table
-import org.agileware.natural.cucumber.cucumber.Tag
+import org.agileware.natural.cucumber.model.AbstractScenario
+import org.agileware.natural.cucumber.model.Background
+import org.agileware.natural.cucumber.model.DocString
+import org.agileware.natural.cucumber.model.Example
+import org.agileware.natural.cucumber.model.Feature
+import org.agileware.natural.cucumber.model.Scenario
+import org.agileware.natural.cucumber.model.ScenarioOutline
+import org.agileware.natural.cucumber.model.Step
+import org.agileware.natural.cucumber.model.Table
+import org.agileware.natural.cucumber.model.Tag
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument

@@ -4,7 +4,7 @@
     modelPluginID="org.agileware.natural.cucumber" forceOverwrite="true" modelName="Cucumber"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="8.0" copyrightFields="false" runtimeVersion="2.20">
-  <genPackages prefix="Cucumber" basePackage="org.agileware.natural.cucumber" disposableProviderFactory="true"
+  <genPackages prefix="Model" basePackage="org.agileware.natural.cucumber" disposableProviderFactory="true"
       fileExtensions="feature" ecorePackage="Cucumber.ecore#/">
     <genClasses ecoreClass="Cucumber.ecore#//Feature">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Cucumber.ecore#//Feature/background"/>

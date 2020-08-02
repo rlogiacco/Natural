@@ -1,10 +1,10 @@
 package org.agileware.natural.cucumber.validation;
 
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.ABSTRACT_SCENARIO__STEPS;
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.FEATURE__BACKGROUND;
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.FEATURE__SCENARIOS;
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.SECTION__TITLE;
-import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.STEP__DESCRIPTION;
+import static org.agileware.natural.cucumber.model.ModelPackage.Literals.ABSTRACT_SCENARIO__STEPS;
+import static org.agileware.natural.cucumber.model.ModelPackage.Literals.FEATURE__BACKGROUND;
+import static org.agileware.natural.cucumber.model.ModelPackage.Literals.FEATURE__SCENARIOS;
+import static org.agileware.natural.cucumber.model.ModelPackage.Literals.SECTION__TITLE;
+import static org.agileware.natural.cucumber.model.ModelPackage.Literals.STEP__DESCRIPTION;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.INVALID_BACKGROUND;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_FEATURE_TITLE;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_SCENARIOS;
@@ -12,10 +12,10 @@ import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSI
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_STEPDEFS;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MULTIPLE_STEPDEFS;
 
-import org.agileware.natural.cucumber.cucumber.AbstractScenario;
-import org.agileware.natural.cucumber.cucumber.Background;
-import org.agileware.natural.cucumber.cucumber.Feature;
-import org.agileware.natural.cucumber.cucumber.Step;
+import org.agileware.natural.cucumber.model.AbstractScenario;
+import org.agileware.natural.cucumber.model.Background;
+import org.agileware.natural.cucumber.model.Feature;
+import org.agileware.natural.cucumber.model.Step;
 import org.agileware.natural.stepmatcher.JavaAnnotationMatcher;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.xtext.validation.Check;

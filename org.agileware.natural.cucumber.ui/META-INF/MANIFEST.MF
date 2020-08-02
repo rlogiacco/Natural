@@ -26,8 +26,8 @@ Import-Package: org.apache.log4j,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.cucumber.ui.contentassist;uses:="org.eclipse.emf.ecore,org.eclipse.xtext.ui.editor.contentassist,org.eclipse.xtext",
  org.agileware.natural.cucumber.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
- org.agileware.natural.cucumber.ui.labeling;uses:="org.eclipse.xtext.ui.label,org.eclipse.emf.edit.ui.provider,org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.ui.outline;uses:="org.eclipse.xtext.ui.editor.outline.impl,org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.ui.labeling;uses:="org.eclipse.xtext.ui.label,org.eclipse.emf.edit.ui.provider,org.agileware.natural.cucumber.model",
+ org.agileware.natural.cucumber.ui.outline;uses:="org.eclipse.xtext.ui.editor.outline.impl,org.agileware.natural.cucumber.model",
  org.agileware.natural.cucumber.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix",
  org.agileware.natural.cucumber.ui.syntaxcoloring;uses:="org.eclipse.xtext.resource,org.eclipse.xtext.ui.editor.utils,org.eclipse.xtext.ui.editor.syntaxcoloring",
  org.agileware.natural.cucumber.validation;uses:="org.eclipse.swt.widgets,org.eclipse.jface.dialogs,org.eclipse.xtext.ui.validation"

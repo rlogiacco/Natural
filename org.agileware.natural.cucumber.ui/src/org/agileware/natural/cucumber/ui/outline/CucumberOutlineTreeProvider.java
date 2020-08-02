@@ -3,10 +3,10 @@
  */
 package org.agileware.natural.cucumber.ui.outline;
 
-import org.agileware.natural.cucumber.cucumber.DocString;
-import org.agileware.natural.cucumber.cucumber.Step;
-import org.agileware.natural.cucumber.cucumber.Table;
-import org.agileware.natural.cucumber.cucumber.Text;
+import org.agileware.natural.cucumber.model.DocString;
+import org.agileware.natural.cucumber.model.Step;
+import org.agileware.natural.cucumber.model.Table;
+import org.agileware.natural.cucumber.model.Text;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 
 /**

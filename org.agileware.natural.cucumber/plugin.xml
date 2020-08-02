@@ -4,7 +4,7 @@
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package
 			uri = "http://www.agileware.org/natural/cucumber"
-			class = "org.agileware.natural.cucumber.cucumber.CucumberPackage"
+			class = "org.agileware.natural.cucumber.model.ModelPackage"
 			genModel = "model/generated/Cucumber.genmodel" />
 	</extension>
 </plugin>

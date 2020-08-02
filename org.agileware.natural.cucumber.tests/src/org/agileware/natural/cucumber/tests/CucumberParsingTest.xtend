@@ -1,8 +1,8 @@
 package org.agileware.natural.cucumber.tests
 
 import com.google.inject.Inject
-import org.agileware.natural.cucumber.cucumber.Feature
-import org.agileware.natural.cucumber.cucumber.ScenarioOutline
+import org.agileware.natural.cucumber.model.Feature
+import org.agileware.natural.cucumber.model.ScenarioOutline
 import org.agileware.natural.cucumber.serializer.CucumberSerializer
 import org.agileware.natural.testing.AbstractParserTest
 import org.eclipse.xtext.testing.InjectWith
