@@ -3,28 +3,28 @@
  */
 package org.agileware.natural.lang.tests
 
-import com.google.inject.Inject
-import org.agileware.natural.lang.natural.Model
+import org.agileware.natural.lang.model.DocumentModel
+import org.agileware.natural.testing.AbstractParserTest
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
-import org.eclipse.xtext.testing.util.ParseHelper
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
+import static org.hamcrest.MatcherAssert.*
+import static org.hamcrest.Matchers.*
+
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
-class NaturalParsingTest {
-	@Inject
-	ParseHelper<Model> parseHelper
+class NaturalParsingTest  extends AbstractParserTest<DocumentModel> {
 	
 	@Test
-	def void helloNatural() {
-		val result = parseHelper.parse('''
-			Hello Natural!
+	def void helloDocumntModel() {
+		
+		val model = parse('''
+			Section: Hello, Document Model!
 		''')
-		Assert.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assert.assertTrue('''Unexpected errors: «errors.join(", ")»''', errors.isEmpty)
+
+		assertThat(model, notNullValue())
+		assertThat(validate(model), empty())
 	}
 }

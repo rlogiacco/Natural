@@ -1,9 +1,89 @@
-grammar org.agileware.natural.lang.Natural with org.eclipse.xtext.common.Terminals
+grammar org.agileware.natural.lang.Natural hidden(WS, SL_COMMENT)
 
-generate natural "http://www.agileware.org/natural/lang/Natural"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-Model:
-	greetings+=Greeting*;
+generate model "http://www.agileware.org/natural/lang"
+
+DocumentModel:
+	sections+=Section*
+;
 	
-Greeting:
-	'Hello' name=ID '!';
+Section: {Section}
+	'Section:' title=Text? NL
+	narrative=Paragraph?
+;
+
+
+// Free Text Model
+////
+
+Text returns ecore::EString:
+	TEXT_LITERAL+
+;
+
+Paragraph returns ecore::EString:
+	(TEXT_LITERAL+ EOL)+
+;
+
+TEXT_LITERAL: WORD
+	| NUMBER
+	| STRING
+	| PUNCTUATION
+	| ANY_OTHER
+;
+
+terminal NUMBER returns ecore::EDouble:
+    '-'? ('0'..'9')+ ('.' ('0'..'9')+)?
+;
+ 
+terminal STRING returns ecore::EString:
+    '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' 
+	    | "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
+;
+
+terminal WORD: 
+	(LETTER | DIGIT)
+	(LETTER | DIGIT | '_' | '-' | '.' )*
+;
+
+terminal SL_COMMENT: 
+	'#' !('\n' | '\r')* NL
+;
+
+terminal PUNCTUATION: ASCII_SYMBOLS 
+	| '...'
+;
+
+EOL: NL+ WS*;
+terminal NL: ('\r'? '\n') | EOF;
+
+terminal WS: (SPACE | '\t');
+
+terminal ANY_OTHER: .;
+
+
+// Unicode Ranges
+////
+
+terminal fragment SPACE: ASCII_SPACE;
+
+terminal fragment DIGIT: ASCII_DIGIT;
+
+terminal fragment LETTER: LATIN_ALPHABET;
+
+
+
+terminal fragment ASCII_SPACE: '\u0020';
+
+terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
+
+// all ascii chars other than letters, digits, space, or control codes
+terminal fragment ASCII_SYMBOLS: ('\u0021'..'\u002F')
+	| ('\u003A'..'\u0040')
+	| ('\u005B'..'\u0060')
+	| ('\u007B'..'\u007E')
+;
+
+terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+	| ('\u0061'..'\u007A')
+;

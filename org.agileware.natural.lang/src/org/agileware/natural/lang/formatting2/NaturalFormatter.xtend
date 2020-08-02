@@ -4,7 +4,7 @@
 package org.agileware.natural.lang.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.lang.natural.Model
+import org.agileware.natural.lang.model.DocumentModel
 import org.agileware.natural.lang.services.NaturalGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -13,12 +13,9 @@ class NaturalFormatter extends AbstractFormatter2 {
 	
 	@Inject extension NaturalGrammarAccess
 
-	def dispatch void format(Model model, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (greeting : model.greetings) {
-			greeting.format
+	def dispatch void format(DocumentModel model, extension IFormattableDocument document) {
+		for (s : model.sections) {
+			s.format()
 		}
 	}
-	
-	// TODO: implement for 
 }
