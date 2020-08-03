@@ -1,6 +1,6 @@
 define(["ace/lib/oop", "ace/mode/text", "ace/mode/text_highlight_rules"], function(oop, mText, mTextHighlightRules) {
 	var HighlightRules = function() {
-		var keywords = "Scenario";
+		var keywords = "Outline|Scenario";
 		this.$rules = {
 			"start": [
 				{token: "keyword", regex: "\\b(?:" + keywords + ")\\b"}

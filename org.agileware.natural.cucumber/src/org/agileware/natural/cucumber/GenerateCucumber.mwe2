@@ -37,6 +37,7 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.agileware.natural.cucumber.Cucumber"
 			fileExtensions = "feature"
+			referencedResource =  "platform:/resource/org.agileware.natural.lang/model/generated/Natural.genmodel"
 
 			serializer = {
 				generateStub = true

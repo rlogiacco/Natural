@@ -2,11 +2,12 @@ module org.agileware.natural.lang.GenerateNatural
 
 import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.model.project.*
+import org.eclipse.emf.mwe.utils.*
 
 var rootPath = ".."
 
 Workflow {
-	
+
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
@@ -33,13 +34,12 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.agileware.natural.lang.Natural"
 			fileExtensions = "natural"
-
 			serializer = {
 				generateStub = true
 			}
 			validator = {
-				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
+			// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
 				generateDeprecationValidation = true
 			}
 			formatter = {
@@ -54,5 +54,6 @@ Workflow {
 				debugGrammar = true
 			}
 		}
+
 	}
 }

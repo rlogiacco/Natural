@@ -1,22 +1,33 @@
-grammar org.agileware.natural.cucumber.Cucumber hidden(WS, SL_COMMENT)
+grammar org.agileware.natural.cucumber.Cucumber with org.agileware.natural.lang.Natural
 
-import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate model "http://www.agileware.org/natural/cucumber"
 
-CucumberModel:
-	('#' 'language:' locale=LOCALE EOL+)?
+CucumberModel: {CucumberModel}
+	EOL?
 	feature=Feature?
 ;
 
 /**
- * Base class for Scenario implementations. 
- * A Scenario is any type with the following structure:
  * 
- * tags+=Tag*
- * 'Scenario:'
- * title=Title? EOL+
- * narrative=Narrative?
- * steps+=Step+;
+ */
+Feature: {Section}
+	meta=Meta?
+	'Feature:' title=Text?
+	(EOL narrative=Narrative)?
+	scenarios+=AbstractScenario
+	  (EOL scenarios+=AbstractScenario)*
+;
+
+/**
+ * Base class for scenario section nodes. Each scenario node must define
+ * the following structure at the least:
+ * ```
+ * meta=Meta?
+ * 'Keyword:' title=Text?
+ * (EOL narrative=Narrative)?
+ * steps+=Step
+ *   (EOL steps+=Step)*
+ * ```
  */
 AbstractScenario: Scenario
 	| ScenarioOutline
@@ -25,63 +36,36 @@ AbstractScenario: Scenario
 
 
 /**
- * A Section is a generic element with the structure:
  * 
- * tags+=Tag*
- * 'Keyword:'
- * title=Title? EOL+
- * narrative=Narrative?
  */
-Section: Feature
-	| Background
-	| AbstractScenario
-	| Example
+Background: {Section}
+	meta=Meta?
+	'Background:' title=Text?
+	(EOL narrative=Narrative)?
+	steps+=Step
+	  (EOL steps+=Step)*
 ;
 
 /**
  * 
  */
-Feature: {Feature}
-	tags+=Tag*
-	'Feature:'
-	title=Title EOL+
-	narrative=Narrative?
-	background=Background?
-	scenarios+=AbstractScenario+
+Scenario: {Section}
+	meta=Meta?
+	'Scenario:' title=Text?
+	(EOL narrative=Narrative)?
+	steps+=Step
+	  (EOL steps+=Step)*
 ;
 
 /**
  * 
  */
-Background:
-	tags+=Tag*
-	'Background:'
-	title=Title? EOL+
-	narrative=Narrative?
-	steps+=Step+
-;
-
-/**
- * 
- */
-Scenario:
-	tags+=Tag*
-	'Scenario:'
-	title=Title? EOL+
-	narrative=Narrative?
-	steps+=Step+
-;
-
-/**
- * 
- */
-ScenarioOutline:
-	tags+=Tag*
-	'Scenario' 'Outline:'
-	title=Title? EOL+
-	narrative=Narrative?
-	steps+=Step+
-	examples+=Example+
+ScenarioOutline: {Section}
+	meta=Meta?
+	'Scenario' 'Outline' ':' title=Text?
+	(EOL narrative=Narrative)?
+	steps+=Step
+	  (EOL steps+=Step)*
 ;
 
 /**
@@ -89,154 +73,131 @@ ScenarioOutline:
  */
 Step:
 	keyword=STEP_KEYWORD
-	description=StepDescription EOL*
-	(table=Table | code=DocString)?
+	description=Text
+//	(table=Table | code=DocString)?
 ;
 
-/**
- * 
- */
-Example:
-	tags+=Tag*
-	'Examples:' 
-	title=Title? EOL+
-	narrative=Narrative?
-	table=Table
-;
+///**
+// * 
+// */
+//Example:
+//	tags+=Tag*
+//	'Examples:' 
+//	title=Title? EOL+
+//	narrative=Narrative?
+//	table=Table
+//;
 
-
-/**
- * 
- */
-Table: {Table}
-	rows+=TableRow+
-	EOL*
-;
-
-/**
- * 
- */
-TableRow: {TableRow}
-	cols+=TableCol+ '|' EOL
-;
-
-/**
- * 
- */
-TableCol: {TableCol}
-	cell=TABLE_CELL
-;
-
-/**
- * 
- */
-DocString: {DocString}
-	('"""' EOL -> text=Text '"""')
-	// TODO alternate quote support in formatter
-	// | ("'''" EOL -> text=Text? "'''")
-	EOL*
-;
-
-Title:
-	(WORD | INT | STRING | PLACEHOLDER)
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
-;
-
-Narrative:
-	(
-		(WORD | INT | STRING | PLACEHOLDER)
-		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
-		EOL+
-	)+
-;
-
-StepDescription:
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+
-;
-	
-Tag: id=TAGNAME EOL?;
-
-
-Text: {Text}
-	lines+=TextLine*
-;
-
-TextLine: {TextLine}
-	value=TEXT_VALUE EOL+
-;
-
-TEXT_VALUE returns ecore::EString:
-	TEXT_LITERAL TEXT_LITERAL*
-;
-
-TEXT_LITERAL: WORD
-	| INT
-	| STRING
-	| ANY_OTHER
-;
-
-terminal INT: 
-	'-'?
-	('0'..'9')+
-	('.' ('0'..'9')+)?
-;
-
-terminal LOCALE: 'en' 
-	| 'fr' 
-	| 'sp'
-	| 'it'
-;
+///**
+// * 
+// */
+//DocString: {DocString}
+//	('"""' EOL -> text=Text '"""')
+//	// TODO alternate quote support in formatter
+//	// | ("'''" EOL -> text=Text? "'''")
+//	EOL*
+//;
+//
+//Title:
+//	(WORD | INT | STRING | PLACEHOLDER)
+//	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+//;
+//
+//Narrative:
+//	(
+//		(WORD | INT | STRING | PLACEHOLDER)
+//		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
+//		EOL+
+//	)+
+//;
+//
+//StepDescription:
+//	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+
+//;
+//	
+//Tag: id=TAGNAME EOL?;
+//
+//
+//Text: {Text}
+//	lines+=TextLine*
+//;
+//
+//TextLine: {TextLine}
+//	value=TEXT_VALUE EOL+
+//;
+//
+//TEXT_VALUE returns ecore::EString:
+//	TEXT_LITERAL TEXT_LITERAL*
+//;
+//
+//TEXT_LITERAL: WORD
+//	| INT
+//	| STRING
+//	| ANY_OTHER
+//;
+//
+//terminal INT: 
+//	'-'?
+//	('0'..'9')+
+//	('.' ('0'..'9')+)?
+//;
+//
+//terminal LOCALE: 'en' 
+//	| 'fr' 
+//	| 'sp'
+//	| 'it'
+//;
 
 terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But') (' ' | '\t')+;
 
-terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
-	
-terminal TABLE_CELL: '|' !('|' | '\n' | '\r')*;
-
-terminal STRING:
-	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
-	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'";
-
-terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
-
-terminal TAGNAME: '@' !(' ' | '\t' | '\n' | '\r')+ ;
-
-terminal WORD: 
-	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
-	!(' ' | '\t' | '\n' | '\r')*
-;
-
-terminal WS: (' ' | '\t');
-
-terminal EOL: NL;
-terminal fragment NL: ('\r'? '\n');
-
-terminal ANY_OTHER: .;
-
-// ----------------------------------------------------------
+//terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
+//	
+//terminal TABLE_CELL: '|' !('|' | '\n' | '\r')*;
 //
-// Unicode Ranges
+//terminal STRING:
+//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
+//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'";
 //
-// ----------------------------------------------------------
-
-terminal fragment DIGIT: ASCII_DIGIT;
-
-terminal fragment LETTER: LATIN_ALPHABET;
-
-// Basic Latin
+//terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
+//
+//terminal TAGNAME: '@' !(' ' | '\t' | '\n' | '\r')+ ;
+//
+//terminal WORD: 
+//	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
+//	!(' ' | '\t' | '\n' | '\r')*
+//;
+//
+//terminal WS: (' ' | '\t');
+//
+//terminal EOL: NL;
+//terminal fragment NL: ('\r'? '\n');
+//
+//terminal ANY_OTHER: .;
+//
+//// ----------------------------------------------------------
 ////
-
-terminal fragment ASCII_SPACE: '\u0020';
-
-terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
-
-// all ascii chars other than letters, digits, space, or control codes
-terminal fragment ASCII_SYMBOLS: ('\u0021'..'\u002F')
-	| ('\u003A'..'\u0040')
-	| ('\u005B'..'\u0060')
-	| ('\u007B'..'\u007E')
-;
-
-terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
-	| ('\u0061'..'\u007A')
-;
+//// Unicode Ranges
+////
+//// ----------------------------------------------------------
+//
+//terminal fragment DIGIT: ASCII_DIGIT;
+//
+//terminal fragment LETTER: LATIN_ALPHABET;
+//
+//// Basic Latin
+//////
+//
+//terminal fragment ASCII_SPACE: '\u0020';
+//
+//terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
+//
+//// all ascii chars other than letters, digits, space, or control codes
+//terminal fragment ASCII_SYMBOLS: ('\u0021'..'\u002F')
+//	| ('\u003A'..'\u0040')
+//	| ('\u005B'..'\u0060')
+//	| ('\u007B'..'\u007E')
+//;
+//
+//terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+//	| ('\u0061'..'\u007A')
+//;

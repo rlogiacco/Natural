@@ -4,277 +4,267 @@
 package org.agileware.natural.cucumber.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.cucumber.model.AbstractScenario
-import org.agileware.natural.cucumber.model.Background
-import org.agileware.natural.cucumber.model.DocString
-import org.agileware.natural.cucumber.model.Example
-import org.agileware.natural.cucumber.model.Feature
-import org.agileware.natural.cucumber.model.Scenario
-import org.agileware.natural.cucumber.model.ScenarioOutline
-import org.agileware.natural.cucumber.model.Step
-import org.agileware.natural.cucumber.model.Table
-import org.agileware.natural.cucumber.model.Tag
+import org.agileware.natural.cucumber.model.CucumberModel
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
 
 class CucumberFormatter extends AbstractFormatter2 {
 
 	@Inject extension CucumberGrammarAccess cucumberGrammarAccess
 
-	def dispatch void format(Feature model, extension IFormattableDocument doc) {
-		// println(textRegionAccess)
+	def dispatch void format(CucumberModel model, extension IFormattableDocument doc) {
+		 println(textRegionAccess)
 
-		// format tags
-		for (t : model.tags) {
-			t.format()
-		}
+//		// format tags
+//		for (t : model.tags) {
+//			t.format()
+//		}
+//
+//		// format background
+//		model.background.format()
+//
+//		// format scenarios
+//		for (s : model.scenarios) {
+//			s.format()
+//		}
 
-		// format background
-		model.background.format()
-
-		// format scenarios
-		for (s : model.scenarios) {
-			s.format()
-		}
-
-		// println(doc)
+		 println(doc)
 	}
 
-	def dispatch void format(Background model, extension IFormattableDocument doc) {
-		// format tags
-		for (t : model.tags) {
-			t.format()
-		}
-		
-		// align keyword to column 0
-		model.regionFor
-				.keyword(backgroundAccess.backgroundKeyword_1)
-				.prepend[noIndentation]
-
-		// Indent interior
-		val begin = model.regionFor.ruleCallTo(EOLRule)
-		val end = endRegionFor(model, doc)
-		interior(begin, end)[indent]
-
-		// format steps
-		for (s : model.steps) {
-			s.prepend[indent]
-			s.format()
-		}
-	}
-
-	def dispatch void format(Scenario model, extension IFormattableDocument doc) {
-		// format tags
-		for (t : model.tags) {
-			t.format()
-		}
-		
-		// align keyword to column 0
-		model.regionFor
-				.keyword(scenarioAccess.scenarioKeyword_1)
-				.prepend[noIndentation]
-
-		// Indent interior
-		val begin = model.regionFor.ruleCallTo(EOLRule)
-		val end = endRegionFor(model, doc)
-		interior(begin, end)[indent]
-
-		// format steps
-		for (s : model.steps) {
-			s.prepend[indent]
-			s.format()
-		}
-	}
-
-	def dispatch void format(ScenarioOutline model, extension IFormattableDocument doc) {
-		// format tags
-		for (t : model.tags) {
-			t.format()
-		}
-		
-		// align keyword to column 0
-		model.regionFor
-				.keyword(scenarioOutlineAccess.scenarioKeyword_1)
-				.prepend[noIndentation]
-
-		// Indent interior
-		val begin = model.regionFor.ruleCallTo(EOLRule)
-		val end = endRegionFor(model, doc)
-		interior(begin, end)[indent]
-
-		// format steps
-		for (s : model.steps) {
-			s.prepend[indent]
-			s.format()
-		}
-
-		// format examples
-		for (e : model.examples) {
-			e.prepend[indent]
-			e.format()
-		}
-	}
-
-	def dispatch void format(Example model, extension IFormattableDocument doc) {
-		// format tags
-		for (t : model.tags) {
-			t.format()
-		}
-
-		// TODO this is just a hacky work-around until we can figure
-		// why having tags changes the indentation behavior of the 
-		// keyword
-		if (!model.tags.isEmpty()) {
-			val region = model.regionFor.keyword(exampleAccess.examplesKeyword_1)
-			region.prepend[indent]
-		}
-
-		// format table
-		model.table.rows.forEach[prepend[indent]]
-		model.table.format()
-	}
-
-	def dispatch void format(Step model, extension IFormattableDocument doc) {
-		// TODO cleanup keyword/description
-		// format table
-		if (model.table !== null) {
-			model.table.rows.forEach[prepend[indent]]
-			model.table.format()
-		}
-
-		// format code
-		// TODO proper Text model support (see branch scratch/textmodel)
-		if (model.code !== null) {
-			val open = docStringAccess.quotationMarkQuotationMarkQuotationMarkKeyword_1_0
-			val close = docStringAccess.quotationMarkQuotationMarkQuotationMarkKeyword_1_3
-			
-			model.code.regionFor.keyword(open).prepend[indent]
-			model.code.text.lines.forEach[prepend[indent]]
-			model.code.regionFor.keyword(close).prepend[indent]
-			model.code.format()
-		}
-	}
-
-	def dispatch void format(Table model, extension IFormattableDocument doc) {
-		// TODO...
-	}
-
-	def dispatch void format(DocString model, extension IFormattableDocument doc) {
-		// TODO...
-	}
-
-	def dispatch void format(Tag model, extension IFormattableDocument doc) {
-		// TODO...
-	}
-
-	// ----------------------------------------------------------
-	//
-	// Helper Methods
-	//
-	// ----------------------------------------------------------
-	
-	/**
-	 * Returns the semantic element that closes the Feature
-	 * 
-	 * Delegates to:
-	 * 1. The last element in scenarios
-	 * 2. The last element in background
-	 * 3. The EOL rule after title
-	 */
-	protected def ISemanticRegion endRegionFor(Feature model, extension IFormattableDocument doc) {
-		if (!model.scenarios.isEmpty()) {
-			return endRegionFor(model.scenarios.last, doc)
-		} else if (model.background !== null) {
-			return endRegionFor(model.background, doc)
-		}
-
-		return model.regionFor.ruleCallTo(EOLRule)
-	}
-
-	/**
-	 * Returns the semantic element that closes an AbstractScenario
-	 * 
-	 * Delegates to:
-	 * 1. The last element in `steps`
-	 * 3. The EOL rule after title
-	 */
-	protected def ISemanticRegion endRegionFor(AbstractScenario model, extension IFormattableDocument doc) {
-		if (!model.steps.isEmpty()) {
-			return endRegionFor(model.steps.last, doc)
-		}
-
-		return model.regionFor.ruleCallTo(EOLRule)
-	}
-
-	/**
-	 * Returns the semantic element that closes a ScenarioOutline
-	 * 
-	 * Delegates to:
-	 * 1. The last element in examples
-	 * 2. The last element in steps
-	 * 3. The EOL rule after title
-	 */
-	protected def ISemanticRegion endRegionFor(ScenarioOutline model, extension IFormattableDocument doc) {
-		if (!model.examples.isEmpty()) {
-			return endRegionFor(model.examples.last, doc)
-		} else if (!model.steps.isEmpty()) {
-			return endRegionFor(model.steps.last, doc)
-		}
-
-		return model.regionFor.ruleCallTo(EOLRule)
-	}
-
-	/**
-	 * Returns the semantic element that closes an Example
-	 * 
-	 * Delegates to:
-	 * 1. The EOL rule after the Table
-	 * 1. The EOL rule after the title
-	 */
-	protected def ISemanticRegion endRegionFor(Example model, extension IFormattableDocument doc) {
-		if (model.table !== null) {
-			return endRegionFor(model.table, doc)
-		}
-
-		return model.regionFor.ruleCallTo(EOLRule)
-	}
-
-	/**
-	 * Returns the semantic element that closes a Step
-	 * 
-	 * Delegates to:
-	 * 1. Either to code or table if present
-	 * 2. The EOL rule after `description`
-	 */
-	protected def ISemanticRegion endRegionFor(Step model, extension IFormattableDocument doc) {
-		if (model.code !== null) {
-			return endRegionFor(model.code, doc)
-		} else if (model.table !== null) {
-			return endRegionFor(model.table, doc)
-		}
-
-		return model.regionFor.ruleCallTo(EOLRule)
-	}
-
-	/**
-	 * Returns the semantic element that closes a DocString
-	 * 
-	 * Delegates to:
-	 * 1. The EOLRule at the end of the element
-	 */
-	protected def ISemanticRegion endRegionFor(DocString model, extension IFormattableDocument doc) {
-		return model.regionFor.ruleCall(docStringAccess.EOLTerminalRuleCall_2)
-	}
-
-	/**
-	 * Returns the semantic element that closes a Table
-	 * 
-	 * Delegates to:
-	 * 1. The EOLRule at the end of the table
-	 */
-	protected def ISemanticRegion endRegionFor(Table model, extension IFormattableDocument doc) {
-		return model.rows.last.regionFor.ruleCallTo(EOLRule)
-	}
+//	def dispatch void format(Background model, extension IFormattableDocument doc) {
+//		// format tags
+//		for (t : model.tags) {
+//			t.format()
+//		}
+//		
+//		// align keyword to column 0
+//		model.regionFor
+//				.keyword(backgroundAccess.backgroundKeyword_1)
+//				.prepend[noIndentation]
+//
+//		// Indent interior
+//		val begin = model.regionFor.ruleCallTo(EOLRule)
+//		val end = endRegionFor(model, doc)
+//		interior(begin, end)[indent]
+//
+//		// format steps
+//		for (s : model.steps) {
+//			s.prepend[indent]
+//			s.format()
+//		}
+//	}
+//
+//	def dispatch void format(Scenario model, extension IFormattableDocument doc) {
+//		// format tags
+//		for (t : model.tags) {
+//			t.format()
+//		}
+//		
+//		// align keyword to column 0
+//		model.regionFor
+//				.keyword(scenarioAccess.scenarioKeyword_1)
+//				.prepend[noIndentation]
+//
+//		// Indent interior
+//		val begin = model.regionFor.ruleCallTo(EOLRule)
+//		val end = endRegionFor(model, doc)
+//		interior(begin, end)[indent]
+//
+//		// format steps
+//		for (s : model.steps) {
+//			s.prepend[indent]
+//			s.format()
+//		}
+//	}
+//
+//	def dispatch void format(ScenarioOutline model, extension IFormattableDocument doc) {
+//		// format tags
+//		for (t : model.tags) {
+//			t.format()
+//		}
+//		
+//		// align keyword to column 0
+//		model.regionFor
+//				.keyword(scenarioOutlineAccess.scenarioKeyword_1)
+//				.prepend[noIndentation]
+//
+//		// Indent interior
+//		val begin = model.regionFor.ruleCallTo(EOLRule)
+//		val end = endRegionFor(model, doc)
+//		interior(begin, end)[indent]
+//
+//		// format steps
+//		for (s : model.steps) {
+//			s.prepend[indent]
+//			s.format()
+//		}
+//
+//		// format examples
+//		for (e : model.examples) {
+//			e.prepend[indent]
+//			e.format()
+//		}
+//	}
+//
+//	def dispatch void format(Example model, extension IFormattableDocument doc) {
+//		// format tags
+//		for (t : model.tags) {
+//			t.format()
+//		}
+//
+//		// TODO this is just a hacky work-around until we can figure
+//		// why having tags changes the indentation behavior of the 
+//		// keyword
+//		if (!model.tags.isEmpty()) {
+//			val region = model.regionFor.keyword(exampleAccess.examplesKeyword_1)
+//			region.prepend[indent]
+//		}
+//
+//		// format table
+//		model.table.rows.forEach[prepend[indent]]
+//		model.table.format()
+//	}
+//
+//	def dispatch void format(Step model, extension IFormattableDocument doc) {
+//		// TODO cleanup keyword/description
+//		// format table
+//		if (model.table !== null) {
+//			model.table.rows.forEach[prepend[indent]]
+//			model.table.format()
+//		}
+//
+//		// format code
+//		// TODO proper Text model support (see branch scratch/textmodel)
+//		if (model.code !== null) {
+//			val open = docStringAccess.quotationMarkQuotationMarkQuotationMarkKeyword_1_0
+//			val close = docStringAccess.quotationMarkQuotationMarkQuotationMarkKeyword_1_3
+//			
+//			model.code.regionFor.keyword(open).prepend[indent]
+//			model.code.text.lines.forEach[prepend[indent]]
+//			model.code.regionFor.keyword(close).prepend[indent]
+//			model.code.format()
+//		}
+//	}
+//
+//	def dispatch void format(Table model, extension IFormattableDocument doc) {
+//		// TODO...
+//	}
+//
+//	def dispatch void format(DocString model, extension IFormattableDocument doc) {
+//		// TODO...
+//	}
+//
+//	def dispatch void format(Tag model, extension IFormattableDocument doc) {
+//		// TODO...
+//	}
+//
+//	// ----------------------------------------------------------
+//	//
+//	// Helper Methods
+//	//
+//	// ----------------------------------------------------------
+//	
+//	/**
+//	 * Returns the semantic element that closes the Feature
+//	 * 
+//	 * Delegates to:
+//	 * 1. The last element in scenarios
+//	 * 2. The last element in background
+//	 * 3. The EOL rule after title
+//	 */
+//	protected def ISemanticRegion endRegionFor(Feature model, extension IFormattableDocument doc) {
+//		if (!model.scenarios.isEmpty()) {
+//			return endRegionFor(model.scenarios.last, doc)
+//		} else if (model.background !== null) {
+//			return endRegionFor(model.background, doc)
+//		}
+//
+//		return model.regionFor.ruleCallTo(EOLRule)
+//	}
+//
+//	/**
+//	 * Returns the semantic element that closes an AbstractScenario
+//	 * 
+//	 * Delegates to:
+//	 * 1. The last element in `steps`
+//	 * 3. The EOL rule after title
+//	 */
+//	protected def ISemanticRegion endRegionFor(AbstractScenario model, extension IFormattableDocument doc) {
+//		if (!model.steps.isEmpty()) {
+//			return endRegionFor(model.steps.last, doc)
+//		}
+//
+//		return model.regionFor.ruleCallTo(EOLRule)
+//	}
+//
+//	/**
+//	 * Returns the semantic element that closes a ScenarioOutline
+//	 * 
+//	 * Delegates to:
+//	 * 1. The last element in examples
+//	 * 2. The last element in steps
+//	 * 3. The EOL rule after title
+//	 */
+//	protected def ISemanticRegion endRegionFor(ScenarioOutline model, extension IFormattableDocument doc) {
+//		if (!model.examples.isEmpty()) {
+//			return endRegionFor(model.examples.last, doc)
+//		} else if (!model.steps.isEmpty()) {
+//			return endRegionFor(model.steps.last, doc)
+//		}
+//
+//		return model.regionFor.ruleCallTo(EOLRule)
+//	}
+//
+//	/**
+//	 * Returns the semantic element that closes an Example
+//	 * 
+//	 * Delegates to:
+//	 * 1. The EOL rule after the Table
+//	 * 1. The EOL rule after the title
+//	 */
+//	protected def ISemanticRegion endRegionFor(Example model, extension IFormattableDocument doc) {
+//		if (model.table !== null) {
+//			return endRegionFor(model.table, doc)
+//		}
+//
+//		return model.regionFor.ruleCallTo(EOLRule)
+//	}
+//
+//	/**
+//	 * Returns the semantic element that closes a Step
+//	 * 
+//	 * Delegates to:
+//	 * 1. Either to code or table if present
+//	 * 2. The EOL rule after `description`
+//	 */
+//	protected def ISemanticRegion endRegionFor(Step model, extension IFormattableDocument doc) {
+//		if (model.code !== null) {
+//			return endRegionFor(model.code, doc)
+//		} else if (model.table !== null) {
+//			return endRegionFor(model.table, doc)
+//		}
+//
+//		return model.regionFor.ruleCallTo(EOLRule)
+//	}
+//
+//	/**
+//	 * Returns the semantic element that closes a DocString
+//	 * 
+//	 * Delegates to:
+//	 * 1. The EOLRule at the end of the element
+//	 */
+//	protected def ISemanticRegion endRegionFor(DocString model, extension IFormattableDocument doc) {
+//		return model.regionFor.ruleCall(docStringAccess.EOLTerminalRuleCall_2)
+//	}
+//
+//	/**
+//	 * Returns the semantic element that closes a Table
+//	 * 
+//	 * Delegates to:
+//	 * 1. The EOLRule at the end of the table
+//	 */
+//	protected def ISemanticRegion endRegionFor(Table model, extension IFormattableDocument doc) {
+//		return model.rows.last.regionFor.ruleCallTo(EOLRule)
+//	}
 }
