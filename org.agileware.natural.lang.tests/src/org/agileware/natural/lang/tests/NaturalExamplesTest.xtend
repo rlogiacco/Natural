@@ -32,6 +32,7 @@ class NaturalExamplesTest extends AbstractExamplesTest<DocumentModel> {
 		assertExampleParses('''
 			Section: A
 			Section: B
+			
 			Section:
 		''')
 	}
@@ -74,6 +75,32 @@ class NaturalExamplesTest extends AbstractExamplesTest<DocumentModel> {
 			  The quick brown fox  
 			  	Jumps over the lazy dog
 			  
+		''')
+	}
+
+	@Test
+	def void example_08() {
+		assertExampleParses('''
+			# language: en  
+			  
+			Section:	A
+			  
+			  The quick brown fox  
+			  
+			  	Jumps over the lazy dog
+			  
+			  
+			Section:  B 
+			
+			  The quick brown fox  
+			
+			  Jumps over the lazy dog
+			  
+			Section:	A	B 
+			  The quick brown fox  
+			  
+			  	Jumps over the lazy dog
+			   
 		''')
 	}
 

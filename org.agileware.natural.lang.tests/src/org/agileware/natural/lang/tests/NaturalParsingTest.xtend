@@ -59,4 +59,34 @@ class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 			Jumps over the lazy dog
 		'''))
 	}
+	
+	@Test
+	def void multipleSectionsWithExtraWhitespace() {
+		val model = parse('''
+			# language: en  
+			  
+			Section:	A
+			  
+			  The quick brown fox  
+			  
+			  	Jumps over the lazy dog
+			  
+			  
+			Section:  B 
+			
+			  The quick brown fox  
+			
+			  Jumps over the lazy dog
+			  
+			Section:	A	B 
+			  The quick brown fox  
+			  
+			  	Jumps over the lazy dog
+			   
+		''')
+		
+		assertThat(model, notNullValue())
+		assertThat(validate(model), empty())
+		assertThat(model.sections, hasSize(3))
+	}
 }
