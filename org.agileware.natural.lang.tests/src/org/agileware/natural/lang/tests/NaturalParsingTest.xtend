@@ -15,39 +15,38 @@ import static org.hamcrest.Matchers.*
 
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
-class NaturalParsingTest  extends AbstractExamplesTest<DocumentModel> {
-	
+class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
+
 	@Test
-	def void helloDocumntModel() {
-		
+	def void singleSectionWithTitle() {
+
 		val model = parse('''
-			Section: Hello, Document Model!
-				The quick brown fox
-				Jumps over the lazt dog
+			Section: Hello, Natural!
 		''')
 
 		assertThat(model, notNullValue())
 		assertThat(validate(model), empty())
-		
+
 		assertThat(model.sections, hasSize(1))
-		assertThat(model.sections.get(0).title, 
-				equalTo("Hello, Document Model!"))
-		
-		assertThat(model.sections.get(0).narrative, 
-				equalTo('''
-					The quick brown fox
-					Jumps over the lazt dog
-				'''))
+		assertThat(model.sections.get(0).title, equalTo("Hello, Natural!"))
 	}
-	
-//	@Test
-//	def void testSectionsWithBlankLines() {
-//		
-//		val model = parse('''
-//			Section: Hello, Document Model!
-//		''')
-//
-//		assertThat(model, notNullValue())
-//		assertThat(validate(model), empty())
-//	}
+
+	@Test
+	def void singleSectionWithNarrative() {
+
+		val model = parse('''
+			Section:
+			The quick brown fox
+			Jumps over the lazy dog
+		''')
+
+		assertThat(model, notNullValue())
+		assertThat(validate(model), empty())
+		assertThat(model.sections, hasSize(1))
+
+		val s1 = model.sections.get(0)
+		assertThat(s1.title, nullValue())
+		assertThat(s1.narrative, notNullValue())
+		assertThat(s1.narrative.sections, hasSize(1))
+	}
 }

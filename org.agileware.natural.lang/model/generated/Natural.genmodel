@@ -11,7 +11,16 @@
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//Section">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//Section/title"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//Section/narrative"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Section/narrative"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//Narrative">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Narrative/sections"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//Paragraph">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Paragraph/lines"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//TextLine">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//TextLine/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
