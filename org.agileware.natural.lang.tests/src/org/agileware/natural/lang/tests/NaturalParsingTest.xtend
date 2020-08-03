@@ -3,6 +3,7 @@
  */
 package org.agileware.natural.lang.tests
 
+import com.google.inject.Inject
 import org.agileware.natural.lang.model.DocumentModel
 import org.agileware.natural.testing.AbstractExamplesTest
 import org.eclipse.xtext.testing.InjectWith
@@ -12,10 +13,13 @@ import org.junit.runner.RunWith
 
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
+import org.agileware.natural.lang.serializer.DefaultDocumentModelSerializer
 
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
 class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
+
+	@Inject DefaultDocumentModelSerializer serializer
 
 	@Test
 	def void singleSectionWithTitle() {
@@ -36,8 +40,8 @@ class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 
 		val model = parse('''
 			Section:
-			The quick brown fox
-			Jumps over the lazy dog
+				The quick brown fox
+				Jumps over the lazy dog
 		''')
 
 		assertThat(model, notNullValue())
@@ -48,5 +52,11 @@ class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 		assertThat(s1.title, nullValue())
 		assertThat(s1.narrative, notNullValue())
 		assertThat(s1.narrative.sections, hasSize(1))
+
+		val narrative = serializer.serialize(s1.narrative.sections.get(0))
+		assertThat(narrative, equalTo('''
+			The quick brown fox
+			Jumps over the lazy dog
+		'''))
 	}
 }
