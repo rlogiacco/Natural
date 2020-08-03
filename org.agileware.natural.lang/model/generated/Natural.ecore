@@ -13,8 +13,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Narrative">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sections" upperBound="-1"
-        eType="#//Paragraph" containment="true"/>
+        eType="#//NarrativeSection" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NarrativeSection"/>
   <eClassifiers xsi:type="ecore:EClass" name="Meta">
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" upperBound="-1" eType="#//Tag"
         containment="true"/>
@@ -23,7 +24,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Table">
+  <eClassifiers xsi:type="ecore:EClass" name="Table" eSuperTypes="#//NarrativeSection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//TableRow"
         containment="true"/>
   </eClassifiers>
@@ -34,7 +35,15 @@
   <eClassifiers xsi:type="ecore:EClass" name="TableCol">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cell" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Paragraph">
+  <eClassifiers xsi:type="ecore:EClass" name="DocString" eSuperTypes="#//NarrativeSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" eType="#//DocStringInternal"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DocStringInternal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lines" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Paragraph" eSuperTypes="#//NarrativeSection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="lines" upperBound="-1"
         eType="#//TextLine" containment="true"/>
   </eClassifiers>

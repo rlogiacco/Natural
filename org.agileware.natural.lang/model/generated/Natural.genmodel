@@ -17,6 +17,7 @@
     <genClasses ecoreClass="Natural.ecore#//Narrative">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Narrative/sections"/>
     </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//NarrativeSection"/>
     <genClasses ecoreClass="Natural.ecore#//Meta">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Meta/tags"/>
     </genClasses>
@@ -32,6 +33,12 @@
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//TableCol">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//TableCol/cell"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//DocString">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//DocString/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//DocStringInternal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//DocStringInternal/lines"/>
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//Paragraph">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Paragraph/lines"/>

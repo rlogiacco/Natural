@@ -4,7 +4,11 @@
 package org.agileware.natural.lang.tests
 
 import com.google.inject.Inject
+import org.agileware.natural.lang.model.DocString
 import org.agileware.natural.lang.model.DocumentModel
+import org.agileware.natural.lang.model.Paragraph
+import org.agileware.natural.lang.model.Table
+import org.agileware.natural.lang.serializer.DefaultNaturalSerializer
 import org.agileware.natural.testing.AbstractExamplesTest
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
@@ -13,13 +17,12 @@ import org.junit.runner.RunWith
 
 import static org.hamcrest.MatcherAssert.*
 import static org.hamcrest.Matchers.*
-import org.agileware.natural.lang.serializer.DefaultDocumentModelSerializer
 
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
 class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 
-	@Inject DefaultDocumentModelSerializer serializer
+	@Inject DefaultNaturalSerializer naturalSerializer
 
 	@Test
 	def void singleSectionWithTitle() {
@@ -53,13 +56,15 @@ class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 		assertThat(s1.narrative, notNullValue())
 		assertThat(s1.narrative.sections, hasSize(1))
 
-		val narrative = serializer.serialize(s1.narrative.sections.get(0))
-		assertThat(narrative, equalTo('''
+		val paragraph = s1.narrative.sections.get(0) as Paragraph
+		assertThat(paragraph, notNullValue())
+		assertThat(paragraph.lines, hasSize(2))
+		assertThat(naturalSerializer.serialize(paragraph), equalTo('''
 			The quick brown fox
 			Jumps over the lazy dog
 		'''))
 	}
-	
+
 	@Test
 	def void multipleSectionsWithMetaTags() {
 		val model = parse('''
@@ -78,20 +83,93 @@ class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 			
 			Section: C
 		''')
-		
+
 		assertThat(model, notNullValue())
 		assertThat(validate(model), empty())
 		assertThat(model.sections, hasSize(3))
-		
+
 		val a = model.sections.get(0)
 		assertThat(a.meta.tags, hasSize(1))
 		assertThat(a.meta.tags.get(0).id, equalTo("title"))
 		assertThat(a.meta.tags.get(0).value, equalTo("Hello, Meta Tags!"))
-		
+
 		val b = model.sections.get(1)
 		assertThat(b.meta.tags, hasSize(2))
-		
+
 		val c = model.sections.get(2)
 		assertThat(c.meta.tags, hasSize(2))
+	}
+	
+
+	@Test
+	def void singleNarrativeWithMultipleSections() {
+
+		val model = parse('''
+			Section: Hello, Text Model! 
+			  
+				The quick brown fox  
+				
+				Jumps over the lazy dog 
+		''')
+
+		assertThat(model, notNullValue())
+		assertThat(validate(model), empty())
+		assertThat(model.sections, hasSize(1))
+
+		val s = model.sections.get(0)
+		assertThat(s.title, equalTo("Hello, Text Model!"))
+		assertThat(s.narrative, notNullValue())
+		assertThat(s.narrative.sections, hasSize(2))
+	}
+	
+
+	@Test
+	def void singleNarrativeWithTable() {
+
+		val model = parse('''
+			Section: Hello, Table Model!
+				| foo | bar |
+				| a   | 0   |
+				| b   | 1   |
+		''')
+
+		assertThat(model, notNullValue())
+		assertThat(validate(model), empty())
+		assertThat(model.sections, hasSize(1))
+
+		val s = model.sections.get(0)
+		assertThat(s.title, equalTo("Hello, Table Model!"))
+		assertThat(s.narrative, notNullValue())
+		assertThat(s.narrative.sections, hasSize(1))
+		
+		val table = s.narrative.sections.get(0) as Table
+		assertThat(table, notNullValue())
+		assertThat(table.rows, hasSize(3))
+	}
+
+	@Test
+	def void singleNarrativeWithDocString() {
+
+		val model = parse('''
+			Section: Hello, DocString Model!
+			"""
+				The quick brown fox
+				  
+				Jumps over the lazy dog 
+				
+			"""
+		''')
+
+		assertThat(model, notNullValue())
+		assertThat(validate(model), empty())
+		assertThat(model.sections, hasSize(1))
+
+		val s = model.sections.get(0)
+		assertThat(s.title, equalTo("Hello, DocString Model!"))
+		assertThat(s.narrative, notNullValue())
+		assertThat(s.narrative.sections, hasSize(1))
+		
+		val docString = s.narrative.sections.get(0) as DocString
+		assertThat(docString.contents, notNullValue())
 	}
 }

@@ -13,27 +13,21 @@ DocumentModel:
 	  (EOL sections+=Section)*
 	EOL?
 ;
-
-/**
- * A Section is a generic element with the structure:
- * ```
- * meta=Meta?
- * 'Keyword:' title=Text?
- * (EOL narrative=Narrative)?
- * ```
- * With optional blank lines before and after the section. Where possible,
- * EOL separation rules should be defined in the containing model rather than the
- * Section node itself.
- */
+	
 Section: {Section}
 	meta=Meta?
 	'Section:' title=Text?
-	(EOL narrative=Narrative)?
+	  (EOL narrative=Narrative)?
 ;
 
 Narrative:
-   sections+=Paragraph
-     (EOL sections+=Paragraph)*
+   sections+=NarrativeSection
+     (EOL sections+=NarrativeSection)*
+;
+
+NarrativeSection: Paragraph
+	| Table
+	| DocString
 ;
 
 Meta: {Meta}
@@ -75,7 +69,27 @@ TableCol: {TableCol}
 terminal TABLE_CELL: '|' !('|' | '\n' | '\r')*;
 
 
-// Text Model
+// DocString Model
+////
+
+/**
+ * 
+ */
+DocString:
+	('"""' contents=DocStringInternal '"""' NL)
+	  | ("'''" contents=DocStringInternal "'''" NL)
+;
+
+DocStringInternal:
+	EOL
+	lines+=Text
+	(EOL lines+=Text)*
+	EOL
+;
+
+
+
+// Free Text Model
 ////
 
 Paragraph:
