@@ -1,6 +1,6 @@
 package org.agileware.natural.cucumber.ui.syntaxcoloring;
 
-import org.agileware.natural.cucumber.model.CucumberModel;
+import org.agileware.natural.cucumber.model.CucumberDocument;
 import org.agileware.natural.cucumber.model.Feature;
 import org.agileware.natural.cucumber.model.Scenario;
 import org.agileware.natural.cucumber.model.ScenarioOutline;
@@ -18,7 +18,7 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 		if (resource == null || resource.getParseResult() == null || resource.getContents().size() <= 0) {
 			return;
 		}
-		Feature feature = ((CucumberModel) resource.getContents().get(0)).getFeature();
+		Feature feature = ((CucumberDocument) resource.getContents().get(0)).getFeature();
 		if (feature.getBackground() != null) {
 			provideHighlightingForSteps(feature.getBackground().getSteps(), acceptor);
 		}

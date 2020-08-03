@@ -1,7 +1,7 @@
 package org.agileware.natural.lang.serializer
 
 import org.agileware.natural.lang.model.DocString
-import org.agileware.natural.lang.model.DocumentModel
+import org.agileware.natural.lang.model.NaturalDocument
 import org.agileware.natural.lang.model.Meta
 import org.agileware.natural.lang.model.Narrative
 import org.agileware.natural.lang.model.NarrativeSection
@@ -14,7 +14,7 @@ import org.agileware.natural.lang.model.Tag
 import org.eclipse.xtext.util.Strings
 
 class DefaultNaturalSerializer {
-	def String serialize(DocumentModel model) '''
+	def String serialize(NaturalDocument model) '''
 		# language: en
 		«FOR s : model.sections»
 			

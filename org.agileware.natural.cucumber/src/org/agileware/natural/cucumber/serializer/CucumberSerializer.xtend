@@ -2,7 +2,7 @@ package org.agileware.natural.cucumber.serializer
 
 import javax.swing.text.TableView.TableRow
 import org.agileware.natural.cucumber.model.Background
-import org.agileware.natural.cucumber.model.CucumberModel
+import org.agileware.natural.cucumber.model.CucumberDocument
 import org.agileware.natural.cucumber.model.Feature
 import org.agileware.natural.cucumber.model.Scenario
 import org.agileware.natural.cucumber.model.ScenarioOutline
@@ -11,7 +11,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 class CucumberSerializer {
 
-	def String serialize(CucumberModel model) '''
+	def String serialize(CucumberDocument model) '''
 		# language: en
 	'''
 

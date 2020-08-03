@@ -6,8 +6,8 @@
     complianceLevel="8.0" copyrightFields="false" runtimeVersion="2.20">
   <genPackages prefix="Model" basePackage="org.agileware.natural.lang" disposableProviderFactory="true"
       fileExtensions="natural" ecorePackage="Natural.ecore#/">
-    <genClasses ecoreClass="Natural.ecore#//DocumentModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//DocumentModel/sections"/>
+    <genClasses ecoreClass="Natural.ecore#//NaturalDocument">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//NaturalDocument/sections"/>
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//Section">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Section/meta"/>

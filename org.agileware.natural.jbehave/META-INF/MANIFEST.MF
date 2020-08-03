@@ -7,6 +7,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.jbehave; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.agileware.natural.common,
+ org.agileware.natural.lang;visibility:=reexport,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
@@ -49,5 +50,8 @@ Export-Package: org.agileware.natural.jbehave;uses:="com.google.inject,org.eclip
    org.eclipse.xtext,
    org.eclipse.xtext.serializer",
  org.agileware.natural.jbehave.services;uses:="org.eclipse.xtext.service,org.eclipse.xtext",
- org.agileware.natural.jbehave.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation"
+ org.agileware.natural.jbehave.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation",
+ org.agileware.natural.jbehave.model.util,
+ org.agileware.natural.jbehave.model.impl,
+ org.agileware.natural.jbehave.model
 Import-Package: org.apache.log4j

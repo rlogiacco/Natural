@@ -4,7 +4,7 @@
 package org.agileware.natural.lang.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.lang.model.DocumentModel
+import org.agileware.natural.lang.model.NaturalDocument
 import org.agileware.natural.lang.services.NaturalGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -13,7 +13,7 @@ class NaturalFormatter extends AbstractFormatter2 {
 	
 	@Inject extension NaturalGrammarAccess
 
-	def dispatch void format(DocumentModel model, extension IFormattableDocument document) {
+	def dispatch void format(NaturalDocument model, extension IFormattableDocument document) {
 		for (s : model.sections) {
 			s.format()
 		}

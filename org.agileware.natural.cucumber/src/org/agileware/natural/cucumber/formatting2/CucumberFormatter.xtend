@@ -4,7 +4,7 @@
 package org.agileware.natural.cucumber.formatting2
 
 import com.google.inject.Inject
-import org.agileware.natural.cucumber.model.CucumberModel
+import org.agileware.natural.cucumber.model.CucumberDocument
 import org.agileware.natural.cucumber.services.CucumberGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -13,7 +13,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 
 	@Inject extension CucumberGrammarAccess cucumberGrammarAccess
 
-	def dispatch void format(CucumberModel model, extension IFormattableDocument doc) {
+	def dispatch void format(CucumberDocument model, extension IFormattableDocument doc) {
 		 println(textRegionAccess)
 
 //		// format tags

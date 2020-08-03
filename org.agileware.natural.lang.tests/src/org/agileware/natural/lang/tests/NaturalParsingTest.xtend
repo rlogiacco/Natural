@@ -5,7 +5,7 @@ package org.agileware.natural.lang.tests
 
 import com.google.inject.Inject
 import org.agileware.natural.lang.model.DocString
-import org.agileware.natural.lang.model.DocumentModel
+import org.agileware.natural.lang.model.NaturalDocument
 import org.agileware.natural.lang.model.Paragraph
 import org.agileware.natural.lang.model.Table
 import org.agileware.natural.lang.serializer.DefaultNaturalSerializer
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*
 
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
-class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
+class NaturalParsingTest extends AbstractExamplesTest<NaturalDocument> {
 
 	@Inject DefaultNaturalSerializer naturalSerializer
 

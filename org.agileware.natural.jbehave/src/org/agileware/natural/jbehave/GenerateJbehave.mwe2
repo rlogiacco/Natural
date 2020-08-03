@@ -36,6 +36,7 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.agileware.natural.jbehave.Jbehave"
 			fileExtensions = "story"
+			referencedResource =  "platform:/resource/org.agileware.natural.lang/model/generated/Natural.genmodel"
 
 			serializer = {
 				generateStub = true

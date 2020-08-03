@@ -1,6 +1,6 @@
 package org.agileware.natural.lang.tests
 
-import org.agileware.natural.lang.model.DocumentModel
+import org.agileware.natural.lang.model.NaturalDocument
 import org.agileware.natural.testing.AbstractExamplesTest
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 
 @RunWith(XtextRunner)
 @InjectWith(NaturalInjectorProvider)
-class NaturalExamplesTest extends AbstractExamplesTest<DocumentModel> {
+class NaturalExamplesTest extends AbstractExamplesTest<NaturalDocument> {
 
 	@Test
 	def void example_01() {
