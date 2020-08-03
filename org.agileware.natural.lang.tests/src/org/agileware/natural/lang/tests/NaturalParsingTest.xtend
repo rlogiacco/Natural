@@ -61,32 +61,37 @@ class NaturalParsingTest extends AbstractExamplesTest<DocumentModel> {
 	}
 	
 	@Test
-	def void multipleSectionsWithExtraWhitespace() {
+	def void multipleSectionsWithMetaTags() {
 		val model = parse('''
-			# language: en  
-			  
-			Section:	A
-			  
-			  The quick brown fox  
-			  
-			  	Jumps over the lazy dog
-			  
-			  
-			Section:  B 
+			# language: en
+			@title: Hello, Meta Tags!  
 			
-			  The quick brown fox  
+			Section: A
+				The quick brown fox
+				Jumps over the lazy dog
 			
-			  Jumps over the lazy dog
-			  
-			Section:	A	B 
-			  The quick brown fox  
-			  
-			  	Jumps over the lazy dog
-			   
+			@foo
+			@bar
+			Section: B
+			
+			@foo @bar
+			
+			Section: C
 		''')
 		
 		assertThat(model, notNullValue())
 		assertThat(validate(model), empty())
 		assertThat(model.sections, hasSize(3))
+		
+		val a = model.sections.get(0)
+		assertThat(a.meta.tags, hasSize(1))
+		assertThat(a.meta.tags.get(0).id, equalTo("title"))
+		assertThat(a.meta.tags.get(0).value, equalTo("Hello, Meta Tags!"))
+		
+		val b = model.sections.get(1)
+		assertThat(b.meta.tags, hasSize(2))
+		
+		val c = model.sections.get(2)
+		assertThat(c.meta.tags, hasSize(2))
 	}
 }

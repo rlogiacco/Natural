@@ -10,18 +10,30 @@ generate model "http://www.agileware.org/natural/lang"
 DocumentModel:
 	EOL?
 	sections+=Section
-	(EOL sections+=Section)*
+	  (EOL sections+=Section)*
 	EOL?
 ;
 	
 Section: {Section}
+	meta=Meta?
 	'Section:' title=Text?
-	(EOL narrative=Narrative)?
+	  (EOL narrative=Narrative)?
 ;
 
 Narrative:
    sections+=Paragraph
-   (EOL sections+=Paragraph)*
+     (EOL sections+=Paragraph)*
+;
+
+Meta: {Meta}
+	tags+=Tag
+	  (EOL? tags+=Tag)*
+	EOL
+;
+
+Tag: {Tag}
+	'@' id=WORD
+	(':' value=Text)?
 ;
 
 

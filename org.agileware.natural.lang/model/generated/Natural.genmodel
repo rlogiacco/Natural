@@ -10,11 +10,19 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//DocumentModel/sections"/>
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//Section">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Section/meta"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//Section/title"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Section/narrative"/>
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//Narrative">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Narrative/sections"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//Meta">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Meta/tags"/>
+    </genClasses>
+    <genClasses ecoreClass="Natural.ecore#//Tag">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//Tag/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Natural.ecore#//Tag/value"/>
     </genClasses>
     <genClasses ecoreClass="Natural.ecore#//Paragraph">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Natural.ecore#//Paragraph/lines"/>

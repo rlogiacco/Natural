@@ -104,4 +104,23 @@ class NaturalExamplesTest extends AbstractExamplesTest<DocumentModel> {
 		''')
 	}
 
+
+
+	@Test
+	def void example_09() {
+		assertExampleParses('''
+			# language: en
+			@title: Hello, Meta Tags!
+			
+			Section: A
+			
+			@foo
+			@bar
+			Section: B
+			
+			@foo @bar
+			
+			Section: C
+		''')
+	}
 }
