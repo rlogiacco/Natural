@@ -17,3 +17,6 @@ jobs:
         stale-pr-message: 'This PR has not been received attention for a while: marking it as stale.'
         stale-issue-label: 'Stale'
         stale-pr-label: 'Stale'
+        days-before-stale: 60
+        days-before-close: 7
+        only-labels: "Pending Feedback"
