@@ -1,4 +1,4 @@
-name: Mark stale issues and pull requests
+name: Mark issues and pull requests pending feedback as stale, then close
 
 on:
   schedule:
@@ -10,10 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/stale@v1
+    - uses: actions/stale@v3.0.9
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'This issue has not been updated for a while: marking it as stale.'
-        stale-pr-message: 'This PR has not been received attention for a while: marking it as stale.'
+        stale-issue-message: 'This issue has not been updated for a while: marking it as stale. It will be closed in seven (7) days if not updated.'
+        close-issue-message: 'Closing this issue for inactivity'
+        stale-pr-message: 'This PR has not been received attention for a while: marking it as stale. It will be closed in seven (7) days if not updated.'
+        close-pr-message: 'Closing this PR for inactivity.'
         stale-issue-label: 'Stale'
         stale-pr-label: 'Stale'
+        days-before-stale: 60
+        days-before-close: 7
+        only-labels: "Pending Feedback"
