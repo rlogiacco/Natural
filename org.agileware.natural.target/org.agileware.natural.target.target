@@ -31,8 +31,16 @@
 			<unit id="org.opentest4j" version="1.2.0.v20190826-0900"/>
 			<unit id="org.objectweb.asm" version="7.2.0.v20191010-1910"/>
 			<unit id="org.objectweb.asm.tree" version="7.2.0.v20191010-1910"/>
-			<unit id="io.github.classgraph" version="4.8.35.v20190528-1517"/>
-			<repository location="https://download.eclipse.org/tools/orbit/downloads/2020-03"/>
+			<unit id="org.hamcrest.core" version="1.3.0.v20180420-1519"/>
+			<unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
+			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository"/>
+			<unit id="org.hamcrest.core" version="1.3.0.v20180420-1519"/>
+			<unit id="org.hamcrest.core.source" version="1.3.0.v20180420-1519"/>
+			<unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
+			<unit id="org.hamcrest.library.source" version="1.3.0.v20180524-2246"/>
 		</location>
 	</locations>
 </target>
