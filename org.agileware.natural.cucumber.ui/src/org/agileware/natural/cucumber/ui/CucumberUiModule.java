@@ -8,10 +8,10 @@ import org.agileware.natural.cucumber.ui.syntaxcoloring.LexicalHighlightingCalcu
 import org.agileware.natural.cucumber.ui.syntaxcoloring.SemanticHighlightingCalculator;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -22,8 +22,6 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 		super(plugin);
 	}
 	
-	// TODO requires Xbase
-	//	@Override
 	public Class<? extends IHyperlinkHelper> bindIHyperlinkHelper() {
 		return CucumberHyperlinkHelper.class;
 	}
@@ -35,12 +33,11 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 	public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
 		return LexicalHighlightingCalculator.class;
 	}
-	
+
 	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
 		return SemanticHighlightingCalculator.class;
 	}
-
-	@Override
+	
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
 		return BuilderParticipant.class;
 	}

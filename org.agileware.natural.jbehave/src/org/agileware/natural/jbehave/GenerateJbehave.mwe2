@@ -6,7 +6,7 @@ import org.eclipse.xtext.xtext.generator.model.project.*
 var rootPath = ".."
 
 Workflow {
-	
+
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
@@ -36,13 +36,13 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.agileware.natural.jbehave.Jbehave"
 			fileExtensions = "story"
-
+			referencedResource = "platform:/resource/org.agileware.natural.lang/model/generated/Natural.genmodel"
 			serializer = {
 				generateStub = true
 			}
 			validator = {
-				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
+			// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
 				generateDeprecationValidation = true
 			}
 			formatter = {
@@ -55,6 +55,9 @@ Workflow {
 			}
 			parserGenerator = {
 				debugGrammar = true
+				options = auto-inject {
+					classSplitting = true
+				}
 			}
 			projectWizard = {
 				generate = false

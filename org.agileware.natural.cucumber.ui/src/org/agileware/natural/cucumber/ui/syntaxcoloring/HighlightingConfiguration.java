@@ -2,85 +2,56 @@ package org.agileware.natural.cucumber.ui.syntaxcoloring;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor;
 import org.eclipse.xtext.ui.editor.utils.TextStyle;
 
-public class HighlightingConfiguration implements IHighlightingConfiguration {
+public class HighlightingConfiguration extends DefaultHighlightingConfiguration {
 
-	public static final String STEP_KEYWORD = "stepCondition";
-	public static final String TAG = "tag";
-	public static final String TABLE = "table";
-	public static final String PLACEHOLDER = "placeholder";
-	public static final String DOC_STRING = "docstring";
-	public static final String KEYWORD_ID = "keyword";
-	public static final String COMMENT_ID = "comment";
-	public static final String STRING_ID = "string";
-	public static final String NUMBER_ID = "number";
-	public static final String DEFAULT_ID = "default";
-	public static final String INVALID_TOKEN_ID = "error";
+	public static final String TAG_ID = "tag";
 
+	public static final String TABLE_ID = "table";
+
+	public static final String PLACEHOLDER_ID = "placeholder";
+	
+	public static final String DOC_STRING_ID = "docstring";
+
+	@Override
 	public void configure(IHighlightingConfigurationAcceptor acceptor) {
-		acceptor.acceptDefaultHighlighting(KEYWORD_ID, "Keyword", keywordTextStyle());
-		acceptor.acceptDefaultHighlighting(COMMENT_ID, "Comment", commentTextStyle());
-		acceptor.acceptDefaultHighlighting(STRING_ID, "String", stringTextStyle());
-		acceptor.acceptDefaultHighlighting(NUMBER_ID, "Number", numberTextStyle());
-		acceptor.acceptDefaultHighlighting(DEFAULT_ID, "Default", defaultTextStyle());
-		acceptor.acceptDefaultHighlighting(INVALID_TOKEN_ID, "Invalid Symbol", errorTextStyle());
-		// Gherkin
-		acceptor.acceptDefaultHighlighting(STEP_KEYWORD, "Step Condition", stepKeywordTextStyle());
-		acceptor.acceptDefaultHighlighting(TAG, "Tag", tagTextStyle());
-		acceptor.acceptDefaultHighlighting(TABLE, "Table", numberTextStyle());
-		acceptor.acceptDefaultHighlighting(PLACEHOLDER, "Placeholder", tagTextStyle());
-		acceptor.acceptDefaultHighlighting(DOC_STRING, "Doc String", numberTextStyle());
+		acceptor.acceptDefaultHighlighting(TAG_ID, "Tag", tagTextStyle());
+		acceptor.acceptDefaultHighlighting(TABLE_ID, "Table", tableTextStyle());
+		acceptor.acceptDefaultHighlighting(PLACEHOLDER_ID, "Placeholder", placeholderTextStyle());
+		acceptor.acceptDefaultHighlighting(DOC_STRING_ID, "DocString", docStringTextStyle());
+
+		super.configure(acceptor);
 	}
 
-	public static TextStyle defaultTextStyle() {
-		TextStyle textStyle = new TextStyle();
-		// textStyle.setBackgroundColor(new RGB(255, 255, 255));
-		textStyle.setColor(new RGB(0, 0, 0));
+	@Override
+	public TextStyle numberTextStyle() {
+		TextStyle textStyle = stringTextStyle().copy();
 		return textStyle;
 	}
-
-	public static TextStyle errorTextStyle() {
-		TextStyle textStyle = defaultTextStyle().copy();
-		// textStyle.setColor(new RGB(255, 0, 0));
+	
+	public TextStyle placeholderTextStyle() {
+		TextStyle textStyle = stringTextStyle().copy();
 		return textStyle;
 	}
-
-	public static TextStyle numberTextStyle() {
+	
+	public TextStyle docStringTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(125, 125, 125));
 		return textStyle;
 	}
 
-	public static TextStyle stringTextStyle() {
+	public TextStyle tableTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(42, 0, 255));
+		textStyle.setColor(new RGB(125, 125, 125));
 		return textStyle;
 	}
 
-	public static TextStyle commentTextStyle() {
+	public TextStyle tagTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(63, 127, 95));
-		return textStyle;
-	}
-
-	public static TextStyle keywordTextStyle() {
-		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(127, 0, 85));
-		textStyle.setStyle(SWT.BOLD);
-		return textStyle;
-	}
-
-	public static TextStyle stepKeywordTextStyle() {
-		TextStyle textStyle = keywordTextStyle();
-		textStyle.setStyle(SWT.ITALIC);
-		return textStyle;
-	}
-
-	public static TextStyle tagTextStyle() {
-		TextStyle textStyle = numberTextStyle();
+		textStyle.setColor(new RGB(125, 125, 125));
 		textStyle.setStyle(SWT.ITALIC);
 		return textStyle;
 	}

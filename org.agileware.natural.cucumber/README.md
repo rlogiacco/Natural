@@ -2,4 +2,4 @@
 
 Xtext language model for Cucumber editor
 
-![Cucumber AST](model/Cucumber.jpg)
+![Cucumber AST](cucumber.model.jpg)

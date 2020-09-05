@@ -1,42 +1,52 @@
 package org.agileware.natural.cucumber.serializer
 
+import com.google.inject.Inject
+import org.agileware.natural.cucumber.cucumber.AbstractScenario
 import org.agileware.natural.cucumber.cucumber.Background
-import org.agileware.natural.cucumber.cucumber.DocString
+import org.agileware.natural.cucumber.cucumber.CucumberModel
 import org.agileware.natural.cucumber.cucumber.Example
 import org.agileware.natural.cucumber.cucumber.Feature
 import org.agileware.natural.cucumber.cucumber.Scenario
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline
 import org.agileware.natural.cucumber.cucumber.Step
-import org.agileware.natural.cucumber.cucumber.Table
-import org.agileware.natural.cucumber.cucumber.TableCol
-import org.agileware.natural.cucumber.cucumber.TableRow
-import org.agileware.natural.cucumber.cucumber.Tag
+import org.agileware.natural.lang.serializer.NaturalSerializer
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import org.agileware.natural.cucumber.cucumber.Text
 
 class CucumberSerializer {
 
+	@Inject extension NaturalSerializer
+
+	def String serialize(CucumberModel model) '''
+		# language: en
+		«IF model.document !== null»
+			«serialize(model.document)»
+		«ENDIF»
+	'''
+
 	def String serialize(Feature model) '''
-		«FOR t : model.tags»
-			«serialize(t)»
-		«ENDFOR»
+		«serialize(model.meta)»
 		Feature: «model.title»
 		«model.narrative»
-		
-		«IF model.background !== null»
-			«serialize(model.background)»
-		«ENDIF»
 		«FOR s : model.scenarios»
-		
-			«IF s instanceof Scenario»
-				«serialize(s)»
-			«ELSEIF s instanceof ScenarioOutline»
-				«serialize(s)»
-			«ENDIF»
+			
+			«serialize(s)»
 		«ENDFOR»
 	'''
 
+	def String serialize(AbstractScenario model) {
+		if (model instanceof Background) {
+			return serialize(model as Background)
+		} else if (model instanceof Scenario) {
+			return serialize(model as Scenario)
+		} else if (model instanceof ScenarioOutline) {
+			return serialize(model as ScenarioOutline)
+		}
+
+		return "\n"
+	}
+
 	def String serialize(Background model) '''
+		«serialize(model.meta)»
 		Background: «model.title»
 		«model.narrative»
 		«FOR s : model.steps»
@@ -45,9 +55,7 @@ class CucumberSerializer {
 	'''
 
 	def String serialize(Scenario model) '''
-		«FOR t : model.tags»
-			«serialize(t)»
-		«ENDFOR»
+		«serialize(model.meta)»
 		Scenario: «model.title»
 		«model.narrative»
 		«FOR s : model.steps»
@@ -56,17 +64,12 @@ class CucumberSerializer {
 	'''
 
 	def String serialize(ScenarioOutline model) '''
-		«FOR t : model.tags»
-			«serialize(t)»
-		«ENDFOR»
-		Scenario Outline: «model.title»
+		«serialize(model.meta)»
+		Scenario Outline:«model.title»
 		«model.narrative»
-		«FOR s : model.steps»
-			«serialize(s)»
-		«ENDFOR»
 		«FOR e : model.examples»
-		
-			«serialize(e)»
+			
+				«serialize(e)»
 		«ENDFOR»
 	'''
 
@@ -80,43 +83,8 @@ class CucumberSerializer {
 		«NodeModelUtils.getNode(model).getText()»
 		«IF model.table !== null»
 			«serialize(model.table)»
-		«ELSEIF model.code !== null»
-			«serialize(model.code)»
+		«ELSEIF model.text !== null»
+			«serialize(model.text)»
 		«ENDIF»
-	'''
-
-	def String serialize(Tag model) '''
-		@«model.id»
-	'''
-
-	def String serialize(Table model) '''
-		«FOR r : model.rows»
-			«serialize(r)»
-		«ENDFOR»
-	'''
-
-
-	def String serialize(TableRow model) '''
-		«model.cols.map[serialize].join()» |
-	'''
-	
-	def String serialize(TableCol model) {
-		return model.cell
-	}
-
-	def String serialize(DocString model) '''
-		"""
-		«serialize(model.text)»
-		"""
-	'''
-	
-	/**
-	 * TODO this will most certainly break two-way serialization,
-	 *      as trailing line breaks are not assigned within the TEXT_VALUE.
-	 */
-	def String serialize(Text model) '''
-		«FOR l : model.lines»
-			«l.value»
-		«ENDFOR»
 	'''
 }
