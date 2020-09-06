@@ -1,8 +1,10 @@
 package org.agileware.natural.cucumber.validation;
 
 import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.ABSTRACT_SCENARIO__STEPS;
+import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.FEATURE__SCENARIOS;
 import static org.agileware.natural.cucumber.cucumber.CucumberPackage.Literals.FEATURE__TITLE;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_FEATURE_TITLE;
+import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_SCENARIOS;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_SCENARIO_STEPS;
 
 import org.agileware.natural.common.JavaAnnotationMatcher;
@@ -35,16 +37,16 @@ public class CucumberValidator extends AbstractCucumberValidator {
 		}
 	}
 
-	private final static class Counter implements JavaAnnotationMatcher.Command {
-		private int count = 0;
-
-		public int get() {
-			return count;
-		}
-
-		@Override
-		public void match(final String annotationValue, final IMethod method) {
-			count += 1;
+	/**
+	 * Issue a warning if Feature has no scenarios defined. **note:** Do not depend
+	 * on grammar rule validation
+	 *
+	 * @param model
+	 */
+	@Check(CheckType.FAST)
+	public void missingScenarios(final Feature model) {
+		if (model.getScenarios().isEmpty()) {
+			warning("Feature has no scenarios", model, FEATURE__SCENARIOS, MISSING_SCENARIOS);
 		}
 	}
 
@@ -75,6 +77,19 @@ public class CucumberValidator extends AbstractCucumberValidator {
 			warning("No definition found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
 		} else if (counter.get() > 1) {
 			warning("Multiple definitions found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
+		}
+	}
+
+	private final static class Counter implements JavaAnnotationMatcher.Command {
+		private int count = 0;
+
+		public int get() {
+			return count;
+		}
+
+		@Override
+		public void match(final String annotationValue, final IMethod method) {
+			count += 1;
 		}
 	}
 }
