@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Natural Core SDK
+Automatic-Module-Name: org.agileware.natural.common
 Bundle-SymbolicName: org.agileware.natural.common
 Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: org.agileware.natural.common.Activator
