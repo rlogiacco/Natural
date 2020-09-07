@@ -9,6 +9,7 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.agileware.natural.jbehave,
  org.agileware.natural.jbehave.ide,
  org.agileware.natural.lang.ui,
+ org.agileware.natural.stepmatcher.ui,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,

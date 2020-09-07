@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.agileware.natural.common.JavaAnnotationMatcher;
-import org.agileware.natural.common.JavaHyperlink;
 import org.agileware.natural.cucumber.cucumber.Step;
+import org.agileware.natural.stepmatcher.ui.JavaAnnotationMatcher;
+import org.agileware.natural.stepmatcher.ui.JavaHyperlink;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.IHyperlink;

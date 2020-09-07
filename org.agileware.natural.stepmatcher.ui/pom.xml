@@ -6,9 +6,8 @@
 		<artifactId>natural</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.agileware.natural.common</artifactId>
+	<artifactId>org.agileware.natural.stepmatcher.ui</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<version>1.4.0-SNAPSHOT</version>
 
 	<build>
 		<plugins>
