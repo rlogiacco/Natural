@@ -29,7 +29,7 @@ public class LexicalHighlightingCalculator extends AbstractAntlrTokenToAttribute
 		if ("RULE_TAG".equals(tokenName)) {
 			return HighlightingConfiguration.TAG_ID;
 		}
-		if ("RULE_DOC_STRING".equals(tokenName)) {
+		if ("RULE_DOC_STRING_LITERAL".equals(tokenName)) {
 			return HighlightingConfiguration.DOC_STRING_ID;
 		}
 		if ("RULE_TABLE_CELL".equals(tokenName)) {
