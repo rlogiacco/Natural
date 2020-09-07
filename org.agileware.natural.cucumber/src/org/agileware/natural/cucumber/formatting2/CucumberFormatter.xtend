@@ -27,6 +27,7 @@ import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.FormatterRequest
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
+import org.eclipse.xtext.util.Strings
 
 class CucumberFormatter extends AbstractFormatter2 {
 
@@ -46,13 +47,13 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def dispatch void format(CucumberModel model, extension IFormattableDocument doc) {
 		// println(textRegionAccess)
 		model.document.format()
-		// println(doc)
+	// println(doc)
 	}
 
 	def dispatch void format(Feature model, extension IFormattableDocument doc) {
-		
+
 		resetIndentation()
-		
+
 		// Condense all BLANK_SPACE regions into single line break
 		model.allRegionsFor.ruleCallsTo(BLANK_SPACERule).forEach [ region |
 			// println('''Trimming BLANK_SPACE: «region.offset» «region.length»''')
@@ -133,7 +134,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 			model.append[newLine]
 		}
 	}
-	
+
 	def dispatch void format(Step model, extension IFormattableDocument doc) {
 		// TODO cleanup whitespace
 		if (model.text !== null) {
@@ -144,7 +145,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 			model.table.format().prepend[indent]
 		}
 	}
-	
+
 	def dispatch void format(Example model, extension IFormattableDocument doc) {
 
 		if (model.meta !== null) {
@@ -179,7 +180,6 @@ class CucumberFormatter extends AbstractFormatter2 {
 	// Helper Methods
 	//
 	// ----------------------------------------------------------
-	
 	def void formatScenarioBlock(AbstractScenario model, Keyword keyword, Assignment titleAssignment,
 		extension IFormattableDocument doc) {
 
@@ -213,7 +213,7 @@ class CucumberFormatter extends AbstractFormatter2 {
 
 		// Format steps
 		model.steps.forEach[format().prepend[indent]]
-		
+
 		decreaseIndent()
 	}
 
@@ -224,6 +224,8 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def ISemanticRegion endIndent(Feature model) {
 		if (!model.scenarios.isEmpty()) {
 			return model.scenarios.last.endIndent()
+		} else if (model.narrative !== null) {
+			return model.narrative.endIndent()
 		}
 
 		return model.regionFor.ruleCallTo(NLRule)
@@ -232,27 +234,30 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def ISemanticRegion startIndent(AbstractScenario model) {
 		return model.regionFor.ruleCallTo(NLRule)
 	}
-	
+
 	def ISemanticRegion endIndent(Narrative model) {
 		return model.sections.last.endIndent()
 	}
 
 	def ISemanticRegion endIndent(Block model) {
-		if(model instanceof Table) {
+		if (model instanceof Table) {
 			return model.rows.last.regionFor.ruleCallTo(NLRule)
 		}
-		
+
 		return model.regionFor.ruleCallTo(NLRule)
 	}
 
 	def ISemanticRegion endIndent(AbstractScenario model) {
-
 		if (model instanceof ScenarioOutline) {
 			if (!model.examples.isEmpty()) {
 				return model.examples.last.endIndent()
 			}
-		} else if (!model.steps.isEmpty()) {
+		}
+
+		if (!model.steps.isEmpty()) {
 			return model.steps.last.endIndent()
+		} else if (model.narrative !== null) {
+			return model.narrative.endIndent()
 		}
 
 		return model.regionFor.ruleCallTo(NLRule)
@@ -261,9 +266,11 @@ class CucumberFormatter extends AbstractFormatter2 {
 	def ISemanticRegion endIndent(Example model) {
 		if (model.table !== null) {
 			return model.table.endIndent()
+		} else if (Strings.isEmpty(model.narrative)) {
+			return model.regionFor.ruleCall(exampleAccess.NLTerminalRuleCall_5_2)
 		}
 
-		return model.regionFor.ruleCallTo(NLRule)
+		return model.regionFor.ruleCall(exampleAccess.NLTerminalRuleCall_4)
 	}
 
 	def ISemanticRegion endIndent(Step model) {

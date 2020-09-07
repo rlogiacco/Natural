@@ -91,7 +91,7 @@ terminal PLACEHOLDER:
 Example: {Example}
 	(meta=Meta BLANK_SPACE?)?
 	'Examples:' title=RawText? NL
-	(BLANK_SPACE? narrative=RawTextBlock)?
+	(BLANK_SPACE? narrative=RawTextBlock NL)?
 	(BLANK_SPACE? table=Table)
 ;
 
