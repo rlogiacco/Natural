@@ -100,7 +100,7 @@ public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(final MetaElement ele) {
-		return ele.getId();
+		return ele.getId().substring(1);
 	}
 
 	String image(final MetaElement ele) {

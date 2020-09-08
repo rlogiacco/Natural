@@ -3,9 +3,14 @@
  */
 package org.agileware.natural.cucumber.ui.outline;
 
+import org.agileware.natural.cucumber.cucumber.AbstractScenario;
 import org.agileware.natural.cucumber.cucumber.CucumberModel;
+import org.agileware.natural.cucumber.cucumber.Example;
+import org.agileware.natural.cucumber.cucumber.Feature;
+import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
 import org.agileware.natural.cucumber.cucumber.Step;
 import org.agileware.natural.lang.model.DocString;
+import org.agileware.natural.lang.model.Narrative;
 import org.agileware.natural.lang.model.Table;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
@@ -17,9 +22,47 @@ import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 public class CucumberOutlineTreeProvider extends DefaultOutlineTreeProvider {
 
 	protected void _createChildren(final DocumentRootNode parentNode, final CucumberModel model) {
-		if(model.getDocument() != null) {
+		if (model.getDocument() != null) {
 			createNode(parentNode, model.getDocument());
 		}
+	}
+
+	protected void _createChildren(final DocumentRootNode parentNode, final Feature model) {
+		if (model.getMeta() != null) {
+			createNode(parentNode, model.getMeta());
+		}
+
+		for (final AbstractScenario scenario : model.getScenarios()) {
+			createNode(parentNode, scenario);
+		}
+	}
+
+	protected void _createChildren(final DocumentRootNode parentNode, final AbstractScenario model) {
+		if (model.getMeta() != null) {
+			createNode(parentNode, model.getMeta());
+		}
+
+		for (final Step step : model.getSteps()) {
+			createNode(parentNode, step);
+		}
+	}
+
+	protected void _createChildren(final DocumentRootNode parentNode, final ScenarioOutline model) {
+		if (model.getMeta() != null) {
+			createNode(parentNode, model.getMeta());
+		}
+
+		for (final Step step : model.getSteps()) {
+			createNode(parentNode, step);
+		}
+
+		for (final Example step : model.getExamples()) {
+			createNode(parentNode, step);
+		}
+	}
+
+	protected boolean _isLeaf(final Narrative modelElement) {
+		return true;
 	}
 
 	protected boolean _isLeaf(final DocString modelElement) {
