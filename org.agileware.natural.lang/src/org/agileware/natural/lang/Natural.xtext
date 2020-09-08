@@ -48,13 +48,14 @@ Meta: {Meta}
  * 
  */
 MetaElement: {MetaElement}
-	id=TAG (':' value=RawText)?
+	id=TAG
+//	'@' => id=ID => (':' value=RawText)?
 ;
 
-
-terminal TAG:
-	AT (LETTER | DIGIT) (LETTER | DIGIT | '_' | '-')*
+terminal TAG: 
+	'@' !(' ' | '\t' | '\n' | '\r')+
 ;
+
 
 /**
  * 
@@ -148,26 +149,48 @@ RawTextBlock returns ecore::EString:
 StartLiteral: ID
 	| NUMBER
 	| STRING
-	| PUNCTUATION
-//	| GLOB
+	| GLOB
 	| ANY_OTHER
 ;
 
 Literal: ID
 	| NUMBER
 	| STRING
-	| PUNCTUATION
-//	| GLOB
+	| GLOB
 	| ANY_OTHER
 ;
 
-PUNCTUATION: AT
-	| ':'
-	| '\\#'
-	| '...'
+terminal ID:
+	(LETTER | DIGIT)
+	(LETTER | DIGIT | '_' | '-')*
 ;
 
-terminal AT: '@';
+terminal fragment LETTER: ARABIC_ALPHABET
+	| ARMENIAN_ALPHABET
+	| GREEK_ALPHABET
+	| CYRILLIC_ALPHABET
+	| HEBREW_ALPHABET
+	| LATIN_ALPHABET
+	| THAI_ALPHABET
+	| TAGALOG_ALPHABET
+	| DIACRITICAL_MARKS
+;
+
+
+// Reference: https://jrgraphix.net/r/Unicode/
+////
+
+terminal fragment ARABIC_ALPHABET: ('\u0600'..'\u06FF');
+terminal fragment ARMENIAN_ALPHABET: ('\u0530'..'\u058F');
+terminal fragment GREEK_ALPHABET: ('\u0370'..'\u03FF');
+terminal fragment CYRILLIC_ALPHABET: ('\u0400'..'\u04FF');
+terminal fragment HEBREW_ALPHABET: ('\u0590'..'\u05FF');
+terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+	| ('\u0061'..'\u007A')
+;
+terminal fragment THAI_ALPHABET: ('\u0E00'..'\u0E7F');
+terminal fragment TAGALOG_ALPHABET: ('\u0400'..'\u04FF');
+terminal fragment DIACRITICAL_MARKS: ('\u0300'..'\u036F');
 
 terminal STRING returns ecore::EString:
 	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
@@ -207,46 +230,14 @@ terminal fragment EXPONENT_PART:
 	('e' | 'E') ('+' | '-')? DIGIT+
 ;
 
-terminal ID:
-	(LETTER | DIGIT)
-	(LETTER | DIGIT | '_' | '-')*
-;
-
-terminal fragment LETTER: ARABIC_ALPHABET
-	| ARMENIAN_ALPHABET
-	| GREEK_ALPHABET
-	| CYRILLIC_ALPHABET
-	| HEBREW_ALPHABET
-	| LATIN_ALPHABET
-	| THAI_ALPHABET
-	| TAGALOG_ALPHABET
-	| DIACRITICAL_MARKS
-;
-
-
-// Reference: https://jrgraphix.net/r/Unicode/
-////
-
-terminal fragment ARABIC_ALPHABET: ('\u0600'..'\u06FF');
-terminal fragment ARMENIAN_ALPHABET: ('\u0530'..'\u058F');
-terminal fragment GREEK_ALPHABET: ('\u0370'..'\u03FF');
-terminal fragment CYRILLIC_ALPHABET: ('\u0400'..'\u04FF');
-terminal fragment HEBREW_ALPHABET: ('\u0590'..'\u05FF');
-terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
-	| ('\u0061'..'\u007A')
-;
-terminal fragment THAI_ALPHABET: ('\u0E00'..'\u0E7F');
-terminal fragment TAGALOG_ALPHABET: ('\u0400'..'\u04FF');
-terminal fragment DIACRITICAL_MARKS: ('\u0300'..'\u036F');
-
 terminal SL_COMMENT:
 	'#' !('\n' | '\r')* NL
 ;
 
-//terminal GLOB:
-//	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
-//	!(' ' | '\t' | '\n' | '\r')*
-//;
+terminal GLOB:
+	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
+	!(' ' | '\t' | '\n' | '\r')*
+;
 
 BLANK_SPACE: NL+;
 terminal NL: ('\r'? '\n') | EOF;

@@ -38,7 +38,7 @@ class NaturalSerializer {
 
 		return '''
 			«FOR t : model.tags»
-				«t.value»
+				«t.id»
 			«ENDFOR»
 		'''
 	}

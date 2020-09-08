@@ -361,7 +361,6 @@ class NaturalFormatterTest extends AbstractFormatterTest<NaturalModel> {
 				
 				@foo  @bar	
 					
-					@title: Hello, World!
 			@foobar
 				Section:
 					The quick brown fox
@@ -372,7 +371,6 @@ class NaturalFormatterTest extends AbstractFormatterTest<NaturalModel> {
 				
 				@foo
 				@bar
-				@title: Hello, World!
 				@foobar
 				Section:
 					The quick brown fox

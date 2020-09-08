@@ -130,11 +130,11 @@ class JbehaveFormatter extends AbstractFormatter2 {
 		// Trim leading/trailing whitespace
 		model.surround[noSpace]
 
-		if (model.value !== null) {
-			// Cleanup whitespace around value assignment
-			model.regionFor.keyword(':').prepend[noSpace].append[oneSpace]
-			model.regionFor.assignment(metaElementAccess.valueAssignment_2_1).prepend[oneSpace].append[noSpace]
-		}
+//		if (model.value !== null) {
+//			// Cleanup whitespace around value assignment
+//			model.regionFor.keyword(':').prepend[noSpace].append[oneSpace]
+//			model.regionFor.assignment(metaElementAccess.valueAssignment_2_1).prepend[oneSpace].append[noSpace]
+//		}
 
 		// Insert newline if not present from BLANK_SPACE
 		if (model.isLast()) {

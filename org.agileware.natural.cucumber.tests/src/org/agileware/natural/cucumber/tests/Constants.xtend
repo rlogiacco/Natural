@@ -4,8 +4,8 @@ class Constants {
 	
 	public static final String EXAMPLE_FEATURE = '''
 		#language: en
-		@release: Release-2
-		@version: 1.0.0
+		@release:Release-2
+		@version:1.0.0
 		@pet_store
 		Feature: Add a new pet  
 			

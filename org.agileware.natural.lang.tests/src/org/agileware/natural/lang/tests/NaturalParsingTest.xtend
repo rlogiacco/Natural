@@ -118,9 +118,8 @@ class NaturalParsingTest extends AbstractExamplesTest<NaturalModel> {
 		val model = parse('''
 			# language: en
 			@foo	@bar
-			@title: Hello, World!
 			@version:v1
-			@release: 2
+			@release:2.0
 			Document:
 		''')
 
@@ -130,7 +129,7 @@ class NaturalParsingTest extends AbstractExamplesTest<NaturalModel> {
 		val doc = model.document
 		assertThat(doc, notNullValue())
 		assertThat(doc.meta, notNullValue())
-		assertThat(doc.meta.tags, hasSize(5))
+		assertThat(doc.meta.tags, hasSize(4))
 	}
 
 	@Test

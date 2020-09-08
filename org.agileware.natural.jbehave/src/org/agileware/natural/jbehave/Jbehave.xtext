@@ -231,8 +231,7 @@ StartLiteral: ID
 	| NUMBER
 	| STRING
 	| PLACEHOLDER
-	| PUNCTUATION
-//	| GLOB
+	| GLOB
 	| ANY_OTHER
 ;
 
@@ -242,8 +241,7 @@ Literal: ID
 	| STRING
 	| PLACEHOLDER
 	| STEP_KEYWORD
-	| PUNCTUATION
-//	| GLOB
+	| GLOB
 	| ANY_OTHER
 ;
 

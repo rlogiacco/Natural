@@ -109,7 +109,6 @@ class NaturalExamplesTest extends AbstractExamplesTest<NaturalModel> {
 	def void example_09() {
 		assertExampleParses('''
 			# language: en
-			@title: Hello, Meta Tags!
 			@version:1
 			Document:   Hello, 	Natural! 
 			
@@ -127,9 +126,9 @@ class NaturalExamplesTest extends AbstractExamplesTest<NaturalModel> {
 	def void example_10() {
 		assertExampleParses('''
 			Document: Hello, ASCII Punctuation! 
-			#,./;'[]\-=
-			#<>?:"{}|_+
-			#!@$%^&*()`~
+			,./;'[]\-=
+			<>?:"{}|_+
+			!@$%^&*()`~
 		''')
 	}
 }
