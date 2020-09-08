@@ -1,18 +1,18 @@
 #language: en
-@release: Release-2
-@version: 1.0.0
+@release:Release-2
+@version:1.0.0
 @pet_store
 Feature: Add a new pet  
-
+	
+	"""
 	In order to sell a pet
 	As a store owner
 	I want to add a new pet to the catalog
-	
 	"""
+	
 	,./;'[]\-=
 	<>?:"{}|_+
 	!@$%^&*()`~
-	"""
 	
 	| x | y |
 	| a | 0 |
