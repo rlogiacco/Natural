@@ -22,7 +22,8 @@
 		<test.args></test.args>
 	</properties>
 	<modules>
-		<module>org.agileware.natural.common</module>
+		<module>org.agileware.natural.stepmatcher</module>
+		<module>org.agileware.natural.stepmatcher.ui</module>
 		<module>org.agileware.natural.lang</module>
 		<module>org.agileware.natural.lang.ide</module>
 		<module>org.agileware.natural.lang.tests</module>

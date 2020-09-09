@@ -6,7 +6,7 @@ Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.cucumber; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.agileware.natural.common;visibility:=reexport,
+Require-Bundle: org.agileware.natural.stepmatcher;visibility:=reexport,
  org.agileware.natural.lang;visibility:=reexport,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,

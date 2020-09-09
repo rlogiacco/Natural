@@ -7,12 +7,13 @@ import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSI
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_SCENARIOS;
 import static org.agileware.natural.cucumber.validation.CucumberIssueCodes.MISSING_SCENARIO_STEPS;
 
-import org.agileware.natural.common.JavaAnnotationMatcher;
+import java.util.Collection;
+
 import org.agileware.natural.cucumber.cucumber.AbstractScenario;
 import org.agileware.natural.cucumber.cucumber.CucumberPackage;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Step;
-import org.eclipse.jdt.core.IMethod;
+import org.agileware.natural.stepmatcher.IStepMatcher;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.ValidationMessageAcceptor;
@@ -22,7 +23,7 @@ import com.google.inject.Inject;
 public class CucumberValidator extends AbstractCucumberValidator {
 
 	@Inject
-	private JavaAnnotationMatcher matcher;
+	private IStepMatcher matcher;
 
 	/**
 	 * Issue a warning if the Feature has no title
@@ -68,28 +69,21 @@ public class CucumberValidator extends AbstractCucumberValidator {
 	 *
 	 * @param model
 	 */
-	@Check(CheckType.EXPENSIVE)
+	@Check(CheckType.NORMAL)
 	public void checkStepMatching(final Step step) {
-		final Counter counter = new Counter();
-		final String description = step.getDescription().trim();
-		matcher.findMatches(description, counter);
-		if (counter.get() == 0) {
-			warning("No definition found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
-		} else if (counter.get() > 1) {
-			warning("Multiple definitions found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
-		}
-	}
+		if (!matcher.isActivated())
+			return;
 
-	private final static class Counter implements JavaAnnotationMatcher.Command {
-		private int count = 0;
-
-		public int get() {
-			return count;
-		}
-
-		@Override
-		public void match(final String annotationValue, final IMethod method) {
-			count += 1;
+		final String keyword = step.getKeyword();
+		final String description = step.getDescription();
+		if (keyword != null && description != null) {
+			final Collection<?> matches = matcher.findMatches(keyword, description);
+			if (matches.size() == 0) {
+				warning("No definition found for `" + description + "`", CucumberPackage.Literals.STEP__DESCRIPTION);
+			} else if (matches.size() > 1) {
+				warning("Multiple definitions found for `" + description + "`",
+						CucumberPackage.Literals.STEP__DESCRIPTION);
+			}
 		}
 	}
 }

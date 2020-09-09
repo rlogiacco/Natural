@@ -5,8 +5,8 @@ package org.agileware.natural.cucumber.ui.contentassist;
 
 import java.util.Collection;
 
-import org.agileware.natural.common.AbstractAnnotationDescriptor;
-import org.agileware.natural.common.JavaAnnotationMatcher;
+import org.agileware.natural.stepmatcher.ui.AbstractAnnotationDescriptor;
+import org.agileware.natural.stepmatcher.ui.JavaAnnotationMatcher;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.impl.RuleCallImpl;

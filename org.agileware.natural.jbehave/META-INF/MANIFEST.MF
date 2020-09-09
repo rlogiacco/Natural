@@ -6,8 +6,8 @@ Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.jbehave; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.agileware.natural.common;visibility:=reexport,
- org.agileware.natural.lang;visibility:=reexport,
+Require-Bundle: org.agileware.natural.lang;visibility:=reexport,
+ org.agileware.natural.stepmatcher;visibility:=reexport,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",

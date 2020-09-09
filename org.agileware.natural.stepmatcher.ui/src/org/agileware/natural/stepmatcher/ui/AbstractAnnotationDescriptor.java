@@ -1,4 +1,4 @@
-package org.agileware.natural.common;
+package org.agileware.natural.stepmatcher.ui;
 
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IType;
