@@ -30,6 +30,10 @@ import com.google.inject.Singleton;
 @Singleton
 public class JavaAnnotationMatcher implements IStepMatcher {
 
+	private static boolean isMatchingAnnotationValue(final String annotationValue, final String description) {
+		return annotationValue.startsWith("/") && description.matches(annotationValue);
+	}
+
 	@Inject
 	private AbstractAnnotationDescriptor descriptor;
 
@@ -84,7 +88,7 @@ public class JavaAnnotationMatcher implements IStepMatcher {
 		if (!cache.isEmpty()) {
 			for (final List<Entry> entries : cache.values()) {
 				for (final Entry entry : entries) {
-					if (description.matches(entry.annotationValue)) {
+					if (isMatchingAnnotationValue(entry.annotationValue, description)) {
 						command.match(entry.annotationValue, entry.method);
 					}
 				}
@@ -125,7 +129,7 @@ public class JavaAnnotationMatcher implements IStepMatcher {
 											cache.put(method.getCompilationUnit(), entries);
 										}
 										entries.add(new Entry(annotationValue, method));
-										if (description.matches(annotationValue)) {
+										if (isMatchingAnnotationValue(annotationValue, description)) {
 											command.match(annotationValue, method);
 										}
 									}

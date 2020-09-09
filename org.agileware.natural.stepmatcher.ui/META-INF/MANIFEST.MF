@@ -18,4 +18,11 @@ Require-Bundle: org.agileware.natural.stepmatcher,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.agileware.natural.stepmatcher.ui
 Bundle-ActivationPolicy: lazy
-Export-Package: org.agileware.natural.stepmatcher.ui
+Export-Package: org.agileware.natural.stepmatcher.ui;
+  uses:="org.osgi.framework,
+   org.eclipse.jdt.core,
+   org.eclipse.jface.text,
+   org.agileware.natural.stepmatcher,
+   org.eclipse.jface.text.hyperlink,
+   org.eclipse.jdt.core.search,
+   org.eclipse.ui.plugin"
