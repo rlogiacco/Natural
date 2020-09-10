@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.agileware.natural.stepmatcher.AnnotationMacthEntry;
 import org.agileware.natural.stepmatcher.IStepMatcher;
@@ -31,7 +33,13 @@ import com.google.inject.Singleton;
 public class JavaAnnotationMatcher implements IStepMatcher {
 
 	private static boolean isMatchingAnnotationValue(final String annotationValue, final String description) {
-		return annotationValue.startsWith("/") && description.matches(annotationValue);
+		try {
+			return description.matches(Pattern.quote(annotationValue));
+		} catch (final PatternSyntaxException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	@Inject
