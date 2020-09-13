@@ -8,8 +8,8 @@
 
 	<properties>
 		<natural.version>1.0.0-SNAPSHOT</natural.version>
-		<xtext.version>2.21.0</xtext.version>
-		<mwe2.version>2.11.2</mwe2.version>
+		<xtext.version>2.22.0</xtext.version>
+		<mwe2.version>2.11.3</mwe2.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
