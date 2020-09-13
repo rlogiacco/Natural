@@ -34,8 +34,6 @@ class CucumberParsingTest extends AbstractParserTest<CucumberModel> {
 
 		assertThat(model, notNullValue())
 		assertThat(validate(model), empty())
-
-		println(serializer.serialize(model))
 	}
 
 	@Test
