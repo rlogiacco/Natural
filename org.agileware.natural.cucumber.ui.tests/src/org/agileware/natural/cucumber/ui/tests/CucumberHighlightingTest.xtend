@@ -317,18 +317,9 @@ class CucumberHighlightingTest extends AbstractHighlightingTest {
 			Given 0xFFFFFF
 		'''.testHighlighting("0xFFFFFF", numberTextStyle)
 	}
-			
+
 	@Test
 	def void number_10() {
-		'''
-			Feature:
-			Scenario:
-			Given 052
-		'''.testHighlighting("052", numberTextStyle)
-	}
-			
-	@Test
-	def void number_11() {
 		'''
 			Feature:
 			Scenario:
@@ -337,7 +328,7 @@ class CucumberHighlightingTest extends AbstractHighlightingTest {
 	}
 			
 	@Test
-	def void number_12() {
+	def void number_11() {
 		'''
 			Feature:
 			Scenario:
