@@ -6,7 +6,7 @@
 
 ### &#x26A0; **WARNING**
 
-The fact this project is open source **does not** mean you are entitled to contact me on my personal email address nor implies I'm willing to work for you for free. If you have a problem which is not addressed by this plugin either you wait until the fix comes in or you fix it yourself and, if wish, submit a pull request.
+The fact this project is open source **does not** mean you are entitled to contact me on my personal email address nor implies I'm willing to work for you for free: if you have a problem which is not addressed by this plugin either you wait until the fix comes in or you fix it yourself and, if you wish so, submit a pull request.
 If you don't have the knowledge or the time to fix your issue you can always hire someone to do it for you. In any case, **do not** submit requests or issues to my personal email address.
 
 ### You heard me, don't force my hand on this.
