@@ -5,8 +5,8 @@ package org.agileware.natural.cucumber.ui.contentassist;
 
 import java.util.Collection;
 
-import org.agileware.natural.common.AbstractAnnotationDescriptor;
-import org.agileware.natural.common.JavaAnnotationMatcher;
+import org.agileware.natural.stepmatcher.ui.AbstractAnnotationDescriptor;
+import org.agileware.natural.stepmatcher.ui.JavaAnnotationMatcher;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.impl.RuleCallImpl;
@@ -16,28 +16,34 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import com.google.inject.Inject;
 
 /**
- * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
+ * see
+ * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on
+ * how to customize content assistant
  */
 public class CucumberProposalProvider extends AbstractCucumberProposalProvider {
 
 	@Inject
 	private JavaAnnotationMatcher matcher;
-	
+
 	@Inject
 	private AbstractAnnotationDescriptor descriptor;
-	
-	public void complete_Step(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		if (((RuleCallImpl)context.getLastCompleteNode().getGrammarElement()).getRule().getName().equals("EOL") && context.getPrefix().length() == 0) {
-			for (String entry : descriptor.getNames()) {
+
+	@Override
+	public void complete_Step(final EObject model, final RuleCall ruleCall, final ContentAssistContext context,
+			final ICompletionProposalAcceptor acceptor) {
+		if (((RuleCallImpl) context.getLastCompleteNode().getGrammarElement()).getRule().getName().equals("NL")
+				&& context.getPrefix().length() == 0) {
+			for (final String entry : descriptor.getNames()) {
 				acceptor.accept(createCompletionProposal(entry + " ", context));
 			}
 		}
 	}
-	
-	public void complete_StepDescription(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		Collection<String> proposals = matcher.findProposals();
+
+	public void complete_StepDescription(final EObject model, final RuleCall ruleCall,
+			final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+		final Collection<String> proposals = matcher.findProposals();
 		for (String proposal : proposals) {
-			String display = proposal;
+			final String display = proposal;
 			if (proposal.charAt(0) == '^') {
 				proposal = proposal.substring(1);
 			}

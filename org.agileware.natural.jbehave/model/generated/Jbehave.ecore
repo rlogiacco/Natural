@@ -1,67 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jbehave" nsURI="http://www.agileware.org/natural/jbehave" nsPrefix="jbehave">
+  <eClassifiers xsi:type="ecore:EClass" name="JbehaveModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="document" eType="#//Story"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Story">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="description" eType="#//Description"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="#//Meta" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="narrative" eType="#//Narrative"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="narrative" eType="#//StoryNarrative"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lifecycle" eType="#//Lifecycle"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
         eType="#//Scenario" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Narrative">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inOrderTo" eType="#//InOrderTo"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Description">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Meta" eSuperTypes="platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Meta"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StoryNarrative">
     <eStructuralFeatures xsi:type="ecore:EReference" name="asA" eType="#//AsA" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="iWantTo" eType="#//IWantTo"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="wantTo" eType="#//IWantTo"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scenario">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="#//Meta" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="given" eType="#//GivenStories"
+  <eClassifiers xsi:type="ecore:EClass" name="StoryNarrativeA" eSuperTypes="#//StoryNarrative">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inOrderTo" eType="#//InOrderTo"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" upperBound="-1"
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StoryNarrativeB" eSuperTypes="#//StoryNarrative">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="soThat" eType="#//SoThat"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StoryNarrativeElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InOrderTo" eSuperTypes="#//StoryNarrativeElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AsA" eSuperTypes="#//StoryNarrativeElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IWantTo" eSuperTypes="#//StoryNarrativeElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SoThat" eSuperTypes="#//StoryNarrativeElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Lifecycle">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="before" eType="#//LifecycleBefore"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="after" eType="#//LifecycleAfter"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleBefore">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//LifecycleBeforeElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleBeforeElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
+        eType="#//Step" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleAfter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//LifecycleAfterElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleAfterElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outcome" eType="#//Outcome"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
+        eType="#//Step" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scope">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ScopeType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ScopeType">
+    <eLiterals name="STEP" literal="STEP"/>
+    <eLiterals name="SCENARIO" value="1" literal="SCENARIO"/>
+    <eLiterals name="STORY" value="2" literal="STORY"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Outcome">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//OutcomeType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="OutcomeType">
+    <eLiterals name="ANY" literal="ANY"/>
+    <eLiterals name="SUCCESS" value="1" literal="SUCCESS"/>
+    <eLiterals name="FAILURE" value="2" literal="FAILURE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scenario">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="#//Meta" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
         eType="#//Step" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="examples" eType="#//Examples"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GivenStories">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="resources" upperBound="-1"
-        eType="#//StoryPath" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StoryPath">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Meta">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//Tag" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Step">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InOrderTo">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AsA">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IWantTo">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Examples">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Table"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Table">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rows" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Tag">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

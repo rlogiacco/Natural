@@ -8,8 +8,8 @@
 
 	<properties>
 		<natural.version>1.0.0-SNAPSHOT</natural.version>
-		<xtext.version>2.21.0</xtext.version>
-		<mwe2.version>2.11.2</mwe2.version>
+		<xtext.version>2.22.0</xtext.version>
+		<mwe2.version>2.11.3</mwe2.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -22,8 +22,13 @@
 		<test.args></test.args>
 	</properties>
 	<modules>
-		<module>org.agileware.natural.common</module>
-		<module>org.agileware.natural.common.feature</module>
+		<module>org.agileware.natural.stepmatcher</module>
+		<module>org.agileware.natural.stepmatcher.ui</module>
+		<module>org.agileware.natural.lang</module>
+		<module>org.agileware.natural.lang.ide</module>
+		<module>org.agileware.natural.lang.tests</module>
+		<module>org.agileware.natural.lang.ui</module>
+		<module>org.agileware.natural.lang.ui.tests</module>
 		<module>org.agileware.natural.cucumber</module>
 		<module>org.agileware.natural.cucumber.feature</module>
 		<module>org.agileware.natural.cucumber.ide</module>
@@ -39,8 +44,6 @@
 		<module>org.agileware.natural.jbehave.tests</module>
 		<module>org.agileware.natural.jbehave.ui.tests</module>
 		<module>org.agileware.natural.repository</module>
-		<module>org.agileware.natural.stepmatcher</module>
-		<module>org.agileware.natural.stepmatcher.feature</module>
 		<module>org.agileware.natural.testing</module>
 		<module>org.agileware.natural.target</module>
 	</modules>

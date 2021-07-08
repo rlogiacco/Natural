@@ -6,24 +6,25 @@ package org.agileware.natural.cucumber.ui;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.HighlightingConfiguration;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.LexicalHighlightingCalculator;
 import org.agileware.natural.cucumber.ui.syntaxcoloring.SemanticHighlightingCalculator;
+import org.agileware.natural.stepmatcher.IStepMatcher;
+import org.agileware.natural.stepmatcher.ui.AbstractAnnotationDescriptor;
+import org.agileware.natural.stepmatcher.ui.JavaAnnotationMatcher;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.builder.IXtextBuilderParticipant;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class CucumberUiModule extends AbstractCucumberUiModule {
-	
-	public CucumberUiModule(AbstractUIPlugin plugin) {
+
+	public CucumberUiModule(final AbstractUIPlugin plugin) {
 		super(plugin);
 	}
-	
-	// TODO requires Xbase
-	//	@Override
+
 	public Class<? extends IHyperlinkHelper> bindIHyperlinkHelper() {
 		return CucumberHyperlinkHelper.class;
 	}
@@ -35,7 +36,7 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 	public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
 		return LexicalHighlightingCalculator.class;
 	}
-	
+
 	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
 		return SemanticHighlightingCalculator.class;
 	}
@@ -43,5 +44,29 @@ public class CucumberUiModule extends AbstractCucumberUiModule {
 	@Override
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
 		return BuilderParticipant.class;
+	}
+
+	public Class<? extends IStepMatcher> bindIStepMatcher() {
+		return JavaAnnotationMatcher.class;
+	}
+
+	public final static String[] STEPS = { "Given", "When", "Then", "And", "But" };
+	private static final String CUCUMBER_PACKAGE = "io.cucumber.java.en";
+
+	public Class<? extends AbstractAnnotationDescriptor> bindAnnotationDescriptor() {
+		return CucumberAnnotationDescriptor.class;
+	}
+
+	public static class CucumberAnnotationDescriptor extends AbstractAnnotationDescriptor {
+
+		@Override
+		public String[] getNames() {
+			return STEPS;
+		}
+
+		@Override
+		public String getPackage() {
+			return CUCUMBER_PACKAGE;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 package org.agileware.natural.cucumber.tests
 
-import org.agileware.natural.cucumber.cucumber.Feature
+import org.agileware.natural.cucumber.cucumber.CucumberModel
 import org.agileware.natural.testing.AbstractFormatterTest
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
@@ -11,7 +11,7 @@ import static org.agileware.natural.cucumber.tests.Constants.EXAMPLE_FEATURE
 
 @RunWith(XtextRunner)
 @InjectWith(CucumberInjectorProvider)
-class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
+class CucumberFormatterTest extends AbstractFormatterTest<CucumberModel> {
 
 	@Test
 	def void preserveValidFormatting() {
@@ -24,13 +24,13 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val toBeFormatted = '''
 			# language: en
 			Feature: Jack and Jill
-			
-			Background:
-				Given a precondition
-			
-			Scenario: Jack falls down
-				When Jack falls down
-				Then Jill comes tumbling after
+				
+				Background:
+					Given a precondition
+				
+				Scenario: Jack falls down
+					When Jack falls down
+					Then Jill comes tumbling after
 		'''
 		assertFormatted(toBeFormatted)
 	}
@@ -52,13 +52,13 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val expectation = '''
 			# language: en
 			Feature: Jack and Jill
+				
+				Background:
+					Given a precondition
 			
-			Background:
-				Given a precondition
-			
-			Scenario: Jack falls down
-				When Jack falls down
-				Then Jill comes tumbling after
+				Scenario: Jack falls down
+					When Jack falls down
+					Then Jill comes tumbling after
 		'''
 		assertFormatted(toBeFormatted, expectation)
 	}
@@ -69,7 +69,7 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val toBeFormatted = '''
 			# language: en
 			@foo
-			@bar:1
+			@bar
 			Feature: Jack and Jill
 			
 			Background:
@@ -88,21 +88,22 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val expectation = '''
 			# language: en
 			@foo
-			@bar:1
-			Feature: Jack and Jill
-			
-			Background:
-				Given a precondition
-			
-			@foo @bar
-			Scenario: A
-				And another
-			
-			@foo
 			@bar
-			Scenario: B
-				When something happens
-				Then there should be a result
+			Feature: Jack and Jill
+				
+				Background:
+					Given a precondition
+			
+				@foo
+				@bar
+				Scenario: A
+					And another
+			
+				@foo
+				@bar
+				Scenario: B
+					When something happens
+					Then there should be a result
 		'''
 		assertFormatted(toBeFormatted, expectation)
 	}
@@ -113,15 +114,15 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val toBeFormatted = '''
 			# language: en
 			Feature: With a title
-			
-			Scenario Outline:
-				Given <foo>
-				And <bar>
-			
-				Examples:
-				| foo | bar |
-				|  12 |  10 |
-				|  20 |  15 |
+				
+				Scenario Outline:
+					Given <foo>
+					And <bar>
+				
+					Examples:
+					| foo | bar |
+					|  12 |  10 |
+					|  20 |  15 |
 		'''
 		assertFormatted(toBeFormatted)
 	}
@@ -144,15 +145,15 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val expectation = '''
 			# language: en
 			Feature: With a title
+				
+				Scenario Outline:
+					Given <foo>
+					And <bar>
 			
-			Scenario Outline:
-				Given <foo>
-				And <bar>
-			
-				Examples:
-				| foo | bar |
-				|  12 |  10 |
-				|  20 |  15 |
+					Examples:
+					| foo | bar |
+					|  12 |  10 |
+					|  20 |  15 |
 		'''
 		assertFormatted(toBeFormatted, expectation)
 	}
@@ -163,22 +164,22 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val toBeFormatted = '''
 			# language: en
 			Feature: With a title
+				
+				Scenario Outline:
+					Given <foo>
+					And <bar>
 			
-			Scenario Outline:
-				Given <foo>
-				And <bar>
+					@foo
+					Examples:
+					| foo | bar |
+					|  12 |  10 |
+					|  20 |  15 |
 			
-				@foo
-				Examples:
-				| foo | bar |
-				|  12 |  10 |
-				|  20 |  15 |
-			
-				@bar
-				Examples:
-				| foo | bar |
-				|  12 |  10 |
-				|  20 |  15 |
+					@bar
+					Examples:
+					| foo | bar |
+					|  12 |  10 |
+					|  20 |  15 |
 		'''
 		assertFormatted(toBeFormatted)
 	}
@@ -208,27 +209,26 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val expectation = '''
 			# language: en
 			Feature: With a title
+				
+				Scenario Outline:
+					Given <foo>
+					And <bar>
 			
-			Scenario Outline:
-				Given <foo>
-				And <bar>
+					@foo
+					Examples:
+					| foo | bar |
+					|  12 |  10 |
+					|  20 |  15 |
 			
-				@foo
-				Examples:
-				| foo | bar |
-				|  12 |  10 |
-				|  20 |  15 |
-			
-				@bar
-				Examples:
-				| foo | bar |
-				|  12 |  10 |
-				|  20 |  15 |
+					@bar
+					Examples:
+					| foo | bar |
+					|  12 |  10 |
+					|  20 |  15 |
 		'''
 		assertFormatted(toBeFormatted, expectation)
 	}
-	
-		
+
 	@Test
 	def void indentDocString_01() {
 		// SHOULD  DocString to column 1
@@ -246,44 +246,43 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val expectation = '''
 			# language: en
 			Feature: With a title
-			
-			Scenario:
-				Given the DocString
-				"""
-				The quick brown fox
-				Jumps over the lazy dog
-				"""
+				
+				Scenario:
+					Given the DocString
+					"""
+					The quick brown fox
+					Jumps over the lazy dog
+					"""
 		'''
 		assertFormatted(toBeFormatted, expectation)
 	}
-	
+
 	@Test
 	def void indentStepInterior_01() {
 		// MUST preserve existing formatting
 		val toBeFormatted = '''
 			# language: en
 			Feature: With a title
-			
-			Scenario: Stock Symbols
-				The quick brown fox
-				Jumps over the lazy dog
-			
-				Given the stock is traded at 5.0
-				"""
-				The quick brown fox
-				Jumps over the lazy dog
-				"""
-				And the alert status should be OFF
-				When the stock is traded at 11.0
-				| precondition | be-captured     |
-				| abc          | be captured     |
-				| xyz          | not be captured |
-				Then the alert status should be ON
+				
+				Scenario: Stock Symbols
+					The quick brown fox
+					Jumps over the lazy dog
+				
+					Given the stock is traded at 5.0
+					"""
+					The quick brown fox
+					Jumps over the lazy dog
+					"""
+					And the alert status should be OFF
+					When the stock is traded at 11.0
+					| precondition | be-captured     |
+					| abc          | be captured     |
+					| xyz          | not be captured |
+					Then the alert status should be ON
 		'''
 		assertFormatted(toBeFormatted)
 	}
-	
-	
+
 	@Test
 	def void indentStepInterior_02() {
 		// SHOULD align Table and DocString to column 1
@@ -307,19 +306,19 @@ class CucumberFormatterTest extends AbstractFormatterTest<Feature> {
 		val expectation = '''
 			# language: en
 			Feature: With a title
-			
-			Scenario:
-				Given the stock is traded at 5.0
-				"""
-				The quick brown fox
-				Jumps over the lazy dog
-				"""
-				And the alert status should be OFF
-				When the stock is traded at 11.0
-				| precondition | be-captured     |
-				| abc          | be captured     |
-				| xyz          | not be captured |
-				Then the alert status should be ON
+				
+				Scenario:
+					Given the stock is traded at 5.0
+					"""
+					The quick brown fox
+					Jumps over the lazy dog
+					"""
+					And the alert status should be OFF
+					When the stock is traded at 11.0
+					| precondition | be-captured     |
+					| abc          | be captured     |
+					| xyz          | not be captured |
+					Then the alert status should be ON
 		'''
 		assertFormatted(toBeFormatted, expectation)
 	}
