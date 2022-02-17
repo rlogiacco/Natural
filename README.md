@@ -17,7 +17,7 @@ After many years an awesome developer has finally decided to step up and share t
 
 This doesn't mean we wouldn't appreciate your help so don't be shy and submit your contributions! If you are unable or unwilling to contribute your time, please consider a donation: we have opened a [Github Sponsors account][5].
 
-##### Natural installation can be achieved by adding the `Natural Plugin Update Site` with `http://rlogiacco.github.com/Natural` as URL.
+##### Natural installation can be achieved by adding the `Natural Plugin Update Site` with `http://rlogiacco.github.io/Natural` as URL.
 
 ##### Natural is also available on the [Eclipse Marketplace][2] for an easy and seamless installation.
 
