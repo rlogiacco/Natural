@@ -8,6 +8,8 @@ Bundle-SymbolicName: org.agileware.natural.cucumber.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.agileware.natural.cucumber,
  org.agileware.natural.cucumber.ide,
+ org.agileware.natural.lang.ui,
+ org.agileware.natural.stepmatcher.ui,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
@@ -24,11 +26,29 @@ Require-Bundle: org.agileware.natural.cucumber,
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.ui.codemining;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.cucumber.ui.contentassist;uses:="org.eclipse.emf.ecore,org.eclipse.xtext.ui.editor.contentassist,org.eclipse.xtext",
+Export-Package: org.agileware.natural.cucumber.ui.codemining;
+  uses:="org.eclipse.xtext.ui.codemining,
+   org.eclipse.jface.text,
+   org.eclipse.xtext.resource,
+   org.eclipse.xtext.util",
+ org.agileware.natural.cucumber.ui.contentassist;
+  uses:="org.eclipse.emf.ecore,
+   org.agileware.natural.lang.ui.contentassist,
+   org.eclipse.xtext.ui.editor.contentassist,
+   org.eclipse.xtext",
  org.agileware.natural.cucumber.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
- org.agileware.natural.cucumber.ui.labeling;uses:="org.eclipse.xtext.ui.label,org.eclipse.emf.edit.ui.provider,org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.ui.outline;uses:="org.eclipse.xtext.ui.editor.outline.impl,org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.ui.labeling;
+  uses:="org.agileware.natural.lang.model,
+   org.eclipse.xtext.ui.label,
+   org.eclipse.emf.edit.ui.provider,
+   org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.ui.outline;uses:="org.eclipse.xtext.ui.editor.outline.impl,org.agileware.natural.lang.model,org.agileware.natural.cucumber.cucumber",
  org.agileware.natural.cucumber.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix",
- org.agileware.natural.cucumber.ui.syntaxcoloring;uses:="org.eclipse.xtext.resource,org.eclipse.xtext.ui.editor.utils,org.eclipse.xtext.ui.editor.syntaxcoloring",
+ org.agileware.natural.cucumber.ui.syntaxcoloring;
+  uses:="org.eclipse.xtext.ide.editor.syntaxcoloring,
+   org.eclipse.xtext.resource,
+   org.eclipse.xtext.util,
+   org.eclipse.xtext.ui.editor.utils,
+   org.eclipse.xtext.ui.editor.syntaxcoloring",
  org.agileware.natural.cucumber.validation;uses:="org.eclipse.swt.widgets,org.eclipse.jface.dialogs,org.eclipse.xtext.ui.validation"
-Bundle-Activator: org.agileware.natural.cucumber.ui.internal.CucumberActivator
+Bundle-Activator: org.agileware.natural.cucumber.ui.CucumberActivator

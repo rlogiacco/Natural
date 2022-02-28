@@ -1,201 +1,117 @@
-grammar org.agileware.natural.cucumber.Cucumber hidden(WS, SL_COMMENT)
+grammar org.agileware.natural.cucumber.Cucumber with org.agileware.natural.lang.Natural
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate cucumber "http://www.agileware.org/natural/cucumber"
 
-Feature:
-	tags+=Tag*
-	'Feature:'
-	title=Title EOL+
-	narrative=Narrative?
-	background=Background?
-	scenarios+=AbstractScenario+
+/**
+ * 
+ */
+CucumberModel: {CucumberModel}
+	BLANK_SPACE?
+	document=Feature?
+;
+
+/**
+ * 
+ */
+Feature: {Feature}
+	(meta=Meta BLANK_SPACE?)?
+	'Feature:' title=RawText? NL
+	(BLANK_SPACE? narrative=Narrative)?
+	(BLANK_SPACE? scenarios+=AbstractScenario)*
+	BLANK_SPACE?
 ;
 
 /**
  * Base class for Scenario implementations. 
- * A Scenario is any type with the following structure:
+ * An AbstractScenario is any type with the following structure:
  * 
- * tags+=Tag*
- * 'Scenario:'
- * title=Title? EOL+
+ * meta=Meta?
+ * 'Keyword:' title=Title? NL
  * narrative=Narrative?
- * steps+=Step+;
+ * steps+=Step*
  */
 AbstractScenario: Scenario
 	| ScenarioOutline
 	| Background
 ;
 
+/**
+ * 
+ */
+Background: {Background}
+	(meta=Meta BLANK_SPACE?)?
+	'Background:' title=RawText? NL
+	(BLANK_SPACE? narrative=Narrative)?
+	(BLANK_SPACE? steps+=Step)*
+;
 
 /**
- * A Section is a generic element with the structure:
  * 
- * tags+=Tag*
- * 'Keyword:'
- * title=Title? EOL+
- * narrative=Narrative?
  */
-Section: Feature
-	| Background
-	| AbstractScenario
-	| Example
+Scenario: {Scenario}
+	(meta=Meta BLANK_SPACE?)?
+	'Scenario:' title=RawText? NL
+	(BLANK_SPACE? narrative=Narrative)?
+	(BLANK_SPACE? steps+=Step)*
 ;
 
-Background:
-	tags+=Tag*
-	'Background:'
-	title=Title? EOL+
-	narrative=Narrative?
-	steps+=Step+
+/**
+ * 
+ */
+ScenarioOutline: {ScenarioOutline}
+	(meta=Meta BLANK_SPACE?)?
+	// note: Do not fix keyword warning (replace with terminal ok)
+	'Scenario Outline:' title=RawText? NL
+	(BLANK_SPACE? narrative=Narrative)?
+	(BLANK_SPACE? steps+=Step)*
+	(BLANK_SPACE? examples+=Example)*
 ;
 
-Scenario:
-	tags+=Tag*
-	'Scenario:'
-	title=Title? EOL+
-	narrative=Narrative?
-	steps+=Step+
+/**
+ * 
+ */
+Step: {Step}
+	keyword=STEP_KEYWORD description=RawText NL
+	((BLANK_SPACE? table=Table) | (BLANK_SPACE? text=DocString))?
 ;
 
-ScenarioOutline:
-	tags+=Tag*
-	'Scenario' 'Outline:'
-	title=Title? EOL+
-	narrative=Narrative?
-	steps+=Step+
-	examples+=Example+
+terminal STEP_KEYWORD:
+	('Given' | 'When' | 'Then' | 'And' | 'But' | '*')
 ;
 
-Step:
-	keyword=STEP_KEYWORD
-	description=StepDescription EOL*
-	(table=Table | code=DocString)?
+terminal PLACEHOLDER:
+	('<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>')
+	  | ('[' !(']' | ' ' | '\t' | '\n' | '\r')+ ']')
 ;
 
-Example:
-	tags+=Tag*
-	'Examples:' 
-	title=Title? EOL+
-	narrative=Narrative?
-	table=Table
+/**
+ * 
+ */
+Example: {Example}
+	(meta=Meta BLANK_SPACE?)?
+	'Examples:' title=RawText? NL
+	(BLANK_SPACE? narrative=RawTextBlock NL)?
+	(BLANK_SPACE? table=Table)
 ;
 
 
-Table: {Table}
-	rows+=TableRow+
-	EOL*
-;
-
-TableRow: {TableRow}
-	cols+=TableCol+ '|' EOL
-;
-
-TableCol: {TableCol}
-	cell=TABLE_CELL
-;
-
-DocString: {DocString}
-	('"""' EOL -> text=Text '"""')
-	// TODO alternate quote support in formatter
-	// | ("'''" EOL -> text=Text? "'''")
-	EOL*
-;
-
-Title:
-	(WORD | INT | STRING | PLACEHOLDER)
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
-;
-
-Narrative:
-	(
-		(WORD | INT | STRING | PLACEHOLDER)
-		(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)*
-		EOL+
-	)+
-;
-
-StepDescription:
-	(WORD | INT | STRING | PLACEHOLDER | STEP_KEYWORD | TAGNAME)+
-;
-	
-Tag: id=TAGNAME EOL?;
-
-
-Text: {Text}
-	lines+=TextLine*
-;
-
-TextLine: {TextLine}
-	value=TEXT_VALUE EOL+
-;
-
-TEXT_VALUE returns ecore::EString:
-	TEXT_LITERAL TEXT_LITERAL*
-;
-
-TEXT_LITERAL: WORD
-	| INT
+@Override
+StartLiteral: ID
+	| NUMBER
 	| STRING
+	| PLACEHOLDER
+	| GLOB
 	| ANY_OTHER
 ;
 
-terminal INT: 
-	'-'?
-	('0'..'9')+
-	('.' ('0'..'9')+)?
+@Override
+Literal: ID
+	| NUMBER
+	| STRING
+	| PLACEHOLDER
+	| STEP_KEYWORD
+	| GLOB
+	| ANY_OTHER
 ;
 
-terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | 'But') (' ' | '\t')+;
-
-terminal PLACEHOLDER: '<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>';
-	
-terminal TABLE_CELL: '|' !('|' | '\n' | '\r')*;
-
-terminal STRING:
-	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
-	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'";
-
-terminal SL_COMMENT: '#' !('\n' | '\r')* NL;
-
-terminal TAGNAME: '@' !(' ' | '\t' | '\n' | '\r')+ ;
-
-terminal WORD: 
-	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
-	!(' ' | '\t' | '\n' | '\r')*
-;
-
-terminal WS: (' ' | '\t');
-
-terminal EOL: NL;
-terminal fragment NL: ('\r'? '\n'?);
-
-terminal ANY_OTHER: .;
-
-// ----------------------------------------------------------
-//
-// Unicode Ranges
-//
-// ----------------------------------------------------------
-
-terminal fragment DIGIT: ASCII_DIGIT;
-
-terminal fragment LETTER: LATIN_ALPHABET;
-
-// Basic Latin
-////
-
-terminal fragment ASCII_SPACE: '\u0020';
-
-terminal fragment ASCII_DIGIT: ('\u0030'..'\u0039');
-
-// all ascii chars other than letters, digits, space, or control codes
-terminal fragment ASCII_SYMBOLS: ('\u0021'..'\u002F')
-	| ('\u003A'..'\u0040')
-	| ('\u005B'..'\u0060')
-	| ('\u007B'..'\u007E')
-;
-
-terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
-	| ('\u0061'..'\u007A')
-;

@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Stepmatcher
+Bundle-Name: Cucumber JVM Annotation Matcher
 Bundle-SymbolicName: org.agileware.natural.stepmatcher
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.agileware.natural.stepmatcher.Activator
-Require-Bundle: org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Roberto Lo Giacco
 Automatic-Module-Name: org.agileware.natural.stepmatcher
-Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.osgi.framework;resolution:=optional,
+ org.osgi.service.component.annotations;resolution:=optional
+Export-Package: org.agileware.natural.stepmatcher

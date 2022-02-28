@@ -10,21 +10,21 @@ import com.google.inject.Provider;
 public class AbstractFormatterTest<T extends EObject> {
 
 	@Inject
-	FormatterTestHelper formatterTestHelper;
+	protected FormatterTestHelper formatterTestHelper;
 
 	@Inject
-	Provider<FormatterTestRequest> formatterRequestProvider;
+	protected Provider<FormatterTestRequest> formatterRequestProvider;
 
-	public void assertFormatted(String toBeFormatted, String expectation) {
+	public void assertFormatted(final String toBeFormatted, final String expectation) {
 		formatterTestHelper.assertFormatted(
 				formatterRequestProvider.get()
-						.setToBeFormatted(toBeFormatted)
-						.setExpectation(expectation));
+				.setToBeFormatted(toBeFormatted)
+				.setExpectation(expectation));
 	}
 
-	public void assertFormatted(String toBeFormatted) {
+	public void assertFormatted(final String toBeFormatted) {
 		formatterTestHelper.assertFormatted(
 				formatterRequestProvider.get()
-						.setToBeFormatted(toBeFormatted));
+				.setToBeFormatted(toBeFormatted));
 	}
 }

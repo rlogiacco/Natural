@@ -3,33 +3,79 @@
  */
 package org.agileware.natural.cucumber.ui.outline;
 
-import org.agileware.natural.cucumber.cucumber.DocString;
+import org.agileware.natural.cucumber.cucumber.AbstractScenario;
+import org.agileware.natural.cucumber.cucumber.CucumberModel;
+import org.agileware.natural.cucumber.cucumber.Example;
+import org.agileware.natural.cucumber.cucumber.Feature;
+import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
 import org.agileware.natural.cucumber.cucumber.Step;
-import org.agileware.natural.cucumber.cucumber.Table;
-import org.agileware.natural.cucumber.cucumber.Text;
+import org.agileware.natural.lang.model.DocString;
+import org.agileware.natural.lang.model.Narrative;
+import org.agileware.natural.lang.model.Table;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 
 /**
  * customization of the default outline structure
- * 
+ *
  */
 public class CucumberOutlineTreeProvider extends DefaultOutlineTreeProvider {
-	
-	protected boolean _isLeaf(DocString modelElement) {
+
+	protected void _createChildren(final DocumentRootNode parentNode, final CucumberModel model) {
+		if (model.getDocument() != null) {
+			createNode(parentNode, model.getDocument());
+		}
+	}
+
+	protected void _createChildren(final DocumentRootNode parentNode, final Feature model) {
+		if (model.getMeta() != null) {
+			createNode(parentNode, model.getMeta());
+		}
+
+		for (final AbstractScenario scenario : model.getScenarios()) {
+			createNode(parentNode, scenario);
+		}
+	}
+
+	protected void _createChildren(final DocumentRootNode parentNode, final AbstractScenario model) {
+		if (model.getMeta() != null) {
+			createNode(parentNode, model.getMeta());
+		}
+
+		for (final Step step : model.getSteps()) {
+			createNode(parentNode, step);
+		}
+	}
+
+	protected void _createChildren(final DocumentRootNode parentNode, final ScenarioOutline model) {
+		if (model.getMeta() != null) {
+			createNode(parentNode, model.getMeta());
+		}
+
+		for (final Step step : model.getSteps()) {
+			createNode(parentNode, step);
+		}
+
+		for (final Example step : model.getExamples()) {
+			createNode(parentNode, step);
+		}
+	}
+
+	protected boolean _isLeaf(final Narrative modelElement) {
 		return true;
 	}
-	
-	protected boolean _isLeaf(Text modelElement) {
+
+	protected boolean _isLeaf(final DocString modelElement) {
 		return true;
 	}
-	
-	protected boolean _isLeaf(Table modelElement) {
+
+	protected boolean _isLeaf(final Table modelElement) {
 		// do not allow expansion of table nodes
 		return true;
 	}
-	
-	protected boolean _isLeaf(Step modelElement) {
+
+	protected boolean _isLeaf(final Step modelElement) {
 		// only allow expansion of step nodes with tables
-		return modelElement.getTable() == null && modelElement.getCode() == null;
+		return modelElement.getTable() == null && modelElement.getText() == null;
 	}
 }

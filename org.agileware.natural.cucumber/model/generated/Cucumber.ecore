@@ -2,23 +2,29 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cucumber" nsURI="http://www.agileware.org/natural/cucumber"
     nsPrefix="cucumber">
-  <eClassifiers xsi:type="ecore:EClass" name="Feature" eSuperTypes="#//Section">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="background" eType="#//Background"
+  <eClassifiers xsi:type="ecore:EClass" name="CucumberModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="document" eType="#//Feature"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Meta"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="narrative" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Narrative"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scenarios" upperBound="-1"
         eType="#//AbstractScenario" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractScenario" eSuperTypes="#//Section">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractScenario">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Meta"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="narrative" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Narrative"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="steps" upperBound="-1"
         eType="#//Step" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Section">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" upperBound="-1" eType="#//Tag"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="narrative" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Background" eSuperTypes="#//AbstractScenario #//Section"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Background" eSuperTypes="#//AbstractScenario"/>
   <eClassifiers xsi:type="ecore:EClass" name="Scenario" eSuperTypes="#//AbstractScenario"/>
   <eClassifiers xsi:type="ecore:EClass" name="ScenarioOutline" eSuperTypes="#//AbstractScenario">
     <eStructuralFeatures xsi:type="ecore:EReference" name="examples" upperBound="-1"
@@ -27,37 +33,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="Step">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Table"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="code" eType="#//DocString"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Example" eSuperTypes="#//Section">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="#//Table"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="text" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//DocString"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Table">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//TableRow"
+  <eClassifiers xsi:type="ecore:EClass" name="Example">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meta" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Meta"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableRow">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="cols" upperBound="-1" eType="#//TableCol"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="narrative" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="ecore:EClass platform:/resource/org.agileware.natural.lang/model/generated/Natural.ecore#//Table"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableCol">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cell" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DocString">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="text" eType="#//Text" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Tag">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Text">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="lines" upperBound="-1"
-        eType="#//TextLine" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TextLine">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

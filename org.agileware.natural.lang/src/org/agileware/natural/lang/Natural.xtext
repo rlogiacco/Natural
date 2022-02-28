@@ -1,0 +1,246 @@
+grammar org.agileware.natural.lang.Natural hidden(WS, SL_COMMENT)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+generate model "http://www.agileware.org/natural/lang"
+
+/**
+ * 
+ */
+NaturalModel: {NaturalModel}
+	document=Document?
+;
+
+/**
+ * 
+ */
+Document: {Document}
+	BLANK_SPACE?
+	(meta=Meta BLANK_SPACE?)?
+	'Document:' title=RawText? NL
+	(BLANK_SPACE? narrative=Narrative)?
+	(BLANK_SPACE? sections+=Section)*
+	BLANK_SPACE?
+;
+
+/**
+ * 
+ */
+Section: {Section}
+	(meta=Meta BLANK_SPACE?)?
+	'Section:' title=RawText? NL
+	(BLANK_SPACE? narrative=Narrative)?
+;
+
+// --------------------------------------
+// Meta Tags
+// --------------------------------------
+
+/**
+ * 
+ */
+Meta: {Meta}
+	tags+=MetaElement
+	(BLANK_SPACE? tags+=MetaElement)*
+	NL
+;
+
+/**
+ * 
+ */
+MetaElement: {MetaElement}
+	id=TAG
+//	'@' => id=ID => (':' value=RawText)?
+;
+
+terminal TAG: 
+	'@' !(' ' | '\t' | '\n' | '\r')+
+;
+
+
+/**
+ * 
+ */
+Narrative: {Narrative}
+	sections+=Block
+	(NL BLANK_SPACE? sections+=Block)*
+;
+
+// --------------------------------------
+// Text Blocks
+// --------------------------------------
+
+/**
+ * 
+ */
+Block: Paragraph
+	| DocString
+	| Table
+;
+
+/**
+ * 
+ */
+Paragraph: {Paragraph}
+	value=RawTextBlock
+	NL
+;
+
+/**
+ * 
+ */
+DocString: {DocString}
+	value=DOC_STRING_LITERAL
+	NL
+;
+
+terminal DOC_STRING_LITERAL:
+	('"""'->'"""')
+	| ("'''"->"'''")
+;
+
+/**
+ * 
+ */
+Table: {Table}
+	rows+=TableRow+
+;
+
+/**
+ * 
+ */
+TableRow: {TableRow}
+	cols+=TableCol+ '|' NL
+;
+
+/**
+ * 
+ */
+TableCol: {TableCol}
+	value=TABLE_CELL
+;
+
+terminal TABLE_CELL:
+	'|' !('|' | '\n' | '\r')*
+;
+
+// --------------------------------------
+// Text Literals
+// --------------------------------------
+
+/**
+ * Consumes all text literals. This SHOULD be assigned after a start literal or keyword
+ * In the production rules.
+ */
+RawText returns ecore::EString:
+	Literal+
+;
+
+/**
+ * Consumes all text literals, including a single newline prior to another line
+ * of text. Each line MUST not start with any special keywords. All text literals
+ * are consumed until multiple newlines, or a keyword starting a new Block is
+ * encoutered in the model rules.
+ */
+RawTextBlock returns ecore::EString:
+	StartLiteral Literal*
+	(NL StartLiteral Literal*)*
+;
+
+StartLiteral: ID
+	| NUMBER
+	| STRING
+	| GLOB
+	| ANY_OTHER
+;
+
+Literal: ID
+	| NUMBER
+	| STRING
+	| GLOB
+	| ANY_OTHER
+;
+
+terminal ID:
+	(LETTER | DIGIT)
+	(LETTER | DIGIT | '_' | '-')*
+;
+
+terminal fragment LETTER: ARABIC_ALPHABET
+	| ARMENIAN_ALPHABET
+	| GREEK_ALPHABET
+	| CYRILLIC_ALPHABET
+	| HEBREW_ALPHABET
+	| LATIN_ALPHABET
+	| THAI_ALPHABET
+	| TAGALOG_ALPHABET
+	| DIACRITICAL_MARKS
+;
+
+
+// Reference: https://jrgraphix.net/r/Unicode/
+////
+
+terminal fragment ARABIC_ALPHABET: ('\u0600'..'\u06FF');
+terminal fragment ARMENIAN_ALPHABET: ('\u0530'..'\u058F');
+terminal fragment GREEK_ALPHABET: ('\u0370'..'\u03FF');
+terminal fragment CYRILLIC_ALPHABET: ('\u0400'..'\u04FF');
+terminal fragment HEBREW_ALPHABET: ('\u0590'..'\u05FF');
+terminal fragment LATIN_ALPHABET: ('\u0041'..'\u005A')
+	| ('\u0061'..'\u007A')
+;
+terminal fragment THAI_ALPHABET: ('\u0E00'..'\u0E7F');
+terminal fragment TAGALOG_ALPHABET: ('\u0400'..'\u04FF');
+terminal fragment DIACRITICAL_MARKS: ('\u0300'..'\u036F');
+
+terminal STRING returns ecore::EString:
+	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | '\\') | !('\\' | '"' | '\r' | '\n'))* '"' |
+	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | "'" | '\\') | !('\\' | "'" | '\r' | '\n'))* "'"
+;
+
+terminal NUMBER returns ecore::EBigInteger:
+	'-'? DIGIT+ '.' DIGIT* EXPONENT_PART?
+	| '-'? '.' DIGIT+ EXPONENT_PART?
+	| '-'? DIGIT+ EXPONENT_PART
+	| '-'? DECIMAL_NUMBER
+	| '-'? HEX_NUMBER
+	| '-'? OCTAL_NUMBER
+;
+
+terminal fragment DECIMAL_NUMBER:
+	NON_ZERO_DIGIT DIGIT*
+;
+
+terminal fragment DIGIT:
+	'0' | NON_ZERO_DIGIT
+;
+
+terminal fragment NON_ZERO_DIGIT:
+	'1'..'9'
+;
+
+terminal fragment HEX_NUMBER:
+	'0' ('x' | 'X') ('0'..'9' | 'a'..'f' | 'A'..'F')+
+;
+
+terminal fragment OCTAL_NUMBER:
+	'0' '0'..'7'*
+;
+
+terminal fragment EXPONENT_PART:
+	('e' | 'E') ('+' | '-')? DIGIT+
+;
+
+terminal SL_COMMENT:
+	'#' !('\n' | '\r')* NL
+;
+
+terminal GLOB:
+	!('@' | '|' | ' ' | '\t' | '\n' | '\r')
+	!(' ' | '\t' | '\n' | '\r')*
+;
+
+BLANK_SPACE: NL+;
+terminal NL: ('\r'? '\n') | EOF;
+terminal WS: (' ' | '\t');
+
+terminal ANY_OTHER: .;

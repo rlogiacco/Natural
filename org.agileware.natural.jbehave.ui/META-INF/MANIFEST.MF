@@ -8,6 +8,8 @@ Bundle-SymbolicName: org.agileware.natural.jbehave.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.agileware.natural.jbehave,
  org.agileware.natural.jbehave.ide,
+ org.agileware.natural.lang.ui,
+ org.agileware.natural.stepmatcher.ui,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
@@ -18,9 +20,14 @@ Require-Bundle: org.agileware.natural.jbehave,
  org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.agileware.natural.jbehave.ui.contentassist;uses:="org.eclipse.emf.ecore,org.eclipse.xtext.ui.editor.contentassist,org.eclipse.xtext",
+Export-Package: org.agileware.natural.jbehave.ui.contentassist;
+  uses:="org.eclipse.emf.ecore,
+   org.agileware.natural.lang.ui.contentassist,
+   org.eclipse.xtext.ui.editor.contentassist,
+   org.eclipse.xtext",
  org.agileware.natural.jbehave.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
  org.agileware.natural.jbehave.ui.labeling;uses:="org.eclipse.xtext.ui.label,org.eclipse.emf.edit.ui.provider",
  org.agileware.natural.jbehave.ui.outline;uses:="org.eclipse.xtext.ui.editor.outline.impl",
- org.agileware.natural.jbehave.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
+ org.agileware.natural.jbehave.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix",
+ org.agileware.natural.jbehave.validation;uses:="org.eclipse.swt.widgets,org.eclipse.jface.dialogs,org.eclipse.xtext.ui.validation"
 Bundle-Activator: org.agileware.natural.jbehave.ui.internal.JbehaveActivator

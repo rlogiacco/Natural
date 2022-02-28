@@ -6,7 +6,8 @@ Bundle-Vendor: Roberto Lo Giacco
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.agileware.natural.cucumber; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.agileware.natural.common;visibility:=reexport,
+Require-Bundle: org.agileware.natural.stepmatcher;visibility:=reexport,
+ org.agileware.natural.lang;visibility:=reexport,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
@@ -18,11 +19,12 @@ Require-Bundle: org.agileware.natural.common;visibility:=reexport,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.eclipse.xtext.service,org.eclipse.xtext",
- org.agileware.natural.cucumber.cucumber;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
+ org.agileware.natural.cucumber.cucumber;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util,org.agileware.natural.lang.model",
  org.agileware.natural.cucumber.cucumber.impl;
   uses:="org.eclipse.emf.ecore,
    org.eclipse.emf.ecore.impl,
    org.eclipse.emf.common.util,
+   org.agileware.natural.lang.model,
    org.eclipse.emf.common.notify,
    org.agileware.natural.cucumber.cucumber",
  org.agileware.natural.cucumber.cucumber.util;
@@ -31,7 +33,11 @@ Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.ecli
    org.eclipse.emf.common.notify.impl,
    org.eclipse.emf.ecore.util,
    org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.formatting2;uses:="org.eclipse.xtext.formatting2,org.agileware.natural.cucumber.cucumber",
+ org.agileware.natural.cucumber.formatting2;
+  uses:="org.agileware.natural.lang.model,
+   org.eclipse.xtext.formatting2.regionaccess,
+   org.eclipse.xtext.formatting2,
+   org.agileware.natural.cucumber.cucumber",
  org.agileware.natural.cucumber.generator;uses:="org.eclipse.xtext.generator,org.eclipse.emf.ecore.resource",
  org.agileware.natural.cucumber.parser.antlr;uses:="org.eclipse.xtext.parser.antlr,org.agileware.natural.cucumber.parser.antlr.internal,org.agileware.natural.cucumber.services",
  org.agileware.natural.cucumber.parser.antlr.internal;
@@ -39,8 +45,8 @@ Export-Package: org.agileware.natural.cucumber;uses:="com.google.inject,org.ecli
    org.eclipse.xtext.parser.antlr,
    org.antlr.runtime,
    org.agileware.natural.cucumber.services",
- org.agileware.natural.cucumber.scoping;uses:="org.eclipse.xtext.scoping.impl",
+ org.agileware.natural.cucumber.scoping;uses:="org.agileware.natural.lang.scoping",
  org.agileware.natural.cucumber.serializer;uses:="org.agileware.natural.cucumber.cucumber",
- org.agileware.natural.cucumber.services;uses:="org.eclipse.xtext.service,org.eclipse.xtext",
- org.agileware.natural.cucumber.validation;uses:="org.eclipse.xtext.util,org.eclipse.xtext.validation"
+ org.agileware.natural.cucumber.services;uses:="org.agileware.natural.lang.services,org.eclipse.xtext.service,org.eclipse.xtext",
+ org.agileware.natural.cucumber.validation;uses:="org.agileware.natural.lang.validation,org.eclipse.xtext.util,org.eclipse.xtext.validation"
 Import-Package: org.apache.log4j

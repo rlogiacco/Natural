@@ -4,15 +4,15 @@
 package org.agileware.natural.cucumber.ui.labeling;
 
 import org.agileware.natural.cucumber.cucumber.Background;
-import org.agileware.natural.cucumber.cucumber.DocString;
 import org.agileware.natural.cucumber.cucumber.Example;
 import org.agileware.natural.cucumber.cucumber.Feature;
 import org.agileware.natural.cucumber.cucumber.Scenario;
 import org.agileware.natural.cucumber.cucumber.ScenarioOutline;
 import org.agileware.natural.cucumber.cucumber.Step;
-import org.agileware.natural.cucumber.cucumber.Table;
-import org.agileware.natural.cucumber.cucumber.Tag;
-import org.eclipse.emf.common.util.EList;
+import org.agileware.natural.lang.model.DocString;
+import org.agileware.natural.lang.model.Meta;
+import org.agileware.natural.lang.model.MetaElement;
+import org.agileware.natural.lang.model.Table;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 
@@ -20,92 +20,96 @@ import com.google.inject.Inject;
 
 /**
  * Provides labels for a EObjects.
- * 
+ *
  * see
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class CucumberLabelProvider extends DefaultEObjectLabelProvider {
 
 	@Inject
-	public CucumberLabelProvider(AdapterFactoryLabelProvider delegate) {
+	public CucumberLabelProvider(final AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
-	
-	String text(Feature ele) {
-		return ele.getTitle();
+
+	String text(final Feature ele) {
+		return ele.getTitle() == null ? "Feature" : merge("Feature: ", ele.getTitle());
 	}
 
-	String image(Feature ele) {
+	String image(final Feature ele) {
 		return "feature.png";
 	}
 
-	String text(Background ele) {
-		return ele.getTitle() == null ? "Background" : ele.getTitle();
+	String text(final Background ele) {
+		return ele.getTitle() == null ? "Background" : merge("Background: ", ele.getTitle());
 	}
 
-	String image(Background ele) {
+	String image(final Background ele) {
 		return "background.gif";
 	}
 
-	String text(Scenario ele) {
-		return ele.getTitle() == null ? "Scenario" : ele.getTitle();
+	String text(final Scenario ele) {
+		return ele.getTitle() == null ? "Scenario" : merge("Scenario: ", ele.getTitle());
 	}
 
-	String image(Scenario ele) {
+	String image(final Scenario ele) {
 		return "scenario.png";
 	}
 
-	String text(ScenarioOutline ele) {
-		return ele.getTitle() == null ? "Scenario Outline" : ele.getTitle();
+	String text(final ScenarioOutline ele) {
+		return ele.getTitle() == null ? "Scenario Outline" : merge("Scenario Outline: ", ele.getTitle());
 	}
 
-	String image(ScenarioOutline ele) {
+	String image(final ScenarioOutline ele) {
 		return "scenario_outline.png";
 	}
-	
-	String text(Step ele) {
-		return ele.getDescription().trim();
+
+	String text(final Step ele) {
+		return ele.getDescription();
 	}
 
-	String image(Step ele) {
+	String image(final Step ele) {
 		return "step.gif";
 	}
 
-	String text(Table ele) {
+	String text(final Table ele) {
 		return "Table of " + ele.getRows().size() + " rows";
 	}
 
-	String image(Table ele) {
+	String image(final Table ele) {
 		return "table.gif";
 	}
-	
-	String text(DocString ele) {
+
+	String text(final DocString ele) {
 		return "DocString";
 	}
 
-	String image(DocString ele) {
+	String image(final DocString ele) {
 		return "code.gif";
 	}
 
-	String text(Example ele) {
-		return ele.getTitle().isEmpty() ? "Examples" : ele.getTitle();
+	String text(final Example ele) {
+		return ele.getTitle() == null ? "Examples" : merge("Examples: ", ele.getTitle());
 	}
 
-	String image(Example ele) {
+	String image(final Example ele) {
 		return "example.gif";
 	}
 
-	String text(Tag ele) {
-		return ele.getId();
+	String text(final Meta ele) {
+		return "Meta";
 	}
 
-	String image(Tag ele) {
+	String text(final MetaElement ele) {
+		return ele.getId().substring(1);
+	}
+
+	String image(final MetaElement ele) {
 		return "annotation.gif";
 	}
-	
-	private static String merge(EList<String> strings) {
-		StringBuilder builder = new StringBuilder();
-		for (String string : strings) {
+
+	private static String merge(final String... strings) {
+		final StringBuilder builder = new StringBuilder();
+		for (final String string : strings) {
 			builder.append(string);
 		}
 		return builder.toString();

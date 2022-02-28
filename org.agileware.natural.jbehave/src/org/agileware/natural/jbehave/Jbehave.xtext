@@ -1,102 +1,251 @@
-grammar org.agileware.natural.jbehave.Jbehave hidden(SPACE, SL_COMMENT)
+grammar org.agileware.natural.jbehave.Jbehave with org.agileware.natural.lang.Natural
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate jbehave "http://www.agileware.org/natural/jbehave"
 
+/**
+ * 
+ */
+JbehaveModel:
+	{JbehaveModel}
+	BLANK_SPACE?
+	document=Story?;
+
+	/**
+ * The story describes a feature via description, narrative and a set of scenarios
+ * Story := Description? Meta? Narrative? GivenStories? Lifecycle? Scenario+ ;
+ */
 Story:
-	description+=Description*
-	meta=Meta?
-	narrative=Narrative?
-	scenarios+=Scenario+;
+	{Story}
+	(description=Description BLANK_SPACE?)?
+	(meta=Meta BLANK_SPACE?)?
+	(narrative=StoryNarrative BLANK_SPACE?)
+	(lifecycle=Lifecycle BLANK_SPACE?)?
+	scenarios+=Scenario
+	(BLANK_SPACE? scenarios+=Scenario)*
+;
 
-Narrative:
-	'Narrative:' 
-	inOrderTo=InOrderTo 
-	asA=AsA
-	iWantTo=IWantTo;
-	
-Scenario:
-	'Scenario:'
-	description+=Description+
-	meta=Meta?
-	given=GivenStories?
-	conditions+=Step+
-	examples=Examples?;
-
-GivenStories:
-	'GivenStories:'
-	resources+=StoryPath+;
-
-StoryPath:
-	path=PATH ','?;
-
-Meta: {Meta}
-	'Meta:' 
-	elements+=Tag*;
-	
-Step:
-	description=StepDescription EOL*
-	table=Table?;
-
-InOrderTo:
-	IN_ORDER_TO content=NarrativeElementContent;
-
-AsA:
-	AS_A content=NarrativeElementContent;
-
-IWantTo:
-	I_WANT_TO content=NarrativeElementContent;
-
-Examples:
-	'Examples:' 
-	table=Table;
-	
-Table:
-	rows+=TABLE_ROW+ EOL*;
-
+/**
+ * The Description is expressed by any sequence of words that must not contain any keywords at start of lines.
+ * Description := (Word Space?)* ;
+ */
 Description:
-	Content EOL+;
+	{Description}
+	value=RawTextBlock
+	NL
+;
 
-StepDescription:
-	STEP_KEYWORD (STRING | WORD | INT | ANY | PLACEHOLDER)+;
-	
-NarrativeElementContent:
-	(STRING | WORD | INT | ANY | PLACEHOLDER) (AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
+/**
+ * The meta is identified by keyword "Meta:" (or equivalent in I18n-ed locale),
+ * It is followed by any number of meta elements
+ * Meta:= "Meta:" (MetaElement)* ;
+ */
+@Override
+Meta: {Meta}
+	'Meta:' NL
+	(BLANK_SPACE? tags+=MetaElement)+
+	NL
+;
 
-Content:
-	(STRING | WORD | INT | ANY | PLACEHOLDER) (AT | STRING | WORD | INT | ANY | PLACEHOLDER | STEP_KEYWORD)*;
+/**
+ * The narrative is identified by keyword "Narrative:" (or equivalent in I18n-ed locale),
+ * It is followed by the narrative elements
+ * Narrative:= "Narrative:" ( InOrderTo AsA IWantTo | AsA IWantTo SoThat ) ;
+ */
+StoryNarrative: StoryNarrativeA 
+	| StoryNarrativeB
+;
 
-Tag: AT name=WORD EOL?;
+StoryNarrativeA: {StoryNarrativeA}
+	'Narrative:' NL
+	(BLANK_SPACE? inOrderTo=InOrderTo)
+	(BLANK_SPACE? asA=AsA)
+	(BLANK_SPACE? wantTo=IWantTo);
 
+StoryNarrativeB: {StoryNarrativeB}
+	'Narrative:' NL
+	(BLANK_SPACE? asA=AsA)
+	(BLANK_SPACE? wantTo=IWantTo)
+	(BLANK_SPACE? soThat=SoThat);
 
-terminal STEP_KEYWORD: ('Given' | 'When' | 'Then' | 'And' | '!--');
+StoryNarrativeElement: InOrderTo
+	| AsA
+	| IWantTo
+	| SoThat
+;
+
+InOrderTo: {InOrderTo}
+	keyword=IN_ORDER_TO value=RawText NL
+;
+
+AsA: {AsA}
+	keyword=AS_A value=RawText NL
+;
+
+IWantTo: {IWantTo}
+	keyword=I_WANT_TO value=RawText NL
+;
+
+SoThat: {SoThat}
+	keyword=SO_THAT value=RawText NL
+;
 
 terminal IN_ORDER_TO: 'In order to';
-
 terminal AS_A: 'As a';
-
 terminal I_WANT_TO: 'I want to';
+terminal SO_THAT: 'So that';
 
-terminal PLACEHOLDER: '<' ('a'..'z' | 'A'..'Z') !('>' | '\n' | '\r')* '>';
-	
-terminal TABLE_ROW: '|' (!('|' | '\n' | '\r')* '|')+ SPACE* EOL;
+/**
+ * The lifecycle is identified by keyword "Lifecycle:" (or equivalent in I18n-ed locale),
+ * It is followed by the lifecycle elements
+ * Lifecycle:= "Lifecycle:" LifecycleBefore? LifecycleAfter?
+ */
+Lifecycle: {Lifecycle}
+	'Lifecycle:' NL
+	before=LifecycleBefore?
+	after=LifecycleAfter?
+;
 
-terminal WORD: ('a'..'z' | 'A'..'Z') !(SPACE | '\n' | '\r')*;
+/**
+ * The before lifecyle element identified by keyword "Before:" (or equivalent in I18n-ed locale),
+ * followed by one or more steps
+ * LifecycleBefore:= "Before:" (Scope? Step+)+
+ */
+LifecycleBefore: {LifecycleBefore}
+	"Before:" NL
+	elements+=LifecycleBeforeElement+
+;
 
-terminal PATH: '/' ('/' | '.' | '_' | 'a'..'z' | 'A'..'Z' | '0'..'9')+;
+LifecycleBeforeElement: {LifecycleBeforeElement}
+	scope=Scope NL
+	steps+=Step+
+;
 
-terminal INT returns ecore::EDouble: '-'? ('0'..'9')+ ('.' ('0'..'9')+)?;
+/**
+ * The after lifecyle element identified by keyword "After:" (or equivalent in I18n-ed locale),
+ * followed by one or more sets of scope, outcome, meta filter and steps
+ * LifecycleAfter:= "After:" (Scope? Outcome? MetaFilter? Step+)+
+ */
+LifecycleAfter: {LifecycleAfter}
+	"After:" NL
+	elements+=LifecycleAfterElement+
+;
 
-terminal STRING:
-	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
-	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+LifecycleAfterElement: {LifecycleAfterElement}
+	scope=Scope NL
+	(outcome=Outcome NL)?
+	steps+=Step+
+;
 
-terminal SL_COMMENT: '#' !('\n' | '\r')* EOL;
+/**
+ * The scope element identified by keyword "Scope:" (or equivalent in I18n-ed locale),
+ * Scope:= "Scope:" "STEP" | "SCENARIO" | "STORY"
+ */
+Scope: {Scope}
+	"Scope:"
+	type=ScopeType
+;
 
-terminal SPACE: (' ' | '\t');
+enum ScopeType: STEP
+	| SCENARIO
+	| STORY
+;
 
-terminal EOL: '\r'? '\n'?;
+/**
+ * The outcome element identified by keyword "Outcome:" (or equivalent in I18n-ed locale),
+ * Outcome:= "Outcome:" "ANY" | "SUCCESS" | "FAILURE" ;
+ */
+Outcome: {Outcome}
+	"Outcome:"
+	type=OutcomeType
+;
 
-terminal AT: '@';
+enum OutcomeType: ANY
+	| SUCCESS
+	| FAILURE
+;
 
-terminal ANY: .;
+/**
+ * The scenario is identified by keyword "Scenario:" (or equivalent in I18n-ed locale),
+ * which is optional in the case of a single scenario.
+ * It can optionally be followed by a title, which is expressed by any sequence of words
+ * that must not contain any keywords at start of lines.
+ * It is followed by one or more Steps.
+ * Scenarios can optionally contain comments (which are not part of the scenarios) after examples using "!--" keyword
+ * Scenario := "Scenario:"? Title? Meta? GivenStories? Step+ Examples? (Examples Comment+)? ;
+ */
+Scenario: {Scenario}
+	'Scenario:' title=RawText? NL
+	(meta=Meta BLANK_SPACE?)?
+//	(given=GivenStories BLANK_SPACE?)?
+	steps+=Step
+	(BLANK_SPACE? steps+=Step)*
+	(BLANK_SPACE? examples=Examples)?
+;
+
+/**
+ * The comma-separated list of story resources that specify the stories to be run before a story or a scenario
+ *  GivenStories:= "GivenStories:" (StoryPath ','?)+ ;
+ */
+//GivenStories: {GivenStories}
+//	'GivenStories:'
+//	resources+=StoryPath
+//	(-> ',' BLANK_SPACE? resources+=StoryPath)*
+//	NL
+//;
+
+//StoryPath: {StoryPath}
+//	value=PATH
+//;
+
+/**
+ * The scenario step is a step starting work followed by any number of characters
+ * Step := StepStartingWord StepContent ;
+ */
+Step: {Step}
+	keyword=STEP_KEYWORD description=RawText NL
+	//	((BLANK_SPACE? table=Table) | (BLANK_SPACE? text=DocString))?
+;
+
+terminal STEP_KEYWORD:
+	('Given' | 'When' | 'Then' | 'And' | 'But' | '*')
+;
+
+terminal PLACEHOLDER:
+	('<' !('>' | ' ' | '\t' | '\n' | '\r')+ '>')
+	| ('[' !(']' | ' ' | '\t' | '\n' | '\r')+ ']')
+;
+
+/**
+ * The examples table
+ * Examples := "Examples:" ExamplesTable ;
+ */
+Examples: {Examples}
+	'Examples:' NL
+	(BLANK_SPACE? table=Table)
+;
+
+
+@Override
+StartLiteral: ID
+	| NUMBER
+	| STRING
+	| PLACEHOLDER
+	| GLOB
+	| ANY_OTHER
+;
+
+@Override
+Literal: ID
+	| NUMBER
+	| STRING
+	| PLACEHOLDER
+	| STEP_KEYWORD
+	| GLOB
+	| ANY_OTHER
+;
+
+//PATH returns ecore::EString:
+//	('./' | '../' | '/') 
+//	(GLOB ('/' GLOB)* ('.' GLOB)?)?
+//;
